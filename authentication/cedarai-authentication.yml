@@ -1,0 +1,37 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/cedarai-charge-openapi.yml, openapi/cedarai-external-openapi.yml, openapi/cedarai-invoices-openapi.yml,
+  openapi/cedarai-linda-notes-openapi.yml, openapi/cedarai-load-tender-openapi.yml, openapi/cedarai-network-structure-openapi.yml,
+  openapi/cedarai-quotes-openapi.yml, openapi/cedarai-work-order-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-arms-api-key
+  sources:
+  - openapi/cedarai-charge-openapi.yml
+  - openapi/cedarai-external-openapi.yml
+  - openapi/cedarai-invoices-openapi.yml
+  - openapi/cedarai-linda-notes-openapi.yml
+  - openapi/cedarai-load-tender-openapi.yml
+  - openapi/cedarai-network-structure-openapi.yml
+  - openapi/cedarai-quotes-openapi.yml
+  - openapi/cedarai-work-order-openapi.yml
+- name: AssumeUserAuth
+  type: apiKey
+  in: header
+  parameter: x-arms-assume-user
+  sources:
+  - openapi/cedarai-charge-openapi.yml
+  - openapi/cedarai-external-openapi.yml
+  - openapi/cedarai-invoices-openapi.yml
+  - openapi/cedarai-linda-notes-openapi.yml
+  - openapi/cedarai-load-tender-openapi.yml
+  - openapi/cedarai-network-structure-openapi.yml
+  - openapi/cedarai-quotes-openapi.yml
+  - openapi/cedarai-work-order-openapi.yml
