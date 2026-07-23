@@ -1,0 +1,919 @@
+openapi: 3.0.1
+info:
+  title: protobuf/arms/charge.proto ChargeService QuotesService API
+  version: version not set
+servers:
+- description: Production (US)
+  url: https://api-lg-k-h1.arms.cedarai.com
+- description: Production (EU)
+  url: https://api-lg-k-h1.arms.cedarai.se
+security:
+- ApiKeyAuth: []
+  AssumeUserAuth: []
+tags:
+- name: QuotesService
+paths:
+  /shipper/quote-preferences:
+    put:
+      tags:
+      - QuotesService
+      summary: Update Quote Preferences
+      operationId: UpdateQuotePreferences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1QuotePreferences'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1QuotePreferences'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+    get:
+      tags:
+      - QuotesService
+      summary: Get Quote Preferences
+      operationId: GetQuotePreferences
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1QuotePreferences'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /shipper/quotes/{name}:
+    get:
+      tags:
+      - QuotesService
+      summary: Get Shipper Quote
+      operationId: GetQuote
+      parameters:
+      - description: Stable quote resource name as returned in Quote.name, e.g. "quotes/<id>".
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: '[^/]+'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Quote'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /shipper/quotes:
+    post:
+      tags:
+      - QuotesService
+      summary: List Shipper Quotes
+      operationId: ListQuotes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListQuotesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListQuotesResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+components:
+  schemas:
+    v1ListQuotesResponse:
+      properties:
+        quotes:
+          description: Candidate quotes returned for the request.
+          items:
+            $ref: '#/components/schemas/v1Quote'
+          type: array
+      type: object
+    v1Units:
+      enum:
+      - BOARD_FEET
+      - CARLOAD
+      - CONTAINER
+      - CORD_VOLUME
+      - CUBIC_FEET
+      - GALLONS
+      - INTERMODAL_UNITS
+      - KILOGRAMS
+      - LITER
+      - MILES
+      - ONE_HUNDRED_BOARD_FEET
+      - POUNDS
+      - THOUSAND_BOARD_FEET
+      - TRAILER
+      - TRAIN
+      - UNITS
+      - VEHICLE
+      - VOLUMETRIC_UNIT
+      type: string
+    v1QuoteStation:
+      properties:
+        carrier:
+          type: string
+        city:
+          type: string
+        fsac:
+          type: string
+        junction_code:
+          type: string
+        latitude:
+          description: 'Resolved geographic coordinates (decimal degrees), when the station can be
+
+            geocoded from the station master record. Unset when no coordinates are known.'
+          format: double
+          type: number
+        longitude:
+          format: double
+          type: number
+        splc:
+          type: string
+        state:
+          type: string
+      type: object
+    v1EquipmentProfile:
+      properties:
+        car_type:
+          $ref: '#/components/schemas/v1CarType'
+        measurements:
+          description: 'Dimension filters applied to the profile. At most one entry per
+
+            MeasurementDimension.'
+          items:
+            $ref: '#/components/schemas/v1MeasurementFilter'
+          type: array
+        name:
+          description: Optional friendly label such as "60BC". Carrier-specific abbreviations.
+          type: string
+        special_car_type:
+          $ref: '#/components/schemas/v1QuoteSpecialCarType'
+      type: object
+    v1Range:
+      description: Inclusive integer range. Units are determined by the consuming field.
+      properties:
+        from:
+          format: int32
+          type: integer
+        to:
+          format: int32
+          type: integer
+      type: object
+    v1EquipmentOwnershipStatus:
+      description: "Equipment ownership status categories used in EQOS shipment conditions.\n\n - HIGHWAY_CARRIER: H - Highway carrier\n - SHIPPER_OWNED_OR_LEASED: S - Shipper owned or leased\n - STEAMSHIP_LINES: O - Steamship lines\n - RAILROAD_OWNED_OR_LEASED: R - Railroad owned or leased"
+      enum:
+      - HIGHWAY_CARRIER
+      - SHIPPER_OWNED_OR_LEASED
+      - STEAMSHIP_LINES
+      - RAILROAD_OWNED_OR_LEASED
+      type: string
+    v1CarType:
+      enum:
+      - ALL_CAR_TYPES
+      - BI_LEVEL
+      - BOX_CAR
+      - BULKHEAD
+      - CLOSED
+      - CLOSED_BI_LEVEL
+      - CLOSED_TRI_LEVEL
+      - COIL
+      - COVERED_COIL
+      - COVERED_GONDOLA
+      - CUSHIONED_BOX_CAR
+      - FLAT_PEDESTAL
+      - GONDOLA
+      - GRAVITY_FLOW
+      - INSULATED_BOX_CAR
+      - MECHANICAL_REFRIGERATOR
+      - OPEN
+      - OPEN_COIL_CARS
+      - OPEN_GONDOLA
+      - OPEN_HOPPER
+      - PLUG_DOORS
+      - TRI_LEVEL
+      - TRIPLE_CROSS_HOPPER
+      type: string
+    v1Contents:
+      properties:
+        quantity:
+          $ref: '#/components/schemas/v1Quantity'
+        stccs_or_prefixes:
+          description: List of candidate STCCs / STCC prefixes for the shipment commodity.
+          items:
+            type: string
+          type: array
+      type: object
+    v1ChargeType:
+      enum:
+      - FREIGHT
+      - MILEAGE
+      - ACCESSORIAL
+      title: "- MILEAGE: any fuel, even if it's not mileage based\n - ACCESSORIAL: all non-fuel misc charges"
+      type: string
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1Pndr:
+      properties:
+        docket_identifier:
+          description: 'DK03: docket identifier.'
+          format: int64
+          type: string
+        number:
+          description: 'DK02: docket control number.'
+          type: string
+        producer:
+          description: 'DK01: producing/publishing carrier mark.'
+          type: string
+        revision:
+          description: 'DK04: docket revision (optional in many contexts).'
+          format: int32
+          type: integer
+      type: object
+    v1Rate:
+      properties:
+        amount:
+          $ref: '#/components/schemas/v1Money'
+        car_type_conditions:
+          description: Simplified UI-oriented summary of applicable car-type conditions on this rate.
+          items:
+            $ref: '#/components/schemas/v1CarTypeCondition'
+          type: array
+        docket_column:
+          description: Docket column number used to evaluate column-specific conditions.
+          format: int64
+          type: integer
+        docket_level:
+          description: Docket level number.
+          format: int64
+          type: integer
+        docket_line:
+          description: Docket line number.
+          format: int64
+          type: integer
+        docket_sub_level:
+          description: Docket sub-level number.
+          format: int64
+          type: integer
+        equipment_ownership_conditions:
+          description: Positive EQOS (Equipment Ownership Status) conditions on this rate.
+          items:
+            $ref: '#/components/schemas/v1EquipmentOwnershipStatus'
+          type: array
+        matching_equipment_profile_names:
+          description: 'Names of the requesting carrier''s saved equipment profiles whose constraints are
+
+            compatible with this rate''s equipment conditions. Multiple profiles may apply (for
+
+            example, a rate that only restricts to box car matches every saved box car profile).
+
+            Empty when the carrier has no matching named profiles; clients fall back to
+
+            car_type_conditions for display in that case.'
+          items:
+            type: string
+          type: array
+        pndr:
+          $ref: '#/components/schemas/v1Pndr'
+        publication:
+          $ref: '#/components/schemas/v1Publication'
+        qualifier:
+          $ref: '#/components/schemas/v1RateQualifier'
+      type: object
+    v1Quote:
+      properties:
+        created_at:
+          description: 'When this quote was first generated. Populated by GetQuote (from the persisted reconstruction
+
+            mapping) so callers can tell when an id was minted; unset on live ListQuotes responses.'
+          format: date-time
+          type: string
+        distance:
+          $ref: '#/components/schemas/v1QuoteDistance'
+        furtherance_beyond_destination:
+          description: 'Rule 11 segment pricing counterpart (ListQuotesRequest.destination_unknown): continuation
+
+            beyond the last leg''s destination gateway junction is unknown and NOT included in the quoted
+
+            total. Omitted otherwise.'
+          type: boolean
+        legs:
+          description: Quote legs, each with its own route, distance, and itemized charges.
+          items:
+            $ref: '#/components/schemas/v1QuoteLeg'
+          type: array
+        name:
+          description: Stable quote identifier.
+          type: string
+        number_of_cars:
+          description: Number of cars used to scale per-car and aggregate quote amounts.
+          format: int32
+          type: integer
+        prior_movement_before_origin:
+          description: 'Rule 11 segment pricing (ListQuotesRequest.origin_unknown): the movement''s true origin is
+
+            unknown — it enters the priced portion at the first leg''s origin gateway junction, and the
+
+            prior movement is NOT included in the quoted total. Omitted otherwise.'
+          type: boolean
+        route:
+          $ref: '#/components/schemas/v1Route'
+        total:
+          $ref: '#/components/schemas/v1Money'
+      type: object
+    v1Publication:
+      properties:
+        effective_date:
+          description: Effective date of this rate in ISO8601 format (YYYY-MM-DD).
+          type: string
+        expiration_date:
+          description: 'Expiration date of this rate in ISO8601 format (YYYY-MM-DD).
+
+            Omitted when there is no end date.'
+          type: string
+        issuer:
+          description: Issuing carrier or publishing authority.
+          type: string
+        number:
+          description: Publication identifier/number.
+          type: string
+        suffix:
+          description: Optional publication suffix.
+          type: string
+        type:
+          $ref: '#/components/schemas/v1PublicationType'
+      type: object
+    v1MeasurementDimension:
+      description: "Equipment measurement dimensions used to filter quote searches.\nUnits are baked into each value so a single Range can describe any dimension.\n\n - CUBIC_FEET_CAPACITY: Cubic-feet capacity, evaluated against EQCM \"PF\" conditions.\n - GALLONS_CAPACITY: Gallon capacity, evaluated against EQCM \"PG\" conditions.\n - LOAD_LIMIT_POUNDS: Load limit in pounds, evaluated against EQCM \"LB\" conditions.\n - NET_WEIGHT_POUNDS: Net weight in pounds, evaluated against EQCW (equipment gross weight) conditions."
+      enum:
+      - OUTSIDE_LENGTH_INCHES
+      - INSIDE_LENGTH_INCHES
+      - INSIDE_HEIGHT_INCHES
+      - CUBIC_FEET_CAPACITY
+      - GALLONS_CAPACITY
+      - LOAD_LIMIT_POUNDS
+      - NET_WEIGHT_POUNDS
+      type: string
+    v1ConditionSign:
+      enum:
+      - PLUS
+      - MINUS
+      type: string
+    v1PublicationType:
+      enum:
+      - CONTRACT
+      - TARIFF
+      - QUOTE
+      type: string
+    v1RateQualifier:
+      enum:
+      - PER_BOARD_FOOT
+      - PER_100_BOARD_FOOT
+      - PER_1000_BOARD_FOOT
+      - PER_GROSS_TON
+      - PER_KILOGRAM
+      - PER_KILOLITER
+      - PER_KILOMETER
+      - PER_POUND
+      - PER_LITER
+      - PER_METRIC_TON
+      - PER_CONTAINER
+      - PER_CAR
+      - PER_CUBIC_FOOT
+      - PER_GALLON
+      - PER_HUNDRED_POUNDS
+      - PER_INTERMODAL_UNIT
+      - PER_CORD
+      - PER_MILE
+      - PER_NET_TON
+      - PER_UNIT
+      - PER_VEHICLE
+      - PERCENTAGE_OF_CHARGES
+      - PER_TRAIN_RATE
+      - PER_TRAILER
+      type: string
+    v1CarrierFsac:
+      properties:
+        carrier:
+          description: Reporting marks / railroad code (for example, BNSF, UP, CSXT).
+          type: string
+        fsac:
+          description: FSAC (Freight Station Accounting Code) for the location on the carrier.
+          type: string
+      type: object
+    v1Geography:
+      properties:
+        carrier_fsac:
+          $ref: '#/components/schemas/v1CarrierFsac'
+        city_state:
+          $ref: '#/components/schemas/v1CityState'
+        junction:
+          $ref: '#/components/schemas/v1Junction'
+        splc:
+          $ref: '#/components/schemas/v1Splc'
+      type: object
+    typeDecimal:
+      properties:
+        value:
+          type: string
+      type: object
+    v1CarTypeCondition:
+      properties:
+        car_type:
+          $ref: '#/components/schemas/v1CarType'
+        sign:
+          $ref: '#/components/schemas/v1ConditionSign'
+      type: object
+    v1Quantity:
+      properties:
+        amount:
+          $ref: '#/components/schemas/typeDecimal'
+        units:
+          $ref: '#/components/schemas/v1Units'
+      type: object
+    v1Route:
+      properties:
+        entries:
+          description: Structured route entries in movement order.
+          items:
+            $ref: '#/components/schemas/v1RouteEntry'
+          type: array
+        val:
+          description: 'Canonical route string representation (for example: "AA-DIANN-GTW-CHGO-BNSF").'
+          type: string
+      type: object
+    v1ShipmentMethodOfPayment:
+      enum:
+      - PREPAID
+      - COLLECT
+      - RULE_11
+      type: string
+    v1Charge:
+      properties:
+        amount:
+          $ref: '#/components/schemas/v1Money'
+        method_of_payment:
+          $ref: '#/components/schemas/v1ShipmentMethodOfPayment'
+        per_car_amount:
+          $ref: '#/components/schemas/v1Money'
+        rate:
+          $ref: '#/components/schemas/v1Rate'
+        rated_quantity:
+          $ref: '#/components/schemas/v1Quantity'
+        special_charge_description:
+          description: Raw X12/Rail 426 special charge description/L112 when present.
+          type: string
+        special_charge_or_allowance_code:
+          description: Raw X12/Rail 426 special charge or allowance code (for example, ENS, HAZ, SUR).
+          type: string
+        type:
+          $ref: '#/components/schemas/v1ChargeType'
+      type: object
+    v1QuoteDistanceSource:
+      enum:
+      - PC_MILER
+      - ESTIMATED
+      type: string
+    v1QuoteLeg:
+      properties:
+        billing_carrier:
+          description: Billing carrier for this leg.
+          type: string
+        charges:
+          description: Itemized charges for this leg.
+          items:
+            $ref: '#/components/schemas/v1Charge'
+          type: array
+        destination:
+          $ref: '#/components/schemas/v1QuoteStation'
+        distance:
+          $ref: '#/components/schemas/v1QuoteDistance'
+        origin:
+          $ref: '#/components/schemas/v1QuoteStation'
+        route:
+          $ref: '#/components/schemas/v1Route'
+        total:
+          $ref: '#/components/schemas/v1Money'
+      type: object
+    v1QuoteDistance:
+      properties:
+        source:
+          $ref: '#/components/schemas/v1QuoteDistanceSource'
+        value:
+          $ref: '#/components/schemas/typeDecimal'
+      type: object
+    v1CityState:
+      properties:
+        city:
+          description: City name for the location.
+          type: string
+        state_or_province:
+          description: State or province code (for example, TX, ON).
+          type: string
+      type: object
+    v1Money:
+      properties:
+        cents:
+          format: int32
+          type: integer
+        currency:
+          type: string
+        dollars:
+          format: int64
+          type: string
+      type: object
+    v1SavedFacility:
+      description: 'A carrier''s saved facility (identified by CIF, e.g. one of their mills): the
+
+        commodities and saved equipment profiles that facility ships/receives. When
+
+        the facility is selected as a quote origin/destination, the form narrows the
+
+        commodity and equipment choices to what it handles. A facility with no
+
+        declarations imposes no restriction.'
+      properties:
+        cif:
+          description: '9-digit CIF, optionally followed by a 4-digit sub-location suffix (13 digits
+
+            total), same convention as favorite_origin_cif_sets values.'
+          type: string
+        city_state:
+          $ref: '#/components/schemas/v1CityState'
+        equipment_profile_names:
+          description: 'Names of the carrier''s saved equipment profiles this facility uses, e.g.
+
+            "60HCBC" (matching EquipmentProfile.name in favorite_equipment_profile_sets).'
+          items:
+            type: string
+          type: array
+        name:
+          description: 'Optional carrier-chosen label for the facility, e.g. "Walla Walla, WA".
+
+            Display-only; does not affect how the facility is matched on the quote form.'
+          type: string
+        stccs:
+          description: Commodities this facility ships/receives (STCC codes or prefixes).
+          items:
+            type: string
+          type: array
+      type: object
+    v1RouteEntry:
+      properties:
+        carrier:
+          description: Reporting marks / railroad code (for example, BNSF, UP, CSXT).
+          type: string
+        outbound_junction:
+          description: Outbound junction for each leg except the final leg.
+          type: string
+        sequence_code:
+          title: 'Route sequence code aligned with X12 R202.
+
+            Supported values:
+
+            - "1": CARRIER_AFTER_ORIGIN_1
+
+            - "2": CARRIER_AFTER_ORIGIN_2
+
+            - "3": CARRIER_AFTER_ORIGIN_3
+
+            - "4": CARRIER_AFTER_ORIGIN_4
+
+            - "5": CARRIER_AFTER_ORIGIN_5
+
+            - "6": CARRIER_AFTER_ORIGIN_6
+
+            - "7": CARRIER_AFTER_ORIGIN_7
+
+            - "8": CARRIER_AFTER_ORIGIN_8
+
+            - "9": CARRIER_AFTER_ORIGIN_9
+
+            - "A": ORIGIN_CARRIER_AGENTS_ROUTING
+
+            - "D": DELIVERY_SWITCH_CARRIER
+
+            - "H": HAULAGE_RIGHTS_CARRIER_JUNCTION
+
+            - "I": ORIGIN_SWITCH_CARRIER
+
+            - "JD": JUNCTION_SETTLEMENT_CARRIER_FOLLOWING
+
+            - "JI": JUNCTION_SETTLEMENT_CARRIER_INTERMEDIATE
+
+            - "JO": JUNCTION_SETTLEMENT_CARRIER_PREDECESSOR
+
+            - "M": HAULAGE_MOVEMENT_CARRIER_AND_JUNCTION
+
+            - "O": ORIGIN_CARRIER_AIR_MOTOR_OCEAN
+
+            - "R": ORIGIN_CARRIER_RULE_11
+
+            - "S": ORIGIN_CARRIER_SHIPPERS_ROUTING
+
+            - "V": INTERMEDIATE_SWITCH_CARRIER'
+          type: string
+      type: object
+    v1EquipmentProfileSet:
+      properties:
+        name:
+          type: string
+        profiles:
+          items:
+            $ref: '#/components/schemas/v1EquipmentProfile'
+          type: array
+      type: object
+    v1GeographySet:
+      properties:
+        name:
+          type: string
+        values:
+          items:
+            type: string
+          title: city, st
+          type: array
+      type: object
+    v1Splc:
+      properties:
+        splc:
+          description: SPLC identifier for the location.
+          type: string
+      type: object
+    v1QuoteSpecialCarType:
+      enum:
+      - FLAT
+      - CENTER_BEAM
+      type: string
+    v1QuotePreferences:
+      properties:
+        destination_saved_facilities:
+          description: 'Saved facilities favorited as quote destinations; counterpart of
+
+            origin_saved_facilities.'
+          items:
+            $ref: '#/components/schemas/v1SavedFacility'
+          type: array
+        favorite_commodity_sets:
+          items:
+            $ref: '#/components/schemas/v1CommoditySet'
+          type: array
+        favorite_destination_cif_sets:
+          description: 'CIF customer sets favorited as quote destinations; counterpart of
+
+            favorite_origin_cif_sets.'
+          items:
+            $ref: '#/components/schemas/v1GeographySet'
+          type: array
+        favorite_destination_geography_sets:
+          description: Geography sets favorited specifically as quote destinations.
+          items:
+            $ref: '#/components/schemas/v1GeographySet'
+          type: array
+        favorite_equipment_profile_sets:
+          items:
+            $ref: '#/components/schemas/v1EquipmentProfileSet'
+          type: array
+        favorite_geography_sets:
+          description: 'Legacy direction-agnostic geography sets. Retained for backward compatibility:
+
+            these remain usable for BOTH origin and destination search until the carrier
+
+            re-saves quote preferences, after which favorites are stored separately as
+
+            origin and destination sets and this list is emptied. New clients should read
+
+            these in addition to the origin/destination lists, and write only the
+
+            origin/destination lists.'
+          items:
+            $ref: '#/components/schemas/v1GeographySet'
+          type: array
+        favorite_origin_cif_sets:
+          description: 'CIF customer sets favorited as quote origins. Values are 9-digit CIFs,
+
+            optionally followed by a 4-digit sub-location suffix (13 digits total).'
+          items:
+            $ref: '#/components/schemas/v1GeographySet'
+          type: array
+        favorite_origin_geography_sets:
+          description: Geography sets favorited specifically as quote origins.
+          items:
+            $ref: '#/components/schemas/v1GeographySet'
+          type: array
+        origin_saved_facilities:
+          description: 'Saved facilities favorited as quote origins; narrow the commodity and
+
+            equipment choices when the selected origin is one of them.'
+          items:
+            $ref: '#/components/schemas/v1SavedFacility'
+          type: array
+      type: object
+    v1Junction:
+      properties:
+        junction_code:
+          description: Industry junction code used when identifying a location by interchange.
+          type: string
+      type: object
+    v1ListQuotesRequest:
+      properties:
+        aar_car_type_pattern:
+          description: 'Optional exact AAR/UMET car type pattern (for example "A-4" for plug doors)
+
+            used for quote equipment assumptions and ARCT condition evaluation.'
+          type: string
+        car_types:
+          description: 'Optional car type overrides used for rating/equipment assumptions.
+
+            Deprecated for new clients in favor of equipment_profiles, which also supports
+
+            special quote-only types and additional measurement ranges.
+
+            When provided, quote search matches rates for any selected car type.'
+          items:
+            $ref: '#/components/schemas/v1CarType'
+          type: array
+        contents:
+          $ref: '#/components/schemas/v1Contents'
+        contract_cifs:
+          description: 'Contract CIF filters. If provided, matching contract quotes are included
+
+            in addition to tariff results.'
+          items:
+            type: string
+          type: array
+        destination:
+          $ref: '#/components/schemas/v1Geography'
+        destination_cifs:
+          description: Customer CIFs at the destination; SCRS counterpart of origin_cifs for destinations.
+          items:
+            type: string
+          type: array
+        destination_unknown:
+          description: 'Rule 11 segment pricing counterpart of origin_unknown: continuation beyond the
+
+            destination gateway is unknown and unpriced. Same geography handling and
+
+            junction-narrowing as origin_unknown. Requires method_of_payment = RULE_11.'
+          type: boolean
+        destinations:
+          description: List of candidate destination locations. Prefer this over the single destination input.
+          items:
+            $ref: '#/components/schemas/v1Geography'
+          type: array
+        equipment_ownership_statuses:
+          description: 'Optional equipment ownership status filters. When provided, quote search
+
+            matches rates whose EQOS conditions include any of the selected statuses.'
+          items:
+            $ref: '#/components/schemas/v1EquipmentOwnershipStatus'
+          type: array
+        equipment_profiles:
+          description: 'Optional equipment profile filters. When provided, quote search matches
+
+            rates for any selected profile.'
+          items:
+            $ref: '#/components/schemas/v1EquipmentProfile'
+          type: array
+        exclude_carriers:
+          description: 'Carriers (reporting marks / SCAC, for example "BNSF", "UP") to exclude from routing. Any
+
+            candidate route that involves one of these carriers on any leg is dropped from the results.
+
+            Empty means no carrier exclusion is applied. Compared case-insensitively.'
+          items:
+            type: string
+          type: array
+        exclude_junctions:
+          description: 'Junction / gateway codes (for example "DIANN") to exclude from routing. Any candidate route
+
+            that interchanges through one of these junctions is dropped from the results. Empty means no
+
+            junction exclusion is applied. Compared case-insensitively.'
+          items:
+            type: string
+          type: array
+        method_of_payment:
+          $ref: '#/components/schemas/v1ShipmentMethodOfPayment'
+        number_of_cars:
+          description: Number of cars requested for the movement. Omitted/0 defaults to 1.
+          format: int32
+          type: integer
+        origin:
+          $ref: '#/components/schemas/v1Geography'
+        origin_cifs:
+          description: 'Customer CIFs at the origin. When provided, candidate origin stations are filtered to those
+
+            onto which at least one of these customers may switch traffic under SCRS (Serving Carrier
+
+            Reciprocal Switch) rules. Empty means no SCRS origin restriction is applied.'
+          items:
+            type: string
+          type: array
+        origin_unknown:
+          description: 'Rule 11 segment pricing: the true origin of the movement is unknown; the origin
+
+            geographies (any supported form — city/state, FSAC, SPLC, or junction) locate the KNOWN
+
+            gateway where the movement enters the priced portion. The location is narrowed to its
+
+            stations at an interchange junction; a location with no junction station fails with
+
+            INVALID_ARGUMENT (LOCATION_HAS_NO_GATEWAY). The priced portion is rated as part of a
+
+            larger Rule 11 move arriving via that gateway (prior movement unpriced). Requires
+
+            method_of_payment = RULE_11. May be combined with destination_unknown to price a bridge
+
+            segment between two gateways.'
+          type: boolean
+        origins:
+          description: 'List of candidate origin locations. This should be at most a handful, preferably fewer than 10.
+
+            Prefer this over the single origin input.'
+          items:
+            $ref: '#/components/schemas/v1Geography'
+          type: array
+        route:
+          $ref: '#/components/schemas/v1Route'
+        ship_date:
+          description: 'Desired shipment date used for applicability/rating in ISO8601 format.
+
+            Use YYYY-MM-DD (for example: "2026-03-03").'
+          type: string
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1CommoditySet:
+      properties:
+        name:
+          type: string
+        values:
+          items:
+            type: string
+          title: stcc
+          type: array
+      type: object
+    v1MeasurementFilter:
+      description: 'A single dimension constraint on an EquipmentProfile.
+
+        A profile may carry at most one filter per dimension.'
+      properties:
+        dimension:
+          $ref: '#/components/schemas/v1MeasurementDimension'
+        range:
+          $ref: '#/components/schemas/v1Range'
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: x-arms-api-key
+      type: apiKey
+    AssumeUserAuth:
+      in: header
+      name: x-arms-assume-user
+      type: apiKey

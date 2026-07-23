@@ -1,0 +1,4608 @@
+openapi: 3.0.1
+info:
+  title: protobuf/arms/charge.proto ChargeService Ims API
+  version: version not set
+servers:
+- description: Production (US)
+  url: https://api-lg-k-h1.arms.cedarai.com
+- description: Production (EU)
+  url: https://api-lg-k-h1.arms.cedarai.se
+security:
+- ApiKeyAuth: []
+  AssumeUserAuth: []
+tags:
+- name: Ims
+paths:
+  /ims/waybills/bill-of-lading:
+    post:
+      summary: Create bill of lading
+      description: 'Create a bill of lading for a waybill.
+
+        It will always create a bill of lading regardless of what is provided in the request.
+
+
+        When a `billOfLadingNumber` already exists within the last 6 months for this carrier (regardless of lead equipment), the request is rejected with HTTP 409 — use the update endpoint instead, including to correct lead equipment on an existing bill.
+
+
+        When `waybillTemplateId` is set, Cedar merges template data with the request. Static parties (shipper, consignee, freight bill party, in-care-of) are merged field-by-field; all other parties from the request and template are kept. See [Cross-border (Mexico) waybills](/user-docs/api-reference/cross-border-mexico#parties) for party merge rules when using templates.'
+      operationId: createBillOfLading
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBillOfLadingInput'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Waybill'
+        '409':
+          description: A bill with this number already exists within the lookup window
+      tags:
+      - Ims
+    put:
+      summary: Update bill of lading
+      description: 'Update an existing bill of lading identified by `billOfLadingNumber` (within the last 6 months for this carrier).
+
+
+        Immutable fields: `billOfLadingNumber`, `waybillNumber`, and `waybillDate`.
+
+
+        Lead equipment (`equipmentDetails[0].equipmentInitial` / `equipmentNumber`) may be changed via update. Cedar archives the prior bill and creates a replacement bill with the new lead equipment. When a prior outbound 404 EDI was sent for the archived bill, Cedar sends a cancellation 404 (BX01=04, ZC1=CA) for the archived bill after creating the replacement.
+
+
+        For in-place field changes (same lead equipment), when a prior outbound 404 EDI was sent for this bill, Cedar automatically sends a correction 404 (BX01=04, ZC1=CO) after a successful update.
+
+
+        When `waybillTemplateId` is set, Cedar merges template data with the request using the same rules as create.'
+      operationId: updateBillOfLading
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBillOfLadingInput'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Waybill'
+        '400':
+          description: Immutable field change rejected
+        '404':
+          description: No matching bill found within the 6-month lookup window
+        '409':
+          description: Multiple bills match the lookup key
+      tags:
+      - Ims
+  /ims/work-orders/class-lists/classify:
+    post:
+      summary: Classify a class list
+      description: 'Creates a class list (switch list) from a list of car numbers by automatically picking destination tracks based on the carrier''s configured block-to-track scope.
+
+
+        This is the API equivalent of the inventory **Classify** dialog: you provide just the cars, and Cedar mirrors the UI logic to compute where each car goes. Customers replacing the existing class-list API typically batch 5–60 cars per call, scoped to the lead/shift the crew is working — see the `switchListBatch` example for a realistic shape.
+
+
+        Classification logic (per car, in request order):
+
+        1. Find the parent grouping of the carrier-configured block type (for example `yard_block`).
+
+        2. Look up the assigned tracks for that block in priority order.
+
+        3. Pick the first assigned track with capacity for the car.
+
+        4. Otherwise fall back to the lowest-priority assigned track.
+
+        5. Otherwise — only when a block exists — fall back to the car''s current track if `classifyFallbackToCurrentTrack` is enabled in carrier settings.
+
+
+        The operation is atomic: if any car cannot be resolved (missing in inventory, has no block of the carrier-configured type, or has no usable destination) the entire request is rejected and no class list is created. Cars without a block are always rejected, regardless of the fallback setting, mirroring the inventory dialog''s behaviour.
+
+
+        Usage notes:
+
+        - `equipmentInitialAndNumbers` accepts entries like `"BNSF 999001"`. The order is preserved in the resulting class list (it determines `workOrderPriority` on the persisted tasks) and is also used for capacity accounting.
+
+        - `scope` is optional. When omitted, the first scope accessible to the caller is used. Scopes that do not start with `block2track_` are automatically prefixed. A scope that is not configured for the carrier is rejected with `400 Bad Request`.
+
+        - `jobId` is optional. Carriers commonly pass the train or job number the crew is working (for example `350` or `MORNING-JOB-12`); when omitted, a label like `Classify 2026-04-30 22:34:11 UTC` is generated.
+
+        - `isBack` defaults to `false`; set to `true` to switch from the back of the track.
+
+        - The inventory page also offers a **Classify by Current Track** action that splits a multi-track selection into one class list per source track. To replicate that, partition the cars by current track yourself and call this endpoint once per group (see the `byCurrentTrackPerCall` example).
+
+
+        Permission required: `workOrderManagement.classList.classifyThirdParty`.'
+      operationId: classifyClassList
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassifyClassListInput'
+            examples:
+              minimal:
+                summary: Classify three cars using the carrier's default scope
+                value:
+                  carrierId: 1234
+                  equipmentInitialAndNumbers:
+                  - BNSF 999001
+                  - UP 999010
+                  - CSXT 999090
+              full:
+                summary: Classify with an explicit scope, job label, and is-back flag
+                value:
+                  carrierId: 1234
+                  equipmentInitialAndNumbers:
+                  - BNSF 999001
+                  - UP 999010
+                  scope: shift1
+                  jobId: MORNING-CLASSIFY-2026-04-30
+                  isBack: true
+              switchListBatch:
+                summary: Typical morning switch list (mixed Class I and tank-car marks)
+                description: 'A realistic batch the way a switch crew would build a class list: a dozen-plus cars sourced from one or two yard tracks, classified together under a job number that matches the train/job the crew is working. The numeric `jobId` mirrors how dispatchers actually label switch jobs in production. Equipment numbers in this example are synthetic placeholders (UMLER caps reporting marks at 6 digits).'
+                value:
+                  carrierId: 1234
+                  scope: yard1_first_shift
+                  jobId: '350'
+                  equipmentInitialAndNumbers:
+                  - UTLX 999020
+                  - UTLX 999021
+                  - TILX 999030
+                  - GATX 999040
+                  - NATX 999050
+                  - BNSF 999002
+                  - DOWX 999060
+                  - SHPX 999070
+                  - GATX 999041
+                  - PROX 999080
+                  - UTLX 999022
+                  - TILX 999031
+              byCurrentTrackPerCall:
+                summary: One classify call per source track (mirrors the inventory dialog's 'Classify by Current Track')
+                description: The inventory UI's 'Classify by Current Track' action partitions a multi-track selection by each car's current track and opens one dialog per group. To replicate that workflow over the API, group the cars yourself and call this endpoint once per source track. Each call produces an independent class list with its own job label so each switch crew gets a clean assignment list.
+                value:
+                  carrierId: 1234
+                  scope: yard1_first_shift
+                  jobId: 350-from-trk-A12
+                  equipmentInitialAndNumbers:
+                  - UTLX 999020
+                  - UTLX 999021
+                  - TILX 999030
+              explicitScopeMultiShift:
+                summary: Explicit shift-scoped classify (carriers often configure separate scopes per shift)
+                description: Carriers commonly configure two or more block-to-track scopes per crew lead — for example a 1st-shift scope and a 2nd-shift scope that route the same yard blocks to different destination tracks. Pass the relevant scope explicitly to honour the right routing for the crew that is actually on duty.
+                value:
+                  carrierId: 1234
+                  scope: mainyard_lead_second_shift
+                  jobId: '352'
+                  equipmentInitialAndNumbers:
+                  - BNSF 999002
+                  - BNSF 999003
+                  - UP 999011
+                  - UP 999012
+                  - GATX 999040
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassList'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/groupings/list:
+    post:
+      summary: List groupings
+      description: Returns a simplified list of groupings for a carrier, filtering out consist-related grouping types for third-party consumers.
+      operationId: listGroupingsThirdParty
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimplifiedListGroupingInput'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListGroupingsOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/work-orders/class-lists/tasks:
+    post:
+      summary: List class list tasks
+      description: 'Retrieves the list of tasks associated with specified class lists.
+
+
+        Usage notes:
+
+        - Pagination: Use pageSize, pageNextToken, and pagePrevToken to navigate paginated results.
+
+        - Filtering: Combine multiple criteria (e.g., workOrderId, status, equipmentName) to narrow results.
+
+        - Date ranges: carrierDateRange is assumed to be in the carrier''s timezone.'
+      operationId: listClassListTasks
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListClassListTasksInput'
+            examples:
+              basic:
+                summary: Basic pagination
+                value:
+                  carrierId: 1234
+                  pageSize: 20
+              filterByWorkOrder:
+                summary: Filter by class list ID
+                value:
+                  carrierId: 1234
+                  workOrderId: 5678
+              filterByStatus:
+                summary: Filter by status
+                value:
+                  carrierId: 1234
+                  status:
+                  - NOT_STARTED
+                  - COMPLETED
+              filterByEquipment:
+                summary: Filter by equipment
+                value:
+                  carrierId: 1234
+                  equipmentName: ABC 12345
+              filterByTracks:
+                summary: Filter by tracks
+                value:
+                  carrierId: 1234
+                  currentTrackName: Track 1
+                  assignedTrackName: Track 5
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListClassListTasksOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/equipment/bulk-edit-charged-history:
+    post:
+      summary: Bulk edit railcar charge history
+      description: Create and delete multiple charged history records in one request (supports dry run).
+      operationId: bulkEditChargedHistory
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkEditChargedHistoryInput'
+            examples:
+              dryrun:
+                summary: Dry run delete and create
+                value:
+                  carrierId: 1234
+                  dryrun: true
+                  actions:
+                  - action: DELETE
+                    historyItemId: 789
+                  - action: CREATE
+                    equipmentId: 456
+                    chargeGroupId: 123
+                    timestamp: '2022-04-25T14:30:00Z'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkEditChargedHistoryOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/equipment/load-toolswork:
+    post:
+      summary: Toolswork load equipment
+      description: Bulk load equipment with groupings and weights; supports on-the-fly grouping creation.
+      operationId: toolsworkLoadEquipment
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolsWorkLoadEquipmentInput'
+            examples:
+              example1:
+                summary: Load toolswork with 2 equipment
+                value:
+                  carrierId: 1
+                  details:
+                  - initialAndNumber: HUEH 862431
+                    netWeightTons: 2000
+                    grossWeightTons: 3000
+                    comments: very nice
+                    groupings:
+                    - type: bin
+                      name: bin 0
+                    - type: ash type
+                      name: ash type 0
+                  - initialAndNumber: YHZT 582774
+                    netWeightTons: 2000
+                    grossWeightTons: 3000
+                    groupings:
+                    - type: bin
+                      name: bin 1
+                    - type: ash type
+                      name: ash type 1
+                  trackName: Jacob Flores
+                  waybillTemplateId: 11
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsWorkLoadEquipmentOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/equipment/move:
+    post:
+      summary: Update railcar inventory (move equipment)
+      description: 'Move equipment between tracks/spots. Supports sequencing and batch moves.
+
+
+        Usage notes:
+
+        - Use to.grouping.resourceId to target a track and to.groupingIndex to control position (0 = front, -1 = back).
+
+        - Provide updateIntermodalUnits=true to keep intermodal units in sync when moving equipment.'
+      operationId: moveEquipment
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveEquipmentExternalInput'
+            examples:
+              moveToFront:
+                summary: Move equipment to front of track
+                value:
+                  items:
+                  - equipment:
+                      resourceId: 1
+                      resourceType: Equipment
+                    locationUpdate:
+                      from: {}
+                      to: {}
+                    updateIntermodalUnits: true
+                  jobName: MOVE TO FRONT
+              moveToBack:
+                summary: Move equipment to back of track
+                value:
+                  items:
+                  - equipment:
+                      resourceId: 2
+                      resourceType: Equipment
+                    locationUpdate:
+                      from: {}
+                      to: {}
+                    updateIntermodalUnits: true
+                  jobName: MOVE TO BACK
+              moveToMiddle:
+                summary: Move equipment to middle of track
+                value:
+                  items:
+                  - equipment:
+                      resourceId: 3
+                      resourceType: Equipment
+                    locationUpdate:
+                      from: {}
+                      to:
+                        groupingIndex: 5
+                    updateIntermodalUnits: true
+                  jobName: MOVE TO MIDDLE
+              resequence:
+                summary: Resequence a track
+                value:
+                  items:
+                  - equipment:
+                      resourceId: 2
+                      resourceType: Equipment
+                    locationUpdate:
+                      from:
+                        grouping:
+                          resourceId: 4
+                      to:
+                        grouping:
+                          resourceId: 4
+                        groupingIndex: 0
+                    updateIntermodalUnits: true
+                  - equipment:
+                      resourceId: 3
+                      resourceType: Equipment
+                    locationUpdate:
+                      from:
+                        grouping:
+                          resourceId: 4
+                      to:
+                        grouping:
+                          resourceId: 4
+                        groupingIndex: 0
+                    updateIntermodalUnits: true
+                  - equipment:
+                      resourceId: 1
+                      resourceType: Equipment
+                    locationUpdate:
+                      from:
+                        grouping:
+                          resourceId: 4
+                      to:
+                        grouping:
+                          resourceId: 4
+                        groupingIndex: 0
+                    updateIntermodalUnits: true
+                  jobName: RESEQUENCE
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoveEquipmentExternalOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/customers:
+    post:
+      summary: List customers
+      description: Retrieves a list of customers for the specified carrier.
+      operationId: listCustomers
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListCustomersInput'
+            examples:
+              basic:
+                summary: List all customers
+                value:
+                  carrierId: 1234
+              filterByIds:
+                summary: Filter by customer IDs
+                value:
+                  carrierId: 1234
+                  customerIds:
+                  - 100
+                  - 200
+                  - 300
+              includeShippers:
+                summary: Include shipper customers
+                value:
+                  carrierId: 1234
+                  includeShipperCustomers: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCustomersOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/work-orders/class-lists/create:
+    post:
+      summary: Create a class list
+      description: 'Creates a new class list (switch list) with the specified equipment moves.
+
+
+        Usage notes:
+
+        - Each item represents an equipment move to a target track location.
+
+        - The jobId is a user-specified label for the class list.'
+      operationId: createClassList
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClassListInput'
+            examples:
+              basic:
+                summary: Create a class list with two equipment moves
+                value:
+                  carrierId: 1234
+                  jobId: SWITCH-001
+                  items:
+                  - equipmentId: 100
+                    location:
+                      grouping:
+                        resourceId: 10
+                        resourceType: Grouping
+                      groupingIndex: 0
+                  - equipmentId: 200
+                    location:
+                      grouping:
+                        resourceId: 10
+                        resourceType: Grouping
+                      groupingIndex: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassList'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/equipment/notes/update:
+    post:
+      summary: Update equipment notes
+      description: 'Updates notes on one or more pieces of equipment.
+
+
+        Usage notes:
+
+        - Use equipmentIds + notes for bulk updates (same note on multiple equipment).
+
+        - Use the updates array for per-equipment notes (different note per equipment).
+
+        - Pass null for the note value to clear an existing note.
+
+        - Notes are limited to 280 characters.
+
+        - The response returns the updated equipment objects with third-party visible fields.
+
+
+        Permission required: `inventoryManagement.equipment.updateNotes`'
+      operationId: updateEquipmentNotes
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEquipmentNotesInput'
+            examples:
+              bulkSameNote:
+                summary: Set the same note on multiple equipment
+                value:
+                  carrierId: 1234
+                  equipmentIds:
+                  - 100
+                  - 200
+                  - 300
+                  notes: Needs inspection before loading
+              perEquipmentNotes:
+                summary: Set different notes per equipment
+                value:
+                  carrierId: 1234
+                  updates:
+                  - equipmentId: 100
+                    note: Brake issue reported
+                  - equipmentId: 200
+                    note: Cleaned and ready
+              clearNote:
+                summary: Clear notes on equipment
+                value:
+                  carrierId: 1234
+                  equipmentIds:
+                  - 100
+                  notes: null
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateEquipmentNotesOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/groupings/station-tracks:
+    get:
+      summary: List station tracks
+      description: Retrieves a list of station tracks and their associated groupings for a specific carrier.
+      operationId: listStationTracks
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListStationTracksInput'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListStationTracksOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/equipment/switch-request:
+    post:
+      summary: Submit railcar switch request
+      description: 'Submit switch requests for one or more equipment to spots/tracks.
+
+
+        Usage notes:
+
+        - When a spot does not exist yet, providing a spot name will create it on the fly.
+
+        - requestType codes: PL (Pull), IP (In-place), TR (Transfer), RELEASE, LEAVE.'
+      operationId: switchRequestEquipment
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SwitchRequestEquipmentInput'
+            examples:
+              single:
+                summary: Single switch request
+                value:
+                  carrierId: 111111
+                  switchRequests:
+                  - equipmentId: 1
+                    trackId: 2
+                    spot: AD2
+                    requestType: PL
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwitchRequestEquipmentOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/equipment/charged-history:
+    post:
+      summary: List railcar charge history
+      description: Retrieves charged history records, filterable by equipment, time range, and flags.
+      operationId: listChargedHistory
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListChargedHistoryInput'
+            examples:
+              basic:
+                summary: Filter by initial and number
+                value:
+                  carrierId: 1234
+                  initialAndNumber: XYZ 123456
+                  showDeletion: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListChargedHistoryOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/work-orders/class-lists:
+    post:
+      summary: List class lists
+      description: 'Retrieves a list of class lists.
+
+
+        Usage notes:
+
+        - Pagination: Use pageSize, pageNextToken, and pagePrevToken to navigate paginated results.
+
+        - Filtering: Combine multiple criteria (e.g., status, customerName, equipmentName) to narrow results.
+
+        - Date ranges: carrierDateRange is assumed to be in the carrier''s timezone.'
+      operationId: listClassLists
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListClassListsInput'
+            examples:
+              basic:
+                summary: Basic pagination
+                value:
+                  carrierId: 1234
+                  pageSize: 20
+              filterByStatus:
+                summary: Filter by status
+                value:
+                  carrierId: 1234
+                  status:
+                  - ACTIVE
+              filterByJobId:
+                summary: Filter by job ID
+                value:
+                  carrierId: 1234
+                  jobId: SWITCH-001
+              filterByDateRange:
+                summary: Filter by date range
+                value:
+                  carrierId: 1234
+                  carrierDateRange:
+                    startDate: '2024-01-01'
+                    endDate: '2024-01-31'
+              filterByTrackAndCustomer:
+                summary: Filter by track and customer
+                value:
+                  carrierId: 1234
+                  assignedTrackName: Track 5
+                  customerName: Acme Corp
+              filterByParentStationId:
+                summary: Filter by parent station ID
+                value:
+                  carrierId: 1234
+                  parentStationId: 4e26d203-2766-5b9e-bc80-891a2babc474
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListClassListsOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/work-orders/tasks/complete:
+    post:
+      summary: Complete class list tasks
+      description: 'Marks one or more class list tasks as completed.
+
+
+        Usage notes:
+
+        - Each item in the request specifies a taskId and optionally a finalTrackId (the track the equipment was moved to).
+
+        - When all tasks on a class list are completed, the class list is automatically archived.
+
+        - Use this endpoint after moving equipment (via the Move Equipment API) to mark the corresponding class list tasks as done.
+
+        - The completedAt timestamp defaults to the current time if not specified.'
+      operationId: completeClassListTasks
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteClassListTasksInput'
+            examples:
+              completeSingleTask:
+                summary: Complete a single task
+                value:
+                  carrierId: 1234
+                  items:
+                  - taskId: 5678
+                    finalTrackId: 42
+              completeMultipleTasks:
+                summary: Complete multiple tasks at once
+                value:
+                  carrierId: 1234
+                  items:
+                  - taskId: 5678
+                    finalTrackId: 42
+                  - taskId: 5679
+                    finalTrackId: 43
+              completeWithTimestamp:
+                summary: Complete with explicit timestamp
+                value:
+                  carrierId: 1234
+                  completedAt: '2026-03-25T20:00:00Z'
+                  items:
+                  - taskId: 5678
+                    finalTrackId: 42
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompleteClassListTasksOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+  /ims/equipment/inventory:
+    post:
+      summary: List railcar inventory
+      description: 'Retrieves a list of railcar inventory items based on specified criteria (pagination, filters like loadStatus, station, track, etc.).
+
+
+        Usage notes:
+
+        - Pagination: Use pageSize, pageNextToken, and pagePrevToken to navigate paginated results.
+
+        - Filtering: Combine multiple criteria (e.g., loadStatus, aarCarType, station, track, tag) to narrow results.
+
+        - IDs: Station, track, and tag identifiers should come from the listStationTracks endpoint.'
+      operationId: listInventory
+      parameters:
+      - $ref: '#/components/parameters/CarrierId'
+      - $ref: '#/components/parameters/ViewAsUserGroup'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListInventoryInput'
+            examples:
+              basic:
+                summary: Basic pagination and filters
+                value:
+                  pageSize: 20
+                  loadStatus: LOAD
+                  station: 1001
+              filterLoadStatusAndCarType:
+                summary: Filter by load status and AAR car type
+                value:
+                  loadStatus: LOAD
+                  aarCarType: GONDOLA
+              stationTrackTag:
+                summary: Filter by station, track, and tag
+                value:
+                  station: 1001
+                  track: 2001
+                  tag: 3001
+              shipperConsignee:
+                summary: Filter by shipper and consignee
+                value:
+                  shipper: Company A
+                  consignee: Company B
+              equipmentFilters:
+                summary: Filter by equipment information
+                value:
+                  equipmentId: 12345
+                  equipmentIds:
+                  - 12345
+                  - 67890
+                  equipmentInitial: ABC
+                  equipmentInitialsAndNumbers:
+                  - - ABC
+                    - 123
+                  - - DEF
+                    - 456
+                  equipmentNumber: 789
+              complex:
+                summary: Complex query with multiple filters
+                value:
+                  pageSize: 50
+                  loadStatus: EMPTY
+                  station: 1002
+                  track: 2002
+                  shipper: Company C
+                  carrierId: 555
+                  equipmentIds:
+                  - 98765
+                  - 43210
+                  equipmentInitial: XYZ
+              groupingFilters:
+                summary: Filter using intersected grouping filters
+                value:
+                  pageSize: 25
+                  intersectedGroupFilters:
+                  - groupingType: station
+                    groupingIds:
+                    - 1001
+                    - 1002
+                  - groupingType: track
+                    names:
+                    - Track A
+                    - Track B
+                  includeTrain: true
+                  includeSwitchRequest: false
+              consistAndTrain:
+                summary: Filter by consist and train information
+                value:
+                  consistUuid: 123e4567-e89b-12d3-a456-426614174000
+                  trainId: TRAIN123
+                  includeTrain: true
+                  includeSwitchRequest: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInventoryOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Ims
+components:
+  schemas:
+    LineItem:
+      type: object
+      properties:
+        number:
+          type: integer
+        descriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItemDescription'
+        quantity:
+          $ref: '#/components/schemas/LineItemQuantity'
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measurement'
+        priceAuthorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceAuthority'
+    GroupingRule:
+      type: object
+      description: Optional grouping rule configuration.
+      additionalProperties: true
+    ListClassListsOutput:
+      type: object
+      properties:
+        classLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassList'
+          description: List of class lists matching the filter criteria
+        statusCode:
+          type: integer
+        nextToken:
+          type: string
+          description: Token to fetch the next page of results
+        prevToken:
+          type: string
+          description: Token to fetch the previous page of results
+      required:
+      - classLists
+      - statusCode
+    ClassList:
+      type: object
+      description: A class list (switch list) represents a work order for switching operations.
+      properties:
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        jobId:
+          type: string
+          description: User-specified label for the class list
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - ARCHIVED
+          description: Status of the class list
+        createdAt:
+          type: string
+          format: date-time
+          description: When the class list was created
+        cuts:
+          type: array
+          items:
+            type: integer
+          description: Cut positions in the class list
+        isBack:
+          type: boolean
+          description: True if switching from the back of the track
+        carrier:
+          $ref: '#/components/schemas/CarrierResource'
+        createdBy:
+          $ref: '#/components/schemas/UserResource'
+    ListClassListTasksOutput:
+      type: object
+      properties:
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassListTask'
+          description: List of tasks matching the filter criteria
+        statusCode:
+          type: integer
+        nextToken:
+          type: string
+          description: Token to fetch the next page of results
+        prevToken:
+          type: string
+          description: Token to fetch the previous page of results
+      required:
+      - tasks
+      - statusCode
+    RelaxedEquipment:
+      allOf:
+      - $ref: '#/components/schemas/Equipment'
+    WhiteListedAttributes:
+      type: object
+      properties:
+        length:
+          type: number
+        spots:
+          type: array
+          items:
+            type: string
+    WagonDamage:
+      type: object
+      properties:
+        reportId:
+          type: string
+          description: Report identifier for the damage.
+        damageStatus:
+          type: integer
+          description: Status code for the damage.
+        damageCode:
+          type: string
+          description: Damage code.
+        damageDescription:
+          type: string
+          description: Description of the damage.
+        damageIsNew:
+          type: boolean
+          description: Whether the damage is new.
+        eventTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the damage event.
+    HazardousInformation:
+      type: object
+      properties:
+        ladingUnitCode: a14d81c2-807b-443c-b776-a08508622fa1
+        ladingQuantity:
+          type: number
+        unIdCode:
+          type: string
+        unPageNumber:
+          type: string
+        commodityCode:
+          type: string
+        unitCode: 0bb40fcf-51c2-4e87-bd9b-74ef671f9ba6
+        quantity:
+          type: number
+        compartmentIdCode:
+          type: string
+        residueIndicatorCode:
+          type: string
+        packagingGroupCode:
+          type: string
+        interimHazmatRegulatoryNumber:
+          type: string
+        industryCode:
+          type: string
+        classificationInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/HazardousClassificationInformation'
+        hazmatShippingNameInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/HazmatShippingNameInformation'
+        hazmatAdditionalInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/HazmatFreeFormInformation'
+        epaRequiredData:
+          type: array
+          items:
+            $ref: '#/components/schemas/EPARequiredData'
+        canadianDangerousRequirements:
+          type: array
+          items:
+            $ref: '#/components/schemas/CanadianDangerousRequirements'
+        transborderHazardousRequirements:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransborderHazardousRequirements'
+        hazmatReferenceNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/HazmatReferenceNumber'
+        administrativeContacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdministrativeContact'
+        parties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+    ListGroupingsOutput:
+      type: object
+      properties:
+        groupings:
+          type: array
+          items:
+            $ref: '#/components/schemas/SingleGroupingOutput'
+    ListChargedHistoryInput:
+      type: object
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier for which to list charge history.
+        initialAndNumber:
+          type: string
+          description: Filter by equipment initial and number (e.g., 'XYZ 123456').
+        equipmentIds:
+          type: array
+          description: Filter by specific equipment resourceIds.
+          items:
+            type: integer
+        showDeletion:
+          type: boolean
+          description: Include deleted records when true (useful for audits).
+        timestampBefore:
+          type: string
+          format: date-time
+          description: Only include records entered before this timestamp (ISO 8601).
+        timestampAfter:
+          type: string
+          format: date-time
+          description: Only include records entered after this timestamp (ISO 8601).
+      required:
+      - carrierId
+      - showDeletion
+    Waybill:
+      type: object
+      properties:
+        loadStatus:
+          type: string
+        commodityCode:
+          type: string
+        netWeightTons:
+          type: number
+        originCityName:
+          type: string
+        originStateOrProvince:
+          type: string
+        originFsac:
+          type: string
+        destinationCityName:
+          type: string
+        destinationStateOrProvince:
+          type: string
+        destinationFsac:
+          type: string
+        consignorCustomerName:
+          type: string
+        consigneeCustomerName:
+          type: string
+        originScac:
+          type: string
+        trafficType:
+          type: string
+          enum:
+          - LOCAL
+          - ORIGINATING
+          - TERMINATING
+          - STORAGE
+          - BRIDGE
+          - UNKNOWN
+        shipmentPaymentMethod:
+          type: string
+          enum:
+          - '11'
+          - CC
+          - MX
+          - NC
+          - NR
+          - PP
+        transportationMethod:
+          type: string
+          enum:
+          - R
+          - X
+        shipmentId:
+          type: string
+        weightUnitCode:
+          type: string
+          enum:
+          - E
+          - K
+          - L
+          - S
+          - T
+        shipmentQualifier:
+          type: string
+          enum:
+          - '1'
+          - '6'
+          - '7'
+          - '8'
+          - B
+          - C
+          - E
+          - F
+          - G
+          - H
+          - I
+          - M
+          - N
+          - S
+          - W
+          - X
+        capacityLoadCode:
+          type: string
+          enum:
+          - C
+          - F
+          - G
+          - M
+          - V
+        customsDocumentationHandlingCode:
+          type: string
+        confidentialBillingRequestCode:
+          type: string
+          enum:
+          - C
+          - M
+          - N
+          - R
+        taxReasonCode:
+          type: string
+        shipmentWeightCode:
+          type: string
+          enum:
+          - A3
+          - B
+          - C
+          - E
+          - G
+          - J
+          - K
+          - M
+          - N
+          - O
+          - S
+          - X
+        referencedPatternIdentifier:
+          type: string
+        billingCode:
+          type: string
+          enum:
+          - A
+          - D
+          - E
+          - G
+          - H
+          - M
+          - P
+          - S
+          - U
+          - V
+          - W
+          - X
+          - Y
+        repetitivePatternNumber:
+          type: integer
+        extendedReferenceInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtendedReferenceInformation'
+        crossReferenceEquipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrossReferenceEquipment'
+        equipmentDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentDetails'
+        intermodalStatusDetails:
+          $ref: '#/components/schemas/IntermodalStatusDetails'
+        specialHandlingCodes:
+          type: array
+          items:
+            type: string
+        protectiveService:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProtectiveService'
+        originStation:
+          $ref: '#/components/schemas/Station'
+        originJunction:
+          $ref: '#/components/schemas/Station'
+        destinationStation:
+          $ref: '#/components/schemas/Station'
+        destinationJunction:
+          $ref: '#/components/schemas/Station'
+        parties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        route:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteEntry'
+        emptyCarDispositions:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmptyCarDisposition'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        hazardousInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/HazardousInformation'
+        hazardousCertifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/HazardousCertification'
+        release:
+          $ref: '#/components/schemas/Release'
+        defaultReceiver:
+          type: string
+        waybillTemplateId:
+          type: integer
+        waybillTemplateName:
+          type: string
+        waybillNumberSuffix:
+          type: string
+        originCarrierCode:
+          type: string
+        consigneeLocationId:
+          type: integer
+        shipperLocationId:
+          type: integer
+        inCareOfLocationId:
+          type: integer
+        freightBillPartyLocationId:
+          type: integer
+        pickupPartyLocationId:
+          type: integer
+        waybillNumber:
+          type: integer
+        waybillDate:
+          type: string
+        billOfLadingNumber:
+          type: string
+        originSystem:
+          type: string
+          enum:
+          - ARMS
+          - EDI
+          - BRAVO
+        preparationDate:
+          type: string
+        preparationTime:
+          type: string
+        revisionNumber:
+          type: integer
+        revisionTime:
+          type: string
+        revisionSourceType:
+          type: string
+          enum:
+          - WAYBILL
+          - CONSIST
+          - BILL_OF_LADING
+          - ADVANCE_CAR_DISPOSITION
+          - LOAD
+          - EMPTY
+          - REBILL
+          - CLM
+        armsTrackingId:
+          type: string
+        resourceType:
+          type: string
+          enum:
+          - Waybill
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        waybillStatus:
+          type: string
+          enum:
+          - PENDING
+          - ACTIVE
+          - ARCHIVED
+        createdAt:
+          type: string
+    CustomerResource:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Customer
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        name:
+          type: string
+    GroupingResource:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Grouping
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        name:
+          type: string
+        groupingType:
+          type: string
+        sortOrder:
+          type: integer
+        colorToken:
+          type: string
+    UserResource:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - User
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        displayName:
+          type: string
+        email:
+          type: string
+          format: email
+    MoveEquipmentExternalInput:
+      type: object
+      properties:
+        items:
+          type: array
+          description: List of move instructions to perform in a single batch.
+          items:
+            type: object
+            properties:
+              equipment:
+                anyOf:
+                - $ref: '#/components/schemas/ExpandedEquipment'
+                - $ref: '#/components/schemas/Equipment'
+                description: Equipment to move. Provide an equipment resource (minimal or expanded).
+              locationUpdate:
+                $ref: '#/components/schemas/EquipmentTrackUpdate'
+                description: Describes the move from a source location to a target location. The target may include grouping.resourceId and optional groupingIndex to position within the track (0 = front, -1 = back).
+              updateIntermodalUnits:
+                type: boolean
+                description: Whether related intermodal units should be updated with the same move.
+            required:
+            - equipment
+            - locationUpdate
+            - updateIntermodalUnits
+            additionalProperties: false
+        updateTime:
+          type: string
+          description: Timestamp associated with the move (e.g., job time).
+        updateType:
+          type: string
+          enum:
+          - ABNO
+          - AETA
+          - AETI
+          - AINV
+          - ARIL
+          - ARRI
+          - BADO
+          - BFRM
+          - BHVY
+          - BLGT
+          - BOHR
+          - BXNG
+          - CGIP
+          - CGRD
+          - CH80
+          - CH81
+          - CH82
+          - CH83
+          - CH84
+          - CH85
+          - CH86
+          - CH89
+          - DFLC
+          - DRMP
+          - EQOR
+          - FFBO
+          - FTBO
+          - HADR
+          - HAND
+          - HANR
+          - HEMB
+          - HHAR
+          - HIGT
+          - HMIS
+          - HOGT
+          - ICHD
+          - ICHR
+          - IGTI
+          - IGTR
+          - LDCH
+          - LTFR
+          - LTTO
+          - MAWY
+          - MOTR
+          - NOBL
+          - NOTP
+          - OGTI
+          - OGTR
+          - OSTH
+          - PACT
+          - PASL
+          - PCON
+          - PFLT
+          - PFPS
+          - PKGD
+          - PKGR
+          - PLJI
+          - PLLF
+          - PLLT
+          - PUJI
+          - RAMP
+          - REBL
+          - REJS
+          - REMB
+          - RFLT
+          - RLOD
+          - RMTY
+          - RRFS
+          - RTAA
+          - RTOI
+          - RTPO
+          - STEA
+          - STEX
+          - STPL
+          - STSE
+          - STSU
+          - STUN
+          - SWAP
+          - ULCH
+          - UNSC
+          - UNKN
+        jobName:
+          type: string
+          description: Friendly name for the job shown in history (e.g., 'MOVE TO FRONT').
+    CustomerOutput:
+      type: object
+      properties:
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+        name:
+          type: string
+        carrierId:
+          type: integer
+        carrier:
+          $ref: '#/components/schemas/CarrierResource'
+        blockCodePrefix:
+          type: string
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerLocationResource'
+        scac:
+          type: string
+        printedName:
+          type: string
+    AdministrativeContact:
+      type: object
+      properties:
+        contactFunctionCode:
+          type: string
+        name:
+          type: string
+        communicationNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommunicationNumber'
+        contactInquiryReference:
+          type: string
+    HazmatShippingNameInformation:
+      type: object
+      properties:
+        hazmatShippingName:
+          type: string
+        hazmatShippingNameQualifier:
+          type: string
+          enum:
+          - C
+          - D
+          - I
+        nosIndicatorCode:
+          type: string
+        railSafetySensitiveMaterial:
+          type: boolean
+    ToolsWorkLoadEquipmentDetails:
+      type: object
+      properties:
+        initialAndNumber:
+          type: string
+          description: Equipment mark and number (e.g., 'HUEH 862431').
+        netWeightTons:
+          type: number
+          description: Net weight in tons.
+        grossWeightTons:
+          type: number
+          description: Gross weight in tons.
+        tareWeightTons:
+          type: number
+          description: Tare weight in tons.
+        groupings:
+          type: array
+          description: Groupings to attach to the equipment (created on the fly if missing).
+          items:
+            $ref: '#/components/schemas/ToolsWorkLoadGroupingDetails'
+        comments:
+          type: string
+          description: Optional comments or notes.
+        sequence:
+          type: integer
+          description: Optional sequence ordering for the load list.
+      required:
+      - initialAndNumber
+      - netWeightTons
+      - groupings
+    Grouping:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Grouping
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        name:
+          type: string
+        groupingType:
+          type: string
+        colorToken:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/AttributesBase'
+        rules:
+          $ref: '#/components/schemas/GroupingRule'
+        equipmentIndexEnabled:
+          type: boolean
+          enum:
+          - false
+        deletedAt:
+          type: string
+        updatedAt:
+          type: string
+        objectType:
+          type: string
+          enum:
+          - EQUIPMENT
+          - CONTAINER
+      required:
+      - resourceType
+      - resourceId
+      - groupingType
+      - attributes
+      - rules
+      - equipmentIndexEnabled
+      - objectType
+    HistoryMoveType:
+      type: string
+      enum:
+      - ABNO
+      - AEIE
+      - AEIN
+      - AEIS
+      - AEIW
+      - AETA
+      - AETI
+      - AINV
+      - ARIL
+      - ARRI
+      - BADO
+      - BFRM
+      - BHVY
+      - BLGT
+      - BOHR
+      - BXNG
+      - CGIP
+      - CGRD
+      - CH80
+      - CH81
+      - CH82
+      - CH83
+      - CH84
+      - CH85
+      - CH86
+      - CH89
+      - CHARGED
+      - CHERRYPICK
+      - CPRL
+      - DELIVERED
+      - DFLC
+      - DIGOUTS
+      - DIVERT
+      - DRMP
+      - ECYC
+      - EMPTIED
+      - EQOR
+      - FFBO
+      - FLIP
+      - FTBO
+      - HADR
+      - HAND
+      - HANR
+      - HEMB
+      - HEATSTRT
+      - HEATSTP
+      - HHAR
+      - HIGT
+      - HMIS
+      - HOGT
+      - HUMP
+      - ICHD
+      - ICHR
+      - IGTI
+      - IGTR
+      - INTERPLANT
+      - INTRAPLANT
+      - LCOM
+      - LDCH
+      - LOADED
+      - LTFR
+      - LTTO
+      - MAWY
+      - MOTR
+      - MOVE
+      - NOBL
+      - NOTP
+      - OFFERED
+      - OGTI
+      - OGTR
+      - ORDER
+      - OSTH
+      - PACT
+      - PASL
+      - PCON
+      - PFLT
+      - PFPS
+      - PKGD
+      - PKGR
+      - PLJI
+      - PLLF
+      - PLLT
+      - PUJI
+      - RAMP
+      - RECEIVED
+      - RECONSIGN
+      - REBL
+      - REJS
+      - REMB
+      - RFLT
+      - RICD
+      - RLOD
+      - RMTY
+      - RRFS
+      - RTAA
+      - RTOI
+      - RTPO
+      - SCYC
+      - SETBACK
+      - SPARGSTRT
+      - SPARGSTP
+      - SPECIALSWITCH
+      - STEA
+      - STEX
+      - STOP
+      - STPD
+      - STPE
+      - STPL
+      - STRD
+      - STRE
+      - STRT
+      - STSE
+      - STSU
+      - STUN
+      - SWAP
+      - TRIM
+      - TSET
+      - TURN
+      - ULCH
+      - UNKN
+      - UNSC
+      - WAYB
+      - WEIGH
+      - WEIGHE
+      - WEIGHL
+    CarrierResource:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Carrier
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        carrierCode:
+          type: string
+        name:
+          type: string
+    ListClassListsInput:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          minimum: 1
+          description: Number of items per page. Use with pageNextToken/pagePrevToken for pagination.
+        pageNextToken:
+          type: string
+          description: Token to fetch the next page of results returned from a previous call.
+        pagePrevToken:
+          type: string
+          description: Token to fetch the previous page of results returned from a previous call.
+        carrierId:
+          type: integer
+          description: Carrier identifier. May also be supplied via query parameter.
+        jobId:
+          type: string
+          description: Filter by job ID (user-specified label for the class list)
+        status:
+          type: array
+          items:
+            type: string
+            enum:
+            - ACTIVE
+            - ARCHIVED
+          description: Filter by class list status
+        workOrderIds:
+          type: array
+          items:
+            type: integer
+          description: Filter by specific class list resource IDs
+        customerName:
+          type: string
+          description: Filter by customer name
+        carrierDateRange:
+          $ref: '#/components/schemas/DateRange'
+          description: Date range assumed to be in the carrier timezone
+        equipmentName:
+          type: string
+          description: Filter by equipment initial and number (e.g., 'XYZ 123456')
+        originalTrackName:
+          type: string
+          description: Filter by original track name
+        finalTrackName:
+          type: string
+          description: Filter by final track name
+        assignedTrackName:
+          type: string
+          description: Filter by assigned track name
+        parentStationName:
+          type: string
+          description: Filter by parent station name
+        parentStationId:
+          type: string
+          format: uuid
+          description: Filter by parent station grouping ID (UUID from the network hierarchy API)
+      required:
+      - carrierId
+    UpdateBillOfLadingInput:
+      type: object
+      required:
+      - carrierId
+      - billOfLadingNumber
+      - waybill
+      properties:
+        carrierId:
+          type: integer
+        billOfLadingNumber:
+          type: string
+          description: Lookup key for the bill to update. Matches bills created within the last 6 months for this carrier.
+        waybill:
+          $ref: '#/components/schemas/Waybill'
+    ExpandedEquipment:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Equipment
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          type: integer
+        aarCarType:
+          type: string
+        equipmentType:
+          type: string
+          enum:
+          - CAR
+          - LOCOMOTIVE
+          - CABOOSE
+          - TRAIN_DEVICE
+        descriptionCode:
+          type: string
+        arrivalState:
+          type: string
+          enum:
+          - INBOUND
+          - ONLINE
+          - OUTBOUND
+        parentGroupings:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentParentGrouping'
+        waybill:
+          $ref: '#/components/schemas/Waybill'
+        umler:
+          $ref: '#/components/schemas/UmlerCommon'
+        notes:
+          type: string
+        intermodalUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpandedIntermodalUnit'
+        loadStatus:
+          type: string
+          enum:
+          - LOAD
+          - EMPTY
+          - UNKNOWN
+        ichrTime:
+          type: string
+          format: date-time
+        workOrder:
+          $ref: '#/components/schemas/WorkOrderResource'
+        workOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkOrderResource'
+    ListStationTracksOutput:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceType:
+                type: string
+                enum:
+                - Grouping
+              resourceId:
+                type: integer
+              name:
+                type: string
+              groupingType:
+                type: string
+              sortOrder:
+                type: integer
+              colorToken:
+                type: string
+              children:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupingResource'
+              attributes:
+                $ref: '#/components/schemas/WhiteListedAttributes'
+              equipmentCount:
+                $ref: '#/components/schemas/EquipmentCount'
+              uuid:
+                type: string
+                description: UUID that complements the legacy numeric resourceId.
+            additionalProperties: false
+    MoveEquipmentExternalOutput:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+    IntermodalUnitResource:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - IntermodalUnit
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+    ListClassListTasksInput:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          minimum: 1
+          description: Number of items per page. Use with pageNextToken/pagePrevToken for pagination.
+        pageNextToken:
+          type: string
+          description: Token to fetch the next page of results returned from a previous call.
+        pagePrevToken:
+          type: string
+          description: Token to fetch the previous page of results returned from a previous call.
+        carrierId:
+          type: integer
+          description: Carrier identifier. May also be supplied via query parameter.
+        workOrderId:
+          type: integer
+          description: Class list (work order) ID to filter tasks by
+        customerName:
+          type: string
+          description: Filter by customer name
+        equipmentName:
+          type: string
+          description: Filter by equipment initial and number (e.g., 'XYZ 123456')
+        equipmentIds:
+          type: array
+          items:
+            type: integer
+          description: Filter by specific equipment resource IDs
+        taskIds:
+          type: array
+          items:
+            type: integer
+          description: Filter by specific task resource IDs
+        status:
+          type: array
+          items:
+            type: string
+            enum:
+            - NOT_STARTED
+            - COMPLETED
+            - CANCELED
+          description: Filter by task status
+        assignedTrackName:
+          type: string
+          description: Filter by assigned track name
+        finalTrackName:
+          type: string
+          description: Filter by final track name
+        currentTrackName:
+          type: string
+          description: Filter by current track name
+        carrierDateRange:
+          $ref: '#/components/schemas/DateRange'
+          description: Date range assumed to be in the carrier timezone
+      required:
+      - carrierId
+    HazardousCertification:
+      type: object
+      properties:
+        name:
+          type: string
+    InitialAndNumber:
+      type: array
+      prefixItems:
+      - type: string
+      - type: integer
+      items: false
+      minItems: 2
+      maxItems: 2
+    SwitchRequestEquipmentOutput:
+      type: object
+      properties:
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+    UpdateEquipmentNotesOutput:
+      type: object
+      description: Response after updating equipment notes.
+      properties:
+        equipment:
+          type: array
+          description: Updated equipment objects with new notes.
+          items:
+            $ref: '#/components/schemas/Equipment'
+    EquipmentLineItem:
+      type: object
+      description: Per-commodity line on equipment shipment information (X12 417 N1 loop). Used for Carta Porte on cross-border waybills; quantity is a flat number, not the nested LineItemQuantity on waybill.lineItems[].
+      properties:
+        quantity:
+          type: number
+          description: Commodity quantity (X12 N1001).
+        commodityDescription:
+          type: string
+        marksAndNumbers:
+          type: string
+        commodityCodeQualifier:
+          type: string
+          enum:
+          - '3'
+          - J
+          - L
+          - T
+        commodityCode:
+          type: string
+        customsShipmentValue:
+          type: integer
+        weightUnitCode:
+          type: string
+          enum:
+          - E
+          - K
+          - L
+          - S
+          - T
+        weight:
+          type: number
+          description: Commodity weight (X12 N1008).
+        cbpBarcodeNumber:
+          type: string
+        smallestExteriorPackageType:
+          type: string
+          description: Required for Carta Porte shipmentInfo line items (X12 N1010).
+        originCountryCode:
+          type: string
+        destinationCountryCode:
+          type: string
+        currencyCode:
+          type: string
+    SpotResource:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Spot
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        name:
+          type: string
+    ClassifyClassListInput:
+      type: object
+      description: Input for classifying a class list (switch list) from a list of car numbers.
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier.
+        equipmentInitialAndNumbers:
+          type: array
+          minItems: 1
+          description: Equipment initial and numbers to classify, e.g. ['BNSF 999001', 'UP 999010']. Order is preserved in the resulting class list and is also used for capacity accounting.
+          items:
+            type: string
+        scope:
+          type: string
+          description: Block-to-track scope to use. Real-world scopes are usually named after the lead and shift the crew is working (for example `yard1_first_shift` or `mainyard_lead_morning`). If omitted, the first scope accessible to the caller is used. Values that do not start with `block2track_` are automatically prefixed (so `yard1_first_shift` and `block2track_yard1_first_shift` are equivalent). A scope that is not configured for the carrier is rejected with `400 Bad Request`.
+        jobId:
+          type: string
+          description: User-specified label for the class list. Carriers commonly pass the train or job number the crew is working (for example `350` or `MORNING-JOB-12`). If omitted, a label like `Classify <UTC timestamp>` is generated.
+        isBack:
+          type: boolean
+          description: True if switching from the back of the track. Defaults to false.
+          default: false
+      required:
+      - carrierId
+      - equipmentInitialAndNumbers
+    ExpandedIntermodalUnit:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - IntermodalUnit
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        unitInitial:
+          type: string
+        unitNumber:
+          type: integer
+        waybill:
+          $ref: '#/components/schemas/Waybill'
+        descriptionCode:
+          type: string
+    ClassListTask:
+      type: object
+      description: A task within a class list representing a switching operation for a single piece of equipment.
+      properties:
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        carrier:
+          $ref: '#/components/schemas/CarrierResource'
+        equipment:
+          $ref: '#/components/schemas/EquipmentResource'
+        equipmentId:
+          type: integer
+          description: Equipment resource ID
+        taskType:
+          type: string
+          enum:
+          - SWITCH
+          description: Type of task (always SWITCH for class lists)
+        status:
+          type: string
+          enum:
+          - NOT_STARTED
+          - COMPLETED
+          - CANCELED
+          description: Status of the task
+        currentTrack:
+          $ref: '#/components/schemas/GroupingResource'
+        assignedTrack:
+          $ref: '#/components/schemas/GroupingResource'
+        assignedSpot:
+          $ref: '#/components/schemas/SpotResource'
+        finalTrack:
+          $ref: '#/components/schemas/GroupingResource'
+        finalSpot:
+          $ref: '#/components/schemas/SpotResource'
+        createdAt:
+          type: string
+          format: date-time
+          description: When the task was created
+        completedAt:
+          type: string
+          format: date-time
+          description: When the task was completed
+        customer:
+          $ref: '#/components/schemas/CustomerResource'
+    SwitchRequestEquipmentInput:
+      type: object
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier for the requests.
+        switchRequests:
+          type: array
+          description: One or more switch requests to submit.
+          items:
+            $ref: '#/components/schemas/SingleSwitchRequest'
+      required:
+      - carrierId
+      - switchRequests
+    DateRange:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date
+          description: Start date of the range
+        endDate:
+          type: string
+          format: date
+          description: End date of the range
+    EquipmentParentGrouping:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Grouping
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        name:
+          type: string
+        groupingType:
+          type: string
+        sortOrder:
+          type: integer
+        colorToken:
+          type: string
+        groupingIndex:
+          type: integer
+    CrossReferenceEquipment:
+      type: object
+      properties:
+        referenceIdQualifier:
+          type: string
+        referenceId:
+          type: string
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          type: integer
+        crossReferenceTypeCode:
+          type: string
+          enum:
+          - A
+          - B
+          - C
+          - F
+          - G
+          - K
+          - L
+          - M
+          - T
+        equipmentOwnerScac:
+          type: string
+        equipmentLength:
+          type: string
+        equipmentOperatorScac:
+          type: string
+        equipmentIsDamaged:
+          type: boolean
+        checkDigit:
+          type: integer
+    Party:
+      type: object
+      properties:
+        partyType:
+          type: string
+          enum:
+          - '11'
+          - AO
+          - AP
+          - AQ
+          - BN
+          - BT
+          - C1
+          - CB
+          - CD
+          - CE
+          - CH
+          - CN
+          - CV
+          - DH
+          - DM
+          - FW
+          - HW
+          - HX
+          - HZ
+          - IM
+          - MC
+          - N1
+          - OH
+          - OM
+          - PF
+          - PU
+          - PV
+          - RP
+          - SF
+          - SH
+          - SS
+          - ST
+          - SU
+          - TR
+          - UC
+          - XB
+          - XQ
+          - XR
+          - XU
+          - ZS
+        name:
+          type: string
+        idCodeQualifier:
+          type: string
+          enum:
+          - '1'
+          - '2'
+          - '9'
+          - '12'
+          - '17'
+          - '20'
+          - AB
+          - AI
+          - BF
+          - BN
+          - C5
+          - FI
+          - IN
+          - M5
+          - '93'
+        idCode:
+          type: string
+        entitySubIdentifierRelationshipCode:
+          type: string
+        entitySubIdentifierCode:
+          type: string
+        additionalNames:
+          type: array
+          items:
+            type: string
+        address:
+          type: array
+          items:
+            type: string
+        cityName:
+          type: string
+        stateOrProvince:
+          type: string
+        postalCode:
+          type: string
+        countryCode:
+          type: string
+        locationQualifier:
+          type: string
+        locationIdentifier:
+          type: string
+        countrySubdivisionCode:
+          type: string
+        administrativeContacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdministrativeContact'
+        billingInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingInformation'
+        referenceInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferenceInfo'
+    UmlerCommon:
+      type: object
+      description: Shared UMLER attributes for equipment records.
+      additionalProperties: false
+      properties:
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          type: integer
+        car:
+          type: string
+        mechanicalDesignation:
+          type: string
+        owner:
+          type: string
+        elementEquipmentGroup:
+          type: string
+        lessee:
+          type: string
+        markOwnerCategory:
+          type: string
+        outsideLength:
+          type: number
+          description: Outside length in inches
+        outsideLengthFt:
+          type: number
+          description: Outside length in feet (standardized)
+        isIntl:
+          type: boolean
+          description: Whether this is international equipment
+        grossRailWeight:
+          type: number
+        grossRailWeightUnit:
+          type: string
+          description: Unit of measure for gross rail weight
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        grossRailWeightLb:
+          type: number
+          description: Gross rail weight in pounds (standardized)
+        loadLimit:
+          type: number
+        cubicFeetCapacity:
+          type: number
+        tareWeight:
+          type: number
+          description: Tare weight in pounds
+        tareWeightUnit:
+          type: string
+          description: Unit of measure for tare weight
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        tareWeightLb:
+          type: number
+          description: Tare weight in pounds (standardized)
+        plateCode:
+          type: string
+        insideLength:
+          type: number
+        insideLengthUnit:
+          type: string
+          description: Unit of measure for inside length
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        insideLengthFt:
+          type: number
+          description: Inside length in feet (standardized)
+        insideHeight:
+          type: number
+        insideHeightUnit:
+          type: string
+          description: Unit of measure for inside height
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        insideHeightFt:
+          type: number
+          description: Inside height in feet (standardized)
+        outsideExtremeWidth:
+          type: number
+        outsideExtremeWidthUnit:
+          type: string
+          description: Unit of measure for outside extreme width
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        outsideExtremeWidthFt:
+          type: number
+          description: Outside extreme width in feet (standardized)
+        outerExtremeHeight:
+          type: number
+        outerExtremeHeightUnit:
+          type: string
+          description: Unit of measure for outer extreme height
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        outerExtremeHeightFt:
+          type: number
+          description: Outer extreme height in feet (standardized)
+        outsideHeightExtremeWidth:
+          type: number
+        outsideHeightExtremeWidthUnit:
+          type: string
+          description: Unit of measure for outside height extreme width
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        outsideHeightExtremeWidthFt:
+          type: number
+          description: Outside height at extreme width in feet (standardized)
+        sideDoorType:
+          type: string
+        sideDoorHeight:
+          type: number
+        sideDoorHeightUnit:
+          type: string
+          description: Unit of measure for side door height
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        sideDoorHeightFt:
+          type: number
+          description: Side door height in feet (standardized)
+        sideDoorWidth:
+          type: number
+        sideDoorWidthUnit:
+          type: string
+          description: Unit of measure for side door width
+          enum:
+          - IN
+          - LB
+          - CM
+          - KG
+          - FT
+          - M
+          - G
+          - T
+          - MT
+        sideDoorWidthFt:
+          type: number
+          description: Side door width in feet (standardized)
+        boxSideDoorOrientation:
+          type: string
+        axleCount:
+          type: integer
+        brakeShoeType:
+          type: string
+        bodyMaterial:
+          type: string
+        operatingBrakes:
+          type: number
+        floorStrengthClassification:
+          type: string
+        poolNumber:
+          type: string
+        endOfTrainOnly:
+          type: string
+        shoveCarToRest:
+          type: string
+        shoveAdjCarToRest:
+          type: string
+        trainPositionSensitive:
+          type: string
+        couplerStyle:
+          type: string
+        unitEquipmentGroup:
+          type: string
+        abtDueDate:
+          type: string
+        carGrade:
+          type: string
+        lengthFt:
+          type: number
+          description: Length in feet (standardized, EU-specific)
+        brakeWeightLb:
+          type: number
+          description: Brake weight in pounds (standardized)
+        netWeightLb:
+          type: number
+          description: Net weight in pounds (standardized)
+        allowedSpeed:
+          type: string
+          description: Allowed speed when taking commodity into account
+        regionCode:
+          type: string
+          description: Source region code (US or SE)
+        vkm:
+          type: string
+          description: Vehicle keeper code (KEEPER section)
+        vkmValidTo:
+          type: string
+          format: date
+          description: Keeper validity date (KEEPER section, ISO string)
+        resp:
+          type: string
+          description: Responsible entity code (RESPONSIBLE section)
+        responsibleValidTo:
+          type: string
+          format: date
+          description: Responsible entity validity date (RESPONSIBLE section, ISO string)
+        damages:
+          type: array
+          items:
+            $ref: '#/components/schemas/WagonDamage'
+          description: List of damage objects associated with the equipment.
+    Measurement:
+      type: object
+      properties:
+        measurementReferenceIdCode:
+          type: string
+        measurementQualifier:
+          type: string
+        measurementValue:
+          type: number
+        unitCode:
+          type: string
+          enum:
+          - 1E
+          - 1F
+          - 1H
+          - 1J
+          - 1K
+          - 1L
+          - '20'
+          - '21'
+          - AB
+          - B4
+          - B5
+          - BA
+          - BD
+          - BE
+          - BF
+          - BG
+          - BI
+          - BN
+          - BO
+          - BR
+          - BU
+          - BV
+          - BX
+          - C4
+          - CA
+          - CC
+          - CE
+          - CF
+          - CH
+          - CI
+          - CL
+          - CM
+          - CN
+          - CP
+          - CR
+          - CT
+          - CU
+          - CX
+          - CY
+          - DF
+          - DG
+          - DH
+          - DJ
+          - DK
+          - DL
+          - DR
+          - DT
+          - DZ
+          - FA
+          - FO
+          - FT
+          - GA
+          - GH
+          - GI
+          - GR
+          - HA
+          - HG
+          - HJ
+          - HM
+          - IN
+          - JE
+          - JR
+          - JU
+          - KE
+          - KG
+          - KT
+          - LB
+          - LG
+          - LP
+          - LT
+          - M5
+          - M8
+          - ME
+          - ML
+          - MM
+          - MP
+          - MR
+          - MS
+          - MT
+          - MU
+          - NC
+          - NS
+          - NT
+          - NW
+          - OZ
+          - PA
+          - PC
+          - PH
+          - PK
+          - PL
+          - PT
+          - PV
+          - PX
+          - PY
+          - PZ
+          - QR
+          - QS
+          - QT
+          - QU
+          - RL
+          - RM
+          - SC
+          - SF
+          - SH
+          - SI
+          - SJ
+          - SM
+          - SV
+          - SW
+          - SY
+          - TB
+          - TE
+          - TK
+          - TO
+          - TX
+          - TY
+          - UN
+          - VI
+          - WH
+          - YD
+          - ZZ
+        rangeMinimum:
+          type: number
+        rangeMaximum:
+          type: number
+        measurementSignificanceCode:
+          type: string
+        measurementAttributeCode:
+          type: string
+        surfaceLayerPositionCode:
+          type: string
+        measurementMethodOrDevice:
+          type: string
+        codeListQualifier:
+          type: string
+        industryCode:
+          type: string
+    CompleteSingleTaskInput:
+      type: object
+      required:
+      - taskId
+      description: Completion details for a single task.
+      properties:
+        taskId:
+          type: integer
+          description: ID of the task to complete.
+        finalTrackId:
+          type: integer
+          description: Track the equipment was moved to.
+        finalSpotId:
+          type: integer
+          description: Spot the equipment was moved to.
+        completedById:
+          type: integer
+          description: Service template ID that performed the completion.
+    SingleSwitchRequest:
+      type: object
+      properties:
+        equipmentId:
+          type: integer
+          description: Equipment resourceId to switch.
+        trackId:
+          type: integer
+          description: Target track resourceId for the request.
+        requestType:
+          type: string
+          enum:
+          - PL
+          - IP
+          - TR
+          - RELEASE
+          - LEAVE
+          description: Request code (e.g., PL = Pull, IP = In-place, TR = Transfer).
+        requestTypeV2:
+          type: string
+          description: Extended request type string for version 2 requests.
+        spot:
+          type: string
+          description: Optional spot identifier on the track (created on the fly if not existing).
+      required:
+      - equipmentId
+    CompleteClassListTasksOutput:
+      type: object
+      description: Response after completing class list tasks.
+      properties:
+        tasks:
+          type: array
+          description: Updated tasks after completion. If none of the requested tasks were eligible to be completed, such as when they were already completed, this array is empty.
+          items:
+            $ref: '#/components/schemas/ClassListTask'
+    EquipmentResource:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Equipment
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          type: integer
+    AttributesBase:
+      type: object
+      description: Base attribute payload for grouping resources.
+      additionalProperties: true
+    UpdateEquipmentNotesInput:
+      type: object
+      description: Request body for updating equipment notes. Provide either (equipmentIds + notes) for bulk updates, or an updates array for per-equipment notes.
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier.
+        equipmentIds:
+          type: array
+          items:
+            type: integer
+          description: List of equipment IDs to update with the same note. Used with the notes field.
+        notes:
+          type: string
+          nullable: true
+          maxLength: 280
+          description: Note text to apply to all equipmentIds.
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateEquipmentNoteInstance'
+          description: Per-equipment note updates. Use this for setting different notes on different equipment.
+    ToolsWorkLoadGroupingDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Grouping type (e.g., bin, ash type).
+        name:
+          type: string
+          description: Grouping name to associate with the loaded equipment.
+      required:
+      - type
+      - name
+    EquipmentHistoryItem:
+      type: object
+      properties:
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        equipment:
+          $ref: '#/components/schemas/RelaxedEquipment'
+        moveType:
+          $ref: '#/components/schemas/HistoryMoveType'
+        timestamp:
+          type: string
+          format: date-time
+        waybill:
+          $ref: '#/components/schemas/Waybill'
+        previousTrack:
+          $ref: '#/components/schemas/Grouping'
+        previousStation:
+          $ref: '#/components/schemas/Grouping'
+        currentTrack:
+          $ref: '#/components/schemas/Grouping'
+        currentStation:
+          $ref: '#/components/schemas/Grouping'
+        reportingFlag:
+          type: string
+          enum:
+          - ACCEPTED
+          - REJECTED
+          - IMPUTED
+        jobName:
+          type: string
+        receiveFromCarrierCode:
+          type: string
+        deliverToCarrierCode:
+          type: string
+        umlerSnapshot:
+          $ref: '#/components/schemas/Umler'
+        carrierId:
+          type: integer
+        numCharges:
+          type: integer
+        revisionNumber:
+          type: integer
+        revisionTime:
+          type: string
+        deletedAt:
+          type: string
+        mutedAt:
+          type: string
+    WorkOrderResource:
+      type: object
+      properties:
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        workOrderId:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - ACTIVE
+          - CLOSED
+        trainId:
+          type: string
+        inTransit:
+          type: boolean
+        lastEventId:
+          type: integer
+        hasBeenDeparted:
+          type: boolean
+    CanadianDangerousRequirements:
+      type: object
+      properties:
+        emergencyResponsePlanNumber:
+          type: string
+        communicationNumber:
+          type: string
+        packagingGroupCode:
+          type: string
+        firstSubsidiaryClassification:
+          type: string
+        secondSubsidiaryClassification:
+          type: string
+        thirdSubsidiaryClassification:
+          type: string
+        subsidiaryRiskIndicator:
+          type: string
+        netExplosiveQuantity:
+          type: number
+        canadianHazardousNotation:
+          type: string
+        specialCommodityIndicatorCode:
+          type: string
+        additionalCommunicationNumber:
+          type: string
+        netExplosiveQuantityUnitCode: cc0c4147-6a4a-4816-bee4-7ffe00fb1d06
+        hazmatShipmentInfoQualifier:
+          type: string
+        hazmatQuantity:
+          type: number
+        hazmatQuantityUnitCode: ba996b62-4cc6-44f9-bd5f-8e435efc6e36
+    CreateClassListInput:
+      type: object
+      description: Input for creating a class list (switch list).
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier
+        jobId:
+          type: string
+          description: The job ID for the class list
+        items:
+          type: array
+          description: The list of equipment moves to include in the class list
+          items:
+            type: object
+            properties:
+              equipmentId:
+                type: integer
+                description: The equipment resource ID
+              location:
+                type: object
+                description: The inventory location to move the equipment to
+                properties:
+                  grouping:
+                    $ref: '#/components/schemas/GroupingResource'
+                  groupingIndex:
+                    type: integer
+                    description: An index within the grouping (0 = front, -1 = back)
+            required:
+            - equipmentId
+            - location
+      required:
+      - carrierId
+      - jobId
+      - items
+    LineItemQuantity:
+      type: object
+      properties:
+        billedAsQuantity:
+          type: number
+        billedAsQualifier:
+          type: string
+          enum:
+          - DM
+          - GL
+          - NC
+          - ND
+          - NP
+          - NU
+          - NV
+        weight:
+          type: number
+        weightQualifier:
+          type: string
+          enum:
+          - A3
+          - B
+          - C
+          - E
+          - G
+          - J
+          - K
+          - M
+          - N
+          - O
+          - S
+          - X
+        volume:
+          type: number
+        volumeUnitQualifier:
+          type: string
+          enum:
+          - B
+          - C
+          - D
+          - E
+          - F
+          - G
+          - H
+          - L
+          - M
+          - N
+          - R
+          - S
+          - T
+          - U
+          - V
+          - X
+        ladingQuantity:
+          type: number
+        packagingFormCode:
+          type: string
+        dunnageDescription:
+          type: string
+        weightUnitCode:
+          type: string
+        typeOfServiceCode:
+          type: string
+    SimplifiedListGroupingInput:
+      type: object
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier used to scope groupings.
+        includedGroupingTypes:
+          type: array
+          items:
+            type: string
+          description: List of grouping types to include.
+        names:
+          type: array
+          items:
+            type: string
+          description: List of grouping names to include.
+      required:
+      - carrierId
+    EquipmentCount:
+      type: object
+      properties:
+        online:
+          type: integer
+    ListChargedHistoryOutput:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentHistoryItem'
+    EquipmentShipmentInformation:
+      type: object
+      description: Per-equipment customs and tariff block (Carta Porte). Required on cross-border US–Mexico waybills; attach under waybill.equipmentDetails[], not waybill.lineItems[].
+      properties:
+        referenceIdQualifier:
+          type: string
+          description: Reference identification qualifier (X12 REF01). Use "UNC" for UNSPSC-classified Carta Porte commodities.
+        referenceId:
+          type: string
+          description: Reference value (X12 REF02). For Carta Porte, the UNSPSC code when referenceIdQualifier is UNC.
+        description:
+          type: string
+        extendedReferenceInfo:
+          type: array
+          description: Extended references on this shipment-info block. Carta Porte requires MTC (Mexico tariff) entries; hazardous shipments also require MHC.
+          items:
+            $ref: '#/components/schemas/ExtendedReferenceInformation'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentLineItem'
+    IntermodalStatusDetails:
+      type: object
+      properties:
+        shipmentStatusCode:
+          type: string
+          enum:
+          - A
+          - AE
+          - AI
+          - AL
+          - AO
+          - AR
+          - B
+          - BO
+          - CA
+          - CB
+          - CC
+          - CS
+          - CT
+          - D
+          - DA
+          - DC
+          - DP
+          - DR
+          - DS
+          - DT
+          - EA
+          - ER
+          - G
+          - GI
+          - I
+          - J
+          - K
+          - L
+          - LE
+          - MA
+          - MD
+          - ME
+          - MI
+          - MO
+          - MR
+          - MT
+          - N
+          - NC
+          - ND
+          - NF
+          - NG
+          - NH
+          - 'NO'
+          - NP
+          - NS
+          - NT
+          - O
+          - OA
+          - OH
+          - P
+          - PA
+          - PB
+          - PC
+          - PD
+          - PE
+          - PF
+          - PG
+          - PH
+          - PI
+          - PJ
+          - PK
+          - PL
+          - PM
+          - PN
+          - PO
+          - PP
+          - R
+          - RF
+          - RL
+          - RN
+          - RY
+          - SA
+          - SC
+          - SF
+          - SO
+          - T
+          - TE
+          - UR
+          - UV
+          - WH
+          - WR
+          - YR
+        shipmentStatusTime:
+          type: string
+    ExtendedReferenceInformation:
+      type: object
+      description: Extended reference information from the waybill. Production notes are entries where referenceIdQualifier is "ZZ" and description is "TrpNotes"; the note text is in referenceId.
+      properties:
+        referenceIdQualifier:
+          type: string
+          description: Reference identification qualifier (e.g. "ZZ" for mutually defined references).
+        referenceId:
+          type: string
+          description: Reference value. For production notes (ZZ/TrpNotes), this contains the note text.
+        description:
+          type: string
+          description: Description of the reference (e.g. "TrpNotes" for production notes).
+        date:
+          type: string
+        timestamp:
+          type: string
+    CompleteClassListTasksInput:
+      type: object
+      required:
+      - carrierId
+      - items
+      description: Request body for completing class list tasks.
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier.
+        items:
+          type: array
+          description: List of tasks to complete.
+          items:
+            $ref: '#/components/schemas/CompleteSingleTaskInput'
+        completedAt:
+          type: string
+          format: date-time
+          description: Override completion timestamp. Defaults to current time if omitted.
+        noReturn:
+          type: boolean
+          default: false
+          description: If true, do not return the updated tasks in the response.
+    HazardousClassificationInformation:
+      type: object
+      properties:
+        hazardousClass:
+          type: string
+        hazardousClassQualifier:
+          type: string
+          enum:
+          - P
+          - S
+        hazardousPlacardNotation:
+          type: string
+        hazardousEndorsement:
+          type: string
+        reportableQuantityCode:
+          type: string
+          enum:
+          - RQ
+        flashpointUnitCode: 1a248ad4-8c6e-47e2-9757-02942eb582cb
+        flashpointTemperature:
+          type: number
+        controlUnitCode: 2cf8c761-7ddb-4c62-a8a8-5775c800bb4f
+        controlTemperature:
+          type: number
+        emergencyUnitCode: e12f4109-5e55-4d76-871a-77a85ec711fd
+        emergencyTemperature:
+          type: number
+        netExplosiveWeightUnitCode:
+          type: string
+        netExplosiveWeight:
+          type: number
+    BulkEditChargedHistoryInput:
+      type: object
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier to scope the bulk edit.
+        dryrun:
+          type: boolean
+          description: If true, validates actions without applying changes.
+        actions:
+          type: array
+          description: List of create/delete actions to apply in order.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/DeleteChargedHistoryInstance'
+            - $ref: '#/components/schemas/CreateChargedHistoryInstance'
+            unevaluatedProperties: false
+      required:
+      - carrierId
+      - dryrun
+      - actions
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+    InventoryLocation:
+      type: object
+      description: 'Loose location envelope. Common keys: grouping { resourceId }, groupingIndex (0 front, -1 back), spot.'
+      additionalProperties: true
+    GroupingNameFilter:
+      type: object
+      properties:
+        leafGroupingType:
+          type: string
+          description: When querying nested groups such as yard config, the grouping type of leaf nodes need to be specified as a target to locate the right grouping equipment association. Leave it None if equipment are directly associated with the groups that you are searching for.
+        groupingType:
+          type: string
+          description: The type of grouping to filter by.
+        names:
+          type: array
+          items:
+            type: string
+          description: List of grouping names to filter by.
+      required:
+      - groupingType
+      - names
+      additionalProperties: false
+    Equipment:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Equipment
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          type: integer
+        aarCarType:
+          type: string
+        equipmentType:
+          type: string
+          enum:
+          - CAR
+          - LOCOMOTIVE
+          - CABOOSE
+          - TRAIN_DEVICE
+        descriptionCode:
+          type: string
+        arrivalState:
+          type: string
+          enum:
+          - INBOUND
+          - ONLINE
+          - OUTBOUND
+        parentGroupings:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentParentGrouping'
+        waybill:
+          $ref: '#/components/schemas/Waybill'
+        umler:
+          $ref: '#/components/schemas/UmlerCommon'
+        notes:
+          type: string
+        intermodalUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntermodalUnitResource'
+        loadStatus:
+          type: string
+          enum:
+          - LOAD
+          - EMPTY
+          - UNKNOWN
+        ichrTime:
+          type: string
+          format: date-time
+        workOrder:
+          $ref: '#/components/schemas/WorkOrderResource'
+        workOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkOrderResource'
+    BillingInformation:
+      type: object
+      properties:
+        rebillReasonCode:
+          type: string
+          enum:
+          - RC
+          - RD
+        origin:
+          $ref: '#/components/schemas/Station'
+        destination:
+          $ref: '#/components/schemas/Station'
+        carrierCodes:
+          type: array
+          items:
+            type: string
+    Terminal:
+      type: object
+      description: Port or terminal location on equipment (X12 R4).
+      properties:
+        terminalFunctionCode:
+          type: string
+          enum:
+          - '1'
+          - '5'
+          - '6'
+          - '7'
+          - D
+          - E
+          - I
+          - L
+          - M
+          - P
+          - R
+        locationQualifier:
+          type: string
+          enum:
+          - CS
+          - D
+          - K
+          - OL
+          - SL
+          - UN
+          - ZZ
+        locationIdentifier:
+          type: string
+        portName:
+          type: string
+    ListInventoryOutput:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            description: Inventory item snapshot
+            properties:
+              resourceType:
+                type: string
+                enum:
+                - Equipment
+              resourceId:
+                type: integer
+              uuid:
+                type: string
+                description: UUID that complements the legacy numeric resourceId.
+              equipmentInitial:
+                type: string
+              equipmentNumber:
+                type: integer
+              aarCarType:
+                type: string
+              equipmentType:
+                type: string
+                enum:
+                - CAR
+                - LOCOMOTIVE
+                - CABOOSE
+                - TRAIN_DEVICE
+              descriptionCode:
+                type: string
+              arrivalState:
+                type: string
+                enum:
+                - INBOUND
+                - ONLINE
+                - OUTBOUND
+              parentGroupings:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EquipmentParentGrouping'
+              waybill:
+                $ref: '#/components/schemas/Waybill'
+              umler:
+                $ref: '#/components/schemas/UmlerCommon'
+              notes:
+                type: string
+              intermodalUnits:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExpandedIntermodalUnit'
+              loadStatus:
+                type: string
+                enum:
+                - LOAD
+                - EMPTY
+                - UNKNOWN
+              ichrTime:
+                type: string
+                format: date-time
+              workOrder:
+                $ref: '#/components/schemas/WorkOrderResource'
+              workOrders:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkOrderResource'
+              currentStopPriority:
+                type: integer
+                description: Trip-plan priority of the equipment's current stop (days until that stop's end time, in the carrier's timezone), matching the Inventory 'Priority' column. Present only when includeTripPlan is set and the carrier has trip plans enabled; omitted for in-transit equipment with no current stop.
+              nextStopPriority:
+                type: integer
+                description: Trip-plan priority of the equipment's next stop, matching the Inventory 'Next Priority' column. For in-transit equipment this is the first expected stop. Present only when includeTripPlan is set and the carrier has trip plans enabled; omitted when there is no next stop.
+            additionalProperties: false
+        statusCode:
+          type: integer
+        nextToken:
+          type: string
+        prevToken:
+          type: string
+    HazmatFreeFormInformation:
+      type: object
+      properties:
+        hazmatShippingInfoQualifier:
+          type: string
+          enum:
+          - ADI
+          - CER
+          - D13
+          - D20
+          - DRC
+          - DWW
+          - EQP
+          - FUM
+          - HOT
+          - HZC
+          - INH
+          - LQY
+          - MOS
+          - MPI
+          - NOD
+          - PIH
+          - POI
+          - RAM
+          - TEC
+          - TNM
+          - WST
+        hazmatShippingInfo:
+          type: string
+        hazmatShippingInfoOverflow:
+          type: string
+        hazardZoneCode:
+          type: string
+        radioactiveActivityUnitCode:
+          type: string
+          enum:
+          - 1T
+          - 4N
+          - G4
+          - R2
+        radioactiveActivity:
+          type: number
+        radioactiveTransportIndex:
+          type: number
+        fumigationDate:
+          type: string
+    EquipmentDetails:
+      type: object
+      properties:
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          type: integer
+        netWeightLbs:
+          type: number
+        grossWeightLbs:
+          type: number
+        weightType:
+          type: string
+          enum:
+          - ESTIMATED
+          - ACTUAL
+        tareWeightLbs:
+          type: number
+        weightAllowance:
+          type: number
+        dunnage:
+          type: number
+        ownershipCode:
+          type: string
+          enum:
+          - L
+          - R
+          - T
+        descriptionCode:
+          type: string
+        owningCarrierCode:
+          type: string
+        position:
+          type: string
+        lengthIn:
+          type: number
+        tareQualifierCode:
+          type: string
+          enum:
+          - A
+          - M
+        checkDigit:
+          type: integer
+        heightIn:
+          type: number
+        widthIn:
+          type: number
+        isoContainerCode:
+          type: string
+        carrierCode:
+          type: string
+        aarCarType:
+          type: string
+        sealNumbers:
+          type: array
+          description: Seal numbers on equipment (X12 M7).
+          items:
+            type: string
+        chassisInitial:
+          type: string
+        chassisNumber:
+          type: integer
+        terminals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Terminal'
+        interchangeMoveAuthorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterchangeMoveAuthority'
+        shipmentInfo:
+          type: array
+          description: Per-equipment Carta Porte data for cross-border waybills. See Cross-border (Mexico) waybills in the API docs.
+          items:
+            $ref: '#/components/schemas/EquipmentShipmentInformation'
+    ReferenceInfo:
+      type: object
+      properties:
+        referenceIdQualifier:
+          type: string
+        referenceId:
+          type: string
+        description:
+          type: string
+    ToolsWorkLoadEquipmentOutput:
+      type: object
+      properties: {}
+    UpdateEquipmentNoteInstance:
+      type: object
+      required:
+      - equipmentId
+      description: A single equipment note update.
+      properties:
+        equipmentId:
+          type: integer
+          description: ID of the equipment to update.
+        note:
+          type: string
+          nullable: true
+          maxLength: 280
+          description: The new note text. Pass null to clear the note.
+    HazmatReferenceNumber:
+      type: object
+      properties:
+        referenceIdQualifier:
+          type: string
+        referenceId:
+          type: string
+        date:
+          type: string
+    InterchangeMoveAuthority:
+      type: object
+      description: Interchange move authority on equipment (X12 IMA).
+      properties:
+        movementAuthorityCode:
+          type: string
+          enum:
+          - A
+          - B
+          - C
+          - D
+          - DS
+          - E
+          - G
+          - HM
+          - I
+          - L
+          - N
+          - NC
+          - NU
+          - O
+          - OA
+          - OS
+          - P
+          - R
+          - RB
+          - S
+          - W
+          - X
+        carrierCode:
+          type: string
+        terminalTariffApplicationCode:
+          type: string
+          enum:
+          - D
+          - E
+          - F
+        stateTariffApplicationCode:
+          type: string
+          enum:
+          - N
+          - S
+        rejectReasonCode:
+          type: string
+          enum:
+          - AD
+          - BA
+          - BC
+          - BD
+          - BG
+          - BL
+          - BO
+          - BV
+          - BW
+          - CN
+          - CR
+          - CW
+          - DD
+          - DR
+          - DS
+          - DV
+          - ER
+          - FD
+          - FR
+          - HB
+          - HH
+          - HX
+          - LK
+          - OG
+          - OV
+          - RF
+          - RH
+          - SU
+          - ZZ
+    Station:
+      type: object
+      properties:
+        fsac:
+          type: string
+        cityName:
+          type: string
+        stateOrProvince:
+          type: string
+        postalCode:
+          type: string
+        countryCode:
+          type: string
+        splc:
+          type: string
+    EmptyCarDisposition:
+      type: object
+      properties:
+        destinationConsigneeName:
+          type: string
+        destinationConsigneeIdQualifier:
+          type: string
+        destinationConsigneeId:
+          type: string
+        destinationCityName:
+          type: string
+        destinationStateOrProvince:
+          type: string
+        destinationPostalCode:
+          type: string
+        destinationCountryCode:
+          type: string
+        destinationAddress:
+          type: string
+        destinationRoute:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteEntry'
+    CommunicationNumber:
+      type: object
+      properties:
+        qualifier:
+          type: string
+        number:
+          type: string
+    Umler:
+      allOf:
+      - $ref: '#/components/schemas/UmlerCommon'
+    RouteEntry:
+      type: object
+      properties:
+        carrierCode:
+          type: string
+        junctionCode:
+          type: string
+        routingSequenceCode:
+          type: string
+          enum:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+          - '8'
+          - '9'
+          - '10'
+          - '11'
+          - '12'
+          - '13'
+          - '14'
+          - '15'
+          - '16'
+          - '17'
+          - '18'
+          - '19'
+          - '20'
+          - A
+          - D
+          - H
+          - I
+          - JD
+          - JI
+          - JO
+          - M
+          - R
+          - S
+          - V
+        splc:
+          type: string
+        intermodalServiceCode:
+          type: string
+        additionalSwitchCarrierCodes:
+          type: array
+          items:
+            type: string
+    LineItemDescription:
+      type: object
+      properties:
+        ladingDescription:
+          type: string
+        commodityCode:
+          type: string
+        commodityCodeQualifier:
+          type: string
+          enum:
+          - '3'
+          - J
+          - L
+          - T
+        packagingCode:
+          type: string
+        marksAndNumbers:
+          type: string
+        marksAndNumbersQualifier:
+          type: string
+        hazmatRatingCommodityCodeQualifier:
+          type: string
+        hazmatRatingCommodityCode:
+          type: string
+        compartmentIdCode:
+          type: string
+    PriceAuthority:
+      type: object
+      properties:
+        referenceIdQualifier:
+          type: string
+        referenceId:
+          type: string
+        primaryPublicationAuthority:
+          type: string
+        regulatoryAgencyCode:
+          type: string
+        tariffAgencyCode:
+          type: string
+        issuingCarrierIdentifier:
+          type: string
+        suffix:
+          type: string
+        itemNumber:
+          type: string
+        supplementIdentifier:
+          type: string
+        sectionNumber:
+          type: string
+        itemNumberSuffix:
+          type: string
+        effectiveDate:
+          type: string
+        expirationDate:
+          type: string
+    ProtectiveService:
+      type: object
+      properties:
+        ruleCode:
+          type: string
+        serviceCode:
+          type: string
+          enum:
+          - D
+          - HDN
+          - HDNC
+          - HSC
+          - M
+          - MN
+          - MNU
+        temperatureUnit:
+          type: string
+          enum:
+          - CE
+          - FA
+        optimalTemperature:
+          type: number
+        scac:
+          type: string
+        fsac:
+          type: string
+        cityName:
+          type: string
+        stateOrProvince:
+          type: string
+        precooled:
+          type: boolean
+        heaterLocation:
+          type: string
+          enum:
+          - Y
+          - N
+        commodityType:
+          type: string
+          enum:
+          - Y
+          - N
+        doorwaySpace:
+          type: string
+          enum:
+          - Y
+          - N
+        originTemperature:
+          type: number
+    SingleGroupingOutput:
+      allOf:
+      - $ref: '#/components/schemas/Grouping'
+      - type: object
+        properties:
+          carrierId:
+            type: integer
+            description: Carrier identifier associated with the grouping.
+    EquipmentTrackUpdate:
+      type: object
+      properties:
+        from:
+          $ref: '#/components/schemas/InventoryLocation'
+          description: Source location. May include grouping.resourceId (track) and optional spot name.
+        to:
+          $ref: '#/components/schemas/InventoryLocation'
+          description: Destination location. Use grouping.resourceId (track) and optional groupingIndex to control position (0 = front, -1 = back).
+    GroupingIdFilter:
+      type: object
+      properties:
+        leafGroupingType:
+          type: string
+          description: When querying nested groups, such as yard config, the grouping type of leaf nodes need to be specified as a target to locate the right grouping equipment association. Leave it None, if equipment are directly associated with the groups that you are searching for.
+        groupingType:
+          type: string
+          description: The type of grouping to filter by.
+        groupingIds:
+          type: array
+          items:
+            type: integer
+          description: List of grouping IDs to filter by.
+      required:
+      - groupingType
+      - groupingIds
+      additionalProperties: false
+    ListInventoryInput:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          minimum: 1
+          description: Number of items per page. Use with pageNextToken/pagePrevToken for pagination.
+        pageNextToken:
+          type: string
+          description: Token to fetch the next page of results returned from a previous call.
+        pagePrevToken:
+          type: string
+          description: Token to fetch the previous page of results returned from a previous call.
+        initialAndNumber:
+          type: string
+          description: Filter by equipment initial and number (e.g., 'XYZ 123456').
+        loadStatus:
+          type: string
+          description: Filter by derived load status.
+          enum:
+          - LOAD
+          - EMPTY
+          - UNKNOWN
+        aarCarType:
+          type: string
+          description: Filter by AAR car type (e.g., GONDOLA).
+        station:
+          type: integer
+          description: Filter by station ID. Obtain IDs from the listStationTracks endpoint.
+        track:
+          type: integer
+          description: Filter by track ID. Obtain IDs from the listStationTracks endpoint.
+        tag:
+          type: integer
+          description: Filter by tag ID. Obtain IDs from the listStationTracks endpoint.
+        shipper:
+          type: string
+          description: Filter by shipper name.
+        consignee:
+          type: string
+          description: Filter by consignee name.
+        arrivalState:
+          type: array
+          description: Filter by arrival state of equipment.
+          items:
+            type: string
+            description: Arrival state value.
+            enum:
+            - INBOUND
+            - ONLINE
+            - OUTBOUND
+        carrierId:
+          type: integer
+          description: Carrier identifier. May also be supplied via query parameter.
+        equipmentId:
+          type: integer
+          description: Filter by a single equipment resourceId.
+        equipmentIds:
+          type: array
+          description: Filter by multiple equipment resourceIds.
+          items:
+            type: integer
+        equipmentInitial:
+          type: string
+          description: Filter by equipment initial prefix (e.g., 'ABC').
+        equipmentInitialsAndNumbers:
+          type: array
+          description: Filter by explicit tuples of equipment initial and number (e.g., [["ABC", 123], ["DEF", 456]]).
+          items:
+            $ref: '#/components/schemas/InitialAndNumber'
+        equipmentNumber:
+          type: integer
+          description: Filter by equipment number.
+        trainId:
+          type: string
+          description: Filter by train ID.
+        includeTrain:
+          type: boolean
+          description: Whether to include train information in the response.
+        intersectedGroupFilters:
+          type: array
+          description: 'Intersect all grouping filters to get grouping IDs. For example, can specify multiple filters at once, such as zone, station, track. In this case, it expands zone and station to track level and intersects them with each other.
+
+
+            This field is mutually exclusive with the legacy grouping fields (station, track, tag).'
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/GroupingIdFilter'
+            - $ref: '#/components/schemas/GroupingNameFilter'
+        consistUuid:
+          type: string
+          description: Filter by consist UUID. This is used with includeSwitchRequest to get all of the equipment on a consist.
+        includeSwitchRequest:
+          type: boolean
+          description: Whether to include switch request information.
+        includeTripPlan:
+          type: boolean
+          description: Whether to include trip-plan-derived priorities (currentStopPriority and nextStopPriority) in the response, matching the priorities shown on the Inventory page. Requires the carrier to have trip plans enabled.
+    CreateChargedHistoryInstance:
+      type: object
+      properties:
+        equipmentId:
+          type: integer
+          description: Equipment resourceId for which to create a charge history record.
+        chargeGroupId:
+          type: integer
+          description: Charge group (e.g., billing category) applied to the record.
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the record (ISO 8601).
+      required:
+      - equipmentId
+      - chargeGroupId
+      - timestamp
+    CustomerLocationResource:
+      type: object
+      properties:
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+        name:
+          type: string
+        blockCode:
+          type: string
+        customerBlock:
+          $ref: '#/components/schemas/GroupingResource'
+        customer:
+          $ref: '#/components/schemas/CustomerResource'
+        carrier:
+          $ref: '#/components/schemas/CarrierResource'
+        groupings:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupingResource'
+        abbreviatedName:
+          type: string
+        currencyCode:
+          type: string
+    DeleteChargedHistoryInstance:
+      type: object
+      properties:
+        historyItemId:
+          type: integer
+          description: Identifier of the charged history item to delete.
+      required:
+      - historyItemId
+    CreateBillOfLadingInput:
+      type: object
+      properties:
+        carrierId:
+          type: integer
+        waybill:
+          $ref: '#/components/schemas/Waybill'
+    Release:
+      type: object
+      properties:
+        releaseCode:
+          type: string
+          enum:
+          - B
+          - R
+        releaseDate:
+          type: string
+        releaseTime:
+          type: string
+    EPARequiredData:
+      type: object
+      properties:
+        epaWasteStreamNumberCode:
+          type: string
+        wasteCharacteristicsCode:
+          type: string
+        hazardousWasteNumberStateOrProvince:
+          type: string
+        hazardousWasteNumber:
+          type: string
+    ListStationTracksInput:
+      type: object
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier used to scope stations and tracks.
+    BulkEditChargedHistoryOutput:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentHistoryItem'
+    TransborderHazardousRequirements:
+      type: object
+      properties:
+        hazardousClassification:
+          type: string
+        hazardousPlacardNotation:
+          type: string
+        hazardousEndorsement:
+          type: string
+    ListCustomersInput:
+      type: object
+      required:
+      - carrierId
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier. May also be supplied via query parameter.
+        customerIds:
+          type: array
+          items:
+            type: integer
+          description: Optional filter by specific customer IDs
+        customerUuids:
+          type: array
+          items:
+            type: string
+          description: Optional filter by specific customer UUIDs
+        includeShipperCustomers:
+          type: boolean
+          description: Whether to include shipper customers
+          default: false
+    ToolsWorkLoadEquipmentInput:
+      type: object
+      properties:
+        carrierId:
+          type: integer
+          description: Carrier identifier for the load.
+        details:
+          type: array
+          description: List of equipment and attributes to load.
+          items:
+            $ref: '#/components/schemas/ToolsWorkLoadEquipmentDetails'
+        trackName:
+          type: string
+          description: Track name where toolswork is loaded.
+        timestamp:
+          type: string
+          description: Optional timestamp of the load event.
+        waybillTemplateId:
+          type: integer
+          description: Waybill template identifier to use for the load.
+      required:
+      - carrierId
+      - details
+      - trackName
+      - waybillTemplateId
+    ListCustomersOutput:
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerOutput'
+        contract:
+          type: object
+          properties:
+            effect:
+              type: string
+              enum:
+              - overwrite
+            resourceType:
+              type: string
+              enum:
+              - Customer
+  parameters:
+    ViewAsUserGroup:
+      name: viewAsUserGroup
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Optional user group context
+    CarrierId:
+      name: carrierId
+      in: query
+      required: true
+      schema:
+        type: integer
+      description: Carrier identifier; required for all endpoints
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: x-arms-api-key
+      type: apiKey
+    AssumeUserAuth:
+      in: header
+      name: x-arms-assume-user
+      type: apiKey

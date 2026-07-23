@@ -1,0 +1,170 @@
+openapi: 3.0.1
+info:
+  title: protobuf/arms/charge.proto ChargeService NetworkStructureService API
+  version: version not set
+servers:
+- description: Production (US)
+  url: https://api-lg-k-h1.arms.cedarai.com
+- description: Production (EU)
+  url: https://api-lg-k-h1.arms.cedarai.se
+security:
+- ApiKeyAuth: []
+  AssumeUserAuth: []
+tags:
+- name: NetworkStructureService
+paths:
+  /t/v1/network-hierarchy:
+    post:
+      tags:
+      - NetworkStructureService
+      summary: Get the Network Hierarchy
+      description: Get the Carrier Network as a hierarchical tree structure.
+      operationId: GetHierarchy
+      parameters:
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/armsGetHierarchyRequest'
+        description: Request message for retrieving the carrier network hierarchy.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/armsGetHierarchyResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+components:
+  schemas:
+    armsGetHierarchyResponse:
+      example:
+        hierarchy:
+          roots:
+          - children:
+            - children:
+              - children:
+                - children: []
+                  region:
+                    attributes:
+                      is_virtual: 'Yes'
+                    groupingId: '1234'
+                    groupingType: track
+                    legacyGroupingId: '123'
+                    name: Track 1
+                    sortOrder: 0
+                region:
+                  attributes: {}
+                  groupingId: '789'
+                  groupingType: station
+                  legacyGroupingId: '789'
+                  name: Station 1
+                  sortOrder: 10
+              region:
+                attributes: {}
+                groupingId: '456'
+                groupingType: area
+                legacyGroupingId: '456'
+                name: Area 1
+                sortOrder: 10
+            region:
+              attributes: {}
+              groupingId: '12345'
+              groupingType: road
+              legacyGroupingId: '123'
+              name: ABC
+              sortOrder: 0
+          scope: main
+      properties:
+        hierarchy:
+          $ref: '#/components/schemas/armsCarrierHierarchy'
+      title: Get Hierarchy Response
+      type: object
+    armsRegion:
+      properties:
+        attributes:
+          properties: {}
+          type: object
+        groupingId:
+          type: string
+        groupingType:
+          type: string
+        legacyGroupingId:
+          format: int64
+          type: string
+        name:
+          type: string
+        sortOrder:
+          format: int32
+          type: integer
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    armsCarrierHierarchy:
+      properties:
+        roots:
+          items:
+            $ref: '#/components/schemas/armsCarrierHierarchyNode'
+          type: array
+        scope:
+          type: string
+      type: object
+    armsCarrierHierarchyNode:
+      properties:
+        children:
+          items:
+            $ref: '#/components/schemas/armsCarrierHierarchyNode'
+          type: array
+        region:
+          $ref: '#/components/schemas/armsRegion'
+      type: object
+    armsGetHierarchyRequest:
+      description: Request message for retrieving the carrier network hierarchy.
+      example:
+        scope: main
+        sort_by_association: true
+      properties:
+        scope:
+          type: string
+        sortByAssociation:
+          type: boolean
+      title: Get Hierarchy Request
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: x-arms-api-key
+      type: apiKey
+    AssumeUserAuth:
+      in: header
+      name: x-arms-assume-user
+      type: apiKey

@@ -1,0 +1,462 @@
+openapi: 3.0.1
+info:
+  title: protobuf/arms/charge.proto ChargeService InvoicesService API
+  version: version not set
+servers:
+- description: Production (US)
+  url: https://api-lg-k-h1.arms.cedarai.com
+- description: Production (EU)
+  url: https://api-lg-k-h1.arms.cedarai.se
+security:
+- ApiKeyAuth: []
+  AssumeUserAuth: []
+tags:
+- name: InvoicesService
+paths:
+  /shipper/invoices/{id}/vouchers:
+    post:
+      tags:
+      - InvoicesService
+      summary: Attaches Voucher
+      description: Associate a voucher to a shipper's invoice
+      operationId: AttachVoucher
+      parameters:
+      - description: the id of the invoice
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Carrier ID - can be a numeric id or a string identifier
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoicesServiceAttachVoucherBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1AttachVoucherResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /shipper/invoices:
+    get:
+      tags:
+      - InvoicesService
+      summary: List Shipper Invoices
+      description: Returns list of invoices
+      operationId: ListInvoices
+      parameters:
+      - description: Filter invoices matching any of the specified audit statuses
+        explode: true
+        in: query
+        name: audit_status
+        schema:
+          items:
+            enum:
+            - PENDING_APPROVAL
+            - APPROVED
+            - REJECTED
+            type: string
+          type: array
+        style: form
+      - description: Filter invoices matching any of the voucher statuses
+        in: query
+        name: voucher_status
+        schema:
+          enum:
+          - HAS_VOUCHER
+          - NO_VOUCHER
+          type: string
+      - description: The requested page size
+        in: query
+        name: page_size
+        schema:
+          format: int64
+          type: integer
+      - in: query
+        name: page_previous_token
+        schema:
+          type: string
+      - in: query
+        name: page_next_token
+        schema:
+          type: string
+      - description: Carrier ID - can be a numeric id or a string identifier
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListInvoicesResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /shipper/invoices/{id}:
+    get:
+      tags:
+      - InvoicesService
+      summary: Get Shipper Invoice
+      description: Returns a single invoice
+      operationId: GetInvoice
+      parameters:
+      - description: the id of the invoice
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Carrier ID - can be a numeric id or a string identifier
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetInvoiceResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+components:
+  schemas:
+    InvoicePostAuditDispatchStatus:
+      description: " - PENDING_SEND: Queued and not yet sent (immediate, or waiting for a scheduled batch).\n - SENT: Everything sent; nothing left to dispatch.\n - ERROR: At least one action failed (terminally or pending retry)."
+      enum:
+      - PENDING_SEND
+      - SENT
+      - ERROR
+      type: string
+    v1BillOfLadingId:
+      properties:
+        date:
+          $ref: '#/components/schemas/cedaraiDate'
+        identifier:
+          type: string
+        type:
+          type: string
+      type: object
+    cedaraiDate:
+      properties:
+        day:
+          format: int32
+          type: integer
+        month:
+          format: int32
+          type: integer
+        year:
+          format: int32
+          type: integer
+      type: object
+    v1WaybillId:
+      properties:
+        date:
+          type: string
+        number:
+          format: int32
+          type: integer
+      type: object
+    v1ApDocumentType:
+      enum:
+      - PDF_INVOICE
+      - EXCEL_INVOICE
+      type: string
+    v1GetInvoiceResponse:
+      properties:
+        invoice:
+          $ref: '#/components/schemas/v1Invoice'
+      type: object
+    InvoicesServiceAttachVoucherBody:
+      properties:
+        voucher_id:
+          title: a voucher id in a system external to Cedar
+          type: string
+      type: object
+    v1InvoiceDocument:
+      properties:
+        created_at:
+          type: string
+        edi_invoice:
+          $ref: '#/components/schemas/v1EdiInvoice'
+        parsed_invoice:
+          $ref: '#/components/schemas/v1ParsedInvoice'
+      type: object
+    v1Invoice:
+      properties:
+        accrual_amount_this_carrier:
+          $ref: '#/components/schemas/shippingv1Money'
+        accrual_amount_waybill_total:
+          $ref: '#/components/schemas/shippingv1Money'
+        accrual_freight_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        accrual_fuel_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        accrual_misc_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        audit_comments:
+          type: string
+        audit_status:
+          $ref: '#/components/schemas/InvoiceAuditStatus'
+        balance:
+          $ref: '#/components/schemas/shippingv1Money'
+        bill_of_lading_date:
+          type: string
+        bill_of_lading_identifier:
+          type: string
+        billed_freight_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        billed_fuel_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        billed_misc_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        billing_carrier:
+          type: string
+        billing_date:
+          type: string
+        commodity_code:
+          title: A STCC code identifying the commodity
+          type: string
+        commodity_description:
+          type: string
+        destination:
+          $ref: '#/components/schemas/shippingv1Location'
+        equipment:
+          items:
+            $ref: '#/components/schemas/v1EquipmentId'
+          type: array
+        extended_references:
+          items:
+            $ref: '#/components/schemas/v1ExtendedReferenceValue'
+          title: The references (N8 segments) on related EDI that relate the invoice to other resources
+          type: array
+        freight_bill_number:
+          description: Typically the same identifier as the invoice_number but in some cases may differentiate separately rated items on the same invoice. Some railroads will (rarely) provide a single invoice with multiple items that are separately audited/accrued. In such cases, the freight_bill_number will be distinct from the invoice_number.
+          type: string
+        id:
+          description: The unique identifier of this invoice. Used on subsequent calls as the {id} to refer to this invoice.
+          type: string
+        invoice_documents:
+          items:
+            $ref: '#/components/schemas/v1InvoiceDocument'
+          title: The uploaded PDFs and received 410s
+          type: array
+        invoice_number:
+          title: The identifier of the invoice
+          type: string
+        origin:
+          $ref: '#/components/schemas/shippingv1Location'
+        paying_party:
+          $ref: '#/components/schemas/v1InvoiceParty'
+        payment_due_date:
+          type: string
+        post_audit_dispatch_status:
+          $ref: '#/components/schemas/InvoicePostAuditDispatchStatus'
+        rule_11_destination:
+          $ref: '#/components/schemas/v1Station'
+        rule_11_origin:
+          $ref: '#/components/schemas/v1Station'
+        shipment_name:
+          title: the related Cedar shipment identifier if one exists
+          type: string
+        total_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        transportation_destination:
+          $ref: '#/components/schemas/v1Station'
+        transportation_origin:
+          $ref: '#/components/schemas/v1Station'
+        voucher_id:
+          type: string
+        waybill_date:
+          type: string
+        waybill_number:
+          format: int32
+          type: integer
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1AttachVoucherResponse:
+      type: object
+    v1InvoiceParty:
+      properties:
+        name:
+          type: string
+        number:
+          type: string
+      title: the string on the invoice identifying the party
+      type: object
+    v1ListInvoicesResponse:
+      properties:
+        invoices:
+          items:
+            $ref: '#/components/schemas/v1Invoice'
+          type: array
+        next_token:
+          title: Use the next_token as the page_next_token parameter on a ListInvoicesRequest to get the next page of results
+          type: string
+        previous_token:
+          title: Use the previous_token as the page_previous_token parameter on a ListInvoicesRequest to get the previous page of results
+          type: string
+      type: object
+    v1EquipmentId:
+      properties:
+        initial:
+          type: string
+        number:
+          format: int64
+          type: string
+      type: object
+    v1ParsedInvoice:
+      properties:
+        bill_of_lading_id:
+          $ref: '#/components/schemas/v1BillOfLadingId'
+        billing_carrier:
+          type: string
+        billing_date:
+          type: string
+        commodity_code:
+          type: string
+        commodity_description:
+          type: string
+        destination:
+          $ref: '#/components/schemas/shippingv1Location'
+        document_uuid:
+          type: string
+        equipment_ids:
+          items:
+            $ref: '#/components/schemas/v1EquipmentId'
+          type: array
+        freight_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        freight_bill_number:
+          type: string
+        fuel_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        invoice_number:
+          type: string
+        lead_equipment_id:
+          $ref: '#/components/schemas/v1EquipmentId'
+        misc_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        origin:
+          $ref: '#/components/schemas/shippingv1Location'
+        paying_party:
+          $ref: '#/components/schemas/v1InvoiceParty'
+        payment_due_date:
+          type: string
+        pdf_page_number:
+          format: int32
+          type: integer
+        qualifier:
+          type: string
+        quantity:
+          format: int32
+          type: integer
+        total_amount:
+          $ref: '#/components/schemas/shippingv1Money'
+        type:
+          $ref: '#/components/schemas/v1ApDocumentType'
+        waybill_id:
+          $ref: '#/components/schemas/v1WaybillId'
+      type: object
+    v1EdiInvoice:
+      properties:
+        invoice_x12:
+          type: string
+        send_date:
+          type: string
+      type: object
+    InvoiceAuditStatus:
+      enum:
+      - PENDING_APPROVAL
+      - APPROVED
+      - REJECTED
+      type: string
+    shippingv1Money:
+      properties:
+        cents:
+          format: int32
+          type: integer
+        currency:
+          type: string
+        dollars:
+          format: int64
+          type: string
+      type: object
+    v1ExtendedReferenceValue:
+      properties:
+        qualifier:
+          type: string
+        value:
+          type: string
+      type: object
+    shippingv1Location:
+      properties:
+        city:
+          type: string
+        name:
+          type: string
+        state_or_province:
+          type: string
+      type: object
+    v1Station:
+      properties:
+        city:
+          type: string
+        state:
+          type: string
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: x-arms-api-key
+      type: apiKey
+    AssumeUserAuth:
+      in: header
+      name: x-arms-assume-user
+      type: apiKey
