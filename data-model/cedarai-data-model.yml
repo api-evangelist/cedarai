@@ -1,0 +1,75 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/ (entity nouns + id-reference fields across ARMS specs)
+summary: >-
+  Entity graph for the Cedar ARMS domain, derived from the operation surface and
+  request/response fields. All entities are scoped to a Carrier (railroad) via
+  carrierId. This is a derived approximation, not an authoritative schema.
+entities:
+  - name: Carrier
+    description: A railroad/operator; the top-level tenant scope (carrierId).
+  - name: Equipment
+    description: A railcar / piece of equipment tracked in inventory and history.
+  - name: StationTrack
+    description: A station and its tracks/spots where equipment is placed.
+  - name: Grouping
+    description: A logical grouping of equipment (e.g. blocks/consists).
+  - name: ClassList
+    description: A switch list of equipment moves; has tasks.
+  - name: WorkOrder
+    description: A train work order; has tasks, pickups, setouts, and train events.
+  - name: BillOfLading
+    description: A waybill's bill of lading, keyed by billOfLadingNumber.
+  - name: Customer
+    description: A carrier's customer.
+  - name: Charge
+    description: A billable charge row (charges table), keyed by chargeId.
+  - name: Invoice
+    description: A shipper invoice; may have attached vouchers.
+  - name: Quote
+    description: A shipper quote with quote preferences.
+  - name: TruckLoadTender
+    description: A truck load tender.
+  - name: Note
+    description: A threaded note (Linda) attached to any entity (equipment, shipment, waybill, etc.).
+relationships:
+  - from: Equipment
+    to: Carrier
+    kind: belongs_to
+    via: carrierId
+  - from: Equipment
+    to: StationTrack
+    kind: has_one
+    via: station/track (current placement)
+  - from: ClassList
+    to: Equipment
+    kind: has_many
+    via: equipment moves
+  - from: ClassList
+    to: ClassListTask
+    kind: has_many
+    via: tasks
+  - from: WorkOrder
+    to: WorkOrderTask
+    kind: has_many
+    via: tasks
+  - from: WorkOrder
+    to: Equipment
+    kind: has_many
+    via: pickup/setout cars (consist)
+  - from: BillOfLading
+    to: Waybill
+    kind: belongs_to
+    via: waybill
+  - from: Charge
+    to: Invoice
+    kind: belongs_to
+    via: invoice
+  - from: Invoice
+    to: Customer
+    kind: belongs_to
+    via: shipper/customer
+  - from: Note
+    to: Equipment
+    kind: belongs_to
+    via: referenced_entity_id + referenced_entity_type (polymorphic)

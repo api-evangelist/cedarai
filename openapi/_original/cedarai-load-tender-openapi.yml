@@ -1,0 +1,1050 @@
+openapi: 3.0.1
+info:
+  title: protobuf/trucking/v1/load_tender.proto
+  version: version not set
+servers:
+- description: Production (US)
+  url: https://api-lg-k.arms.cedarai.com
+- description: Production (EU)
+  url: https://api-lg-k.arms.cedarai.se
+security:
+- ApiKeyAuth: []
+  AssumeUserAuth: []
+tags:
+- name: TruckLoadTenderService
+paths:
+  /t/v1/load-tender/delete:
+    put:
+      tags:
+      - TruckLoadTenderService
+      summary: Delete Truck Load Tender
+      description: Deletes a Truck Load Tender.
+      operationId: DeleteTruckLoadTender
+      parameters:
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1DeleteTruckLoadTenderRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1DeleteTruckLoadTenderResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /t/v1/load-tender/list:
+    get:
+      tags:
+      - TruckLoadTenderService
+      summary: List Truck Load Tenders
+      description: Returns Truck Load Tenders.
+      operationId: ListTruckLoadTender
+      parameters:
+      - in: query
+        name: page_size
+        schema:
+          format: int32
+          type: integer
+      - in: query
+        name: page_token
+        schema:
+          type: string
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListTruckLoadTenderResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /t/v1/load-tender/create:
+    post:
+      tags:
+      - TruckLoadTenderService
+      summary: Create Truck Load Tender
+      description: Creates a Truck Load Tender.
+      operationId: CreateTruckLoadTender
+      parameters:
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1CreateTruckLoadTenderRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1CreateTruckLoadTenderResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /t/v1/load-tender/update:
+    put:
+      tags:
+      - TruckLoadTenderService
+      summary: Update Truck Load Tender
+      description: Updates a Truck Load Tender.
+      operationId: UpdateTruckLoadTender
+      parameters:
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateTruckLoadTenderRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1UpdateTruckLoadTenderResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /t/v1/load-tender/get:
+    get:
+      tags:
+      - TruckLoadTenderService
+      summary: Get Truck Load Tender
+      description: Returns a single Truck Load Tender.
+      operationId: GetTruckLoadTender
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetTruckLoadTenderResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+components:
+  schemas:
+    v1DeleteTruckLoadTenderRequest:
+      properties:
+        name:
+          type: string
+      type: object
+    v1DeleteTruckLoadTenderResponse:
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1ListTruckLoadTenderResponse:
+      properties:
+        next_page_token:
+          type: string
+        truck_load_tenders:
+          items:
+            $ref: '#/components/schemas/v1TruckLoadTender'
+          type: array
+      type: object
+    v1TruckLoadTender:
+      description: Truck Load Tender.
+      properties:
+        bol_handling_requirements:
+          items:
+            $ref: '#/components/schemas/v1BolHandlingRequirement'
+          type: array
+        business_instructions:
+          items:
+            $ref: '#/components/schemas/v1BusinessInstruction'
+          type: array
+        date_time_references:
+          items:
+            $ref: '#/components/schemas/v1DateTimeReference'
+          type: array
+        equipment_details:
+          items:
+            $ref: '#/components/schemas/armsEquipmentDetails'
+          type: array
+        interline_information:
+          items:
+            $ref: '#/components/schemas/v1InterlineInformation'
+          type: array
+        notes:
+          items:
+            $ref: '#/components/schemas/v1NoteOrSpecialInstruction'
+          type: array
+        scac:
+          description: B202 contains the Standard Carrier Alpha Code (SCAC) of the carrier that will receive
+            the load tender.
+          type: string
+        shipment_identification_number:
+          type: string
+        shipment_method_of_payment:
+          $ref: '#/components/schemas/TruckLoadTenderShipmentMethodOfPayment'
+        shipment_parties:
+          items:
+            $ref: '#/components/schemas/armsParty'
+          type: array
+        stop_off_details:
+          items:
+            $ref: '#/components/schemas/v1StopOffDetail'
+          type: array
+        total_weight:
+          format: double
+          type: number
+        total_weight_qualifier:
+          $ref: '#/components/schemas/v1TruckLoadTenderWeightQualifier'
+        truck_load_tender_id:
+          type: string
+        weight_unit_code:
+          $ref: '#/components/schemas/v1TruckLoadTenderWeightUnitCode'
+      type: object
+    v1BolHandlingRequirement:
+      properties:
+        special_handling_code:
+          $ref: '#/components/schemas/TruckLoadTenderSpecialHandlingCode'
+        special_handling_description:
+          type: string
+      type: object
+    v1BusinessInstruction:
+      properties:
+        description:
+          type: string
+        reference_identification:
+          type: string
+        reference_identification_qualifier:
+          description: Kept as the raw X12 qualifier string to support the broad/open-ended L11 qualifier
+            list.
+          type: string
+      type: object
+    v1DateTimeReference:
+      properties:
+        date:
+          type: string
+        date_qualifier:
+          $ref: '#/components/schemas/TruckLoadTenderDateQualifier'
+        time:
+          type: string
+        time_code:
+          type: string
+        time_qualifier:
+          type: string
+      type: object
+    armsEquipmentDetails:
+      properties:
+        aar_car_type:
+          type: string
+        carrier_code:
+          type: string
+        chassis_initial:
+          type: string
+        chassis_number:
+          format: uint64
+          type: string
+        check_digit:
+          format: int64
+          type: integer
+        description_code:
+          type: string
+        dunnage:
+          format: int64
+          type: integer
+        dunnage_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        equipment_initial:
+          type: string
+        equipment_name:
+          type: string
+        equipment_number:
+          format: uint64
+          type: string
+        equipment_ordered:
+          $ref: '#/components/schemas/armsEquipmentOrdered'
+        gross_weight_lbs:
+          format: int64
+          type: integer
+        gross_weight_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        height_in:
+          format: int64
+          type: integer
+        height_measure:
+          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
+        interchange_move_authorities:
+          items:
+            $ref: '#/components/schemas/armsInterchangeMoveAuthority'
+          type: array
+        iso_container_code:
+          type: string
+        length_in:
+          format: int64
+          type: integer
+        length_measure:
+          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
+        net_weight_lbs:
+          format: int64
+          type: integer
+        net_weight_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        ownership_code:
+          type: string
+        owning_carrier_code:
+          type: string
+        position:
+          type: string
+        seal_numbers:
+          items:
+            type: string
+          type: array
+        shipment_info:
+          items:
+            $ref: '#/components/schemas/armsEquipmentShipmentInformation'
+          type: array
+        tare_qualifier_code:
+          type: string
+        tare_weight_lbs:
+          format: int64
+          type: integer
+        tare_weight_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        terminals:
+          items:
+            $ref: '#/components/schemas/armsTerminal'
+          type: array
+        weight_allowance:
+          format: int64
+          type: integer
+        weight_allowance_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        weight_type:
+          $ref: '#/components/schemas/armsWeightType'
+        width_in:
+          format: int64
+          type: integer
+        width_measure:
+          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
+      type: object
+    v1InterlineInformation:
+      properties:
+        routing_sequence_code:
+          type: string
+        scac:
+          type: string
+        state_or_province_code:
+          type: string
+        transportation_method_type_code:
+          type: string
+      type: object
+    v1NoteOrSpecialInstruction:
+      properties:
+        description:
+          type: string
+        note_reference_code:
+          $ref: '#/components/schemas/TruckLoadTenderNoteReferenceCode'
+      type: object
+    TruckLoadTenderShipmentMethodOfPayment:
+      description: Codes identifying payment terms for transportation charges.
+      enum:
+      - COLLECT
+      - PREPAID
+      type: string
+    armsParty:
+      properties:
+        additional_names:
+          items:
+            type: string
+          type: array
+        address:
+          items:
+            type: string
+          type: array
+        administrative_contacts:
+          items:
+            $ref: '#/components/schemas/armsAdministrativeContact'
+          type: array
+        billing_info:
+          items:
+            $ref: '#/components/schemas/armsBillingInformation'
+          type: array
+        city_name:
+          type: string
+        country_code:
+          type: string
+        country_subdivision_code:
+          type: string
+        entity_sub_identifier_code:
+          type: string
+        entity_sub_identifier_relationship_code:
+          type: string
+        id_code:
+          type: string
+        id_code_qualifier:
+          $ref: '#/components/schemas/armsPartyIdentificationCodeQualifier'
+        location_identifier:
+          type: string
+        location_qualifier:
+          type: string
+        location_uuid:
+          type: string
+        name:
+          type: string
+        party_type:
+          $ref: '#/components/schemas/armsPartyEntityIdentifierCode'
+        postal_code:
+          type: string
+        reference_info:
+          items:
+            $ref: '#/components/schemas/armsReferenceInfo'
+          type: array
+        state_or_province:
+          type: string
+      type: object
+    v1StopOffDetail:
+      properties:
+        bol_handling_requirements:
+          items:
+            $ref: '#/components/schemas/v1BolHandlingRequirement'
+          type: array
+        date_time_references:
+          items:
+            $ref: '#/components/schemas/v1DateTimeReference'
+          type: array
+        lading_descriptions:
+          items:
+            $ref: '#/components/schemas/v1LadingDescription'
+          type: array
+        party:
+          $ref: '#/components/schemas/armsParty'
+        shipment_weight_packaging_quantity_data:
+          items:
+            $ref: '#/components/schemas/v1ShipmentWeightPackagingQuantityData'
+          type: array
+        stop_reason_code:
+          $ref: '#/components/schemas/TruckLoadTenderStopReasonCode'
+        stop_sequence_number:
+          format: int32
+          type: integer
+        weight:
+          format: double
+          type: number
+      type: object
+    v1TruckLoadTenderWeightQualifier:
+      description: Weight qualifier codes used for total shipment weight.
+      enum:
+      - SHIPPER_WEIGHT
+      - BILLED_WEIGHT
+      - ACTUAL_NET_WEIGHT_FOR_COMBINATION
+      - ESTIMATED_NET_WEIGHT
+      - GROSS_WEIGHT
+      - LIGHT_WEIGHT
+      - CLEAN_OUT
+      - LEGAL_WEIGHT
+      - MINIMUM_WEIGHT
+      - ACTUAL_NET_WEIGHT
+      - EXCESS_WEIGHT
+      - STATE_WEIGHT
+      - MAXIMUM_WEIGHT
+      type: string
+    v1TruckLoadTenderWeightUnitCode:
+      description: Codes specifying weight units.
+      enum:
+      - METRIC_TON
+      - GRAMS
+      - KILOGRAMS
+      - POUNDS
+      - MEASUREMENT_TON
+      - OUNCES
+      - SHORT_TON
+      - LONG_TON
+      type: string
+    TruckLoadTenderSpecialHandlingCode:
+      description: Codes specifying special transportation handling instructions.
+      enum:
+      - ADVANCE_APPOINTMENT
+      - DELIVERY_APPOINTMENT
+      - EXPORT
+      type: string
+    TruckLoadTenderDateQualifier:
+      description: Codes specifying the type of date.
+      enum:
+      - CANCEL_AFTER_THIS_DATE
+      - DELIVERY_REQUESTED_ON_THIS_DATE
+      - INVOICE_DATE
+      - PURCHASE_ORDER_DATE
+      - SAILING_DATE
+      - SOLD_DATE
+      - EFFECTIVE_DATE
+      - PURCHASE_ORDER_RECEIVED
+      - PROCESS_DATE
+      - REQUESTED_SHIP_DATE_PICKUP_DATE
+      - SHIPPED_ON_THIS_DATE
+      - TERMS_DISCOUNT_DUE_DATE
+      - TERMS_NET_DUE_DATE
+      - PREFERRED_PAYMENT_DATE
+      - PROMOTION_START
+      - PROMOTION_END
+      - ESTIMATED_DELIVERY_DATE
+      - DATE_AVAILABLE_CONSTRUCTIVE_REPLACEMENT
+      - DATE_UNLOADED
+      - CHECK_DATE
+      - CHARGE_BACK_DATE
+      - FREIGHT_BILL_DATE
+      - PROMOTION_ORDER_DATE_START
+      - PROMOTION_ORDER_DATE_END
+      - PROMOTION_SHIP_DATE_START
+      - PROMOTION_SHIP_DATE_END
+      - PROMOTION_REQUESTED_DELIVERY_DATE_START
+      - PROMOTION_REQUESTED_DELIVERY_DATE_END
+      - PROMOTION_PERFORMANCE_DATE_START
+      - PROMOTION_PERFORMANCE_DATE_END
+      - PROMOTION_INVOICE_PROTECTION_DATE_START
+      - PROMOTION_INVOICE_PROTECTION_DATE_END
+      - PROMOTION_FLOOR_STOCK_PROTECT_START
+      - PROMOTION_FLOOR_STOCK_PROTECT_END
+      - DELIVERED_ON_THIS_DATE
+      - EXPIRATION_DATE
+      - SHIP_NOT_BEFORE_DATE
+      - SHIP_NOT_LATER_THAN_DATE
+      - SHIP_WEEK_OF_DATE
+      - ORIGINAL_PURCHASE_ORDER_DATE
+      - DATE_INVOICE_CREATED
+      - BUY_PERIOD_DATE_START
+      - BUY_PERIOD_DATE_END
+      - ARRIVAL_AT_DESTINATION_YARD
+      - NOTIFIED
+      - ACTUAL_PLACEMENT
+      - RELEASED
+      - CUSTOMS_RELEASE
+      - DUTY_PAID
+      - CHARGED_FROM
+      - CHARGED_TO
+      - ORDERED
+      - DELIVER_NOT_BEFORE_DATE
+      - DELIVER_NO_LATER_THAN_DATE
+      - DELIVER_WEEK_OF
+      - ACTUAL_FREE_TIME_EXPIRATION_DATE
+      - GUARANTEE_EXPIRATION_DATE
+      - PRICE_CHANGE_LAST_ORDER_DATE
+      - PRICE_CHANGE_LAST_ARRIVAL_DATE
+      - PRICE_CHANGE_LAST_SHIP_DATE
+      - PRICE_CHANGE_EFFECTIVE_DATE
+      - ACCRUAL_START_DATE
+      - ACCRUAL_END_DATE
+      - MUST_RESPOND_BY
+      - DELIVERED_BY_THIS_DATE
+      - REQUESTED_DELIVERY_DATE
+      - SCHEDULED_PICKUP_DATE
+      - SCHEDULED_DELIVERY_DATE
+      - EST_NEXT_PROMO_DATE_START
+      - EST_NEXT_PROMO_DATE_END
+      - EST_NEXT_PROMO_SHIP_DATE_START
+      - ESTIMATED_NEXT_PROMOTION_SHIP_DATE_END
+      - BILL_OF_LADING
+      - PICKUP_APPOINTMENT_SCHEDULED_DATE
+      - DELIVERY_APPOINTMENT_SCHEDULED_DATE
+      - PICKUP_REQUESTED_SCHEDULED_DATE
+      - DELIVERY_REQUESTED_SCHEDULED_DATE
+      - PICKUP_APPOINTMENT_GRANTED_DATE
+      - DELIVERY_APPOINTMENT_GRANTED_DATE
+      - EQUIPMENT_FURNISHED_DATE
+      - BILL_OF_LADING_INITIATED_DATE
+      - DATE_ISSUED
+      - ACTUAL_PICKUP_DATE
+      - FIRST_ORDER_DATE
+      - FIRST_SHIP_DATE
+      - FIRST_ARRIVAL_DATE
+      - REQUESTED_PACK_DATE
+      - SUPERSEDED_DATE
+      - SPOT_FOR_LOAD_DATE
+      - SPOT_FOR_UNLOAD_DATE
+      - SPOT_FOR_STORAGE_DATE_NO_SHIPMENT
+      - SPOT_FOR_LOAD_EXCHANGE_DATE_EXPORT
+      - SCHEDULED_PICKUP_DATE_NEEDS_CONFIRMATION
+      - SCHEDULED_DELIVERY_DATE_NEEDS_CONFIRMATION
+      - SCHEDULED_PICKUP_DATE_APPOINTMENT_CONFIRMED
+      - SCHEDULED_DELIVERY_DATE_APPOINTMENT_CONFIRMED
+      - STORE_INVENTORY_STOCK
+      - WAREHOUSE_INVENTORY_STOCK
+      - TRANSACTION_CONTROL_DATE
+      - PUBLICATION_DATE
+      - REQUIRED_BY
+      - VALIDATED
+      - PACK_DATE
+      - BACKORDER_RELEASE_DATE
+      - OFFERED_FOR_DELIVERY
+      - INSPECTION
+      - SHELF_LIFE_EXPIRATION
+      - WARRANTY_EXPIRATION
+      - MANUFACTURE
+      - CONTRACT_PHYSICALLY_COMPLETED
+      - CONTRACT_FINAL_PAYMENT
+      - ESTIMATED_CONTRACT_COMPLETION
+      - CONTRACT_CLOSED
+      - EXTENDED_CLOSEOUT
+      - DATE_DELIVERY_COMMENCED
+      - PRODUCT_RECEIPT_DATE
+      - ACCEPTANCE
+      - REJECTION
+      - RECORDED
+      - SIGNATURE
+      - ACTION
+      - EXPECTED_REPLY
+      - DEMAND_RECEIPT_DATE
+      - CONSUMER_PRODUCT_VARIANT_START_EFFECTIVE_DATE
+      - CONSUMER_PRODUCT_VARIANT_END_EFFECTIVE_DATE
+      - CONSUMER_PRODUCT_VARIANT_DISCONTINUED_DATE
+      - CONSUMER_PRODUCT_VARIANT_CANCELLED_DATE
+      - CUTOFF_DATE
+      - BEGINNING_DATE_OF_CUSTOMER_PLANT_SHUTDOWN
+      - ENDING_DATE_OF_CUSTOMER_PLANT_SHUTDOWN
+      - DATE_LOADING_COMPLETED
+      - EARLIEST_PICKUP_DATE
+      - ESTIMATED_SHIPPING_DATE
+      - FRESHNESS_DATE
+      - SCHEDULED_SERVICE_COMPLETION
+      - LAST_ACQUISITION
+      - DATE_LOADING_COMMENCED
+      - LAST_DEMAND
+      - LATEST_PICKUP_DATE
+      - MAPPING_PRODUCT_EFFECTIVE_DATE
+      - ON_SALE_DATE
+      - PERIOD_END
+      - READY_TO_SHIP
+      - DATE_SHIPPED_TO_PORT_OF_EMBARKATION_POE
+      - ORIGINAL_TRANSACTION
+      - TRANSFER
+      type: string
+    cedaraiIntWeightMeasurement:
+      properties:
+        unit:
+          type: string
+        value:
+          format: int32
+          type: integer
+      type: object
+    armsEquipmentOrdered:
+      properties:
+        aar_car_type:
+          type: string
+        cubic_capacity:
+          format: int32
+          type: integer
+        height_inches:
+          format: int32
+          type: integer
+        length_inches:
+          format: int32
+          type: integer
+        weight_capacity:
+          format: int32
+          type: integer
+      type: object
+    cedaraiIntLengthMeasurement:
+      properties:
+        unit:
+          type: string
+        value:
+          format: int32
+          type: integer
+      type: object
+    armsInterchangeMoveAuthority:
+      properties:
+        carrier_code:
+          type: string
+        movement_authority_code:
+          type: string
+        reject_reason_code:
+          type: string
+        state_tariff_application_code:
+          type: string
+        terminal_tariff_application_code:
+          type: string
+      type: object
+    armsEquipmentShipmentInformation:
+      properties:
+        description:
+          type: string
+        extended_reference_info:
+          items:
+            $ref: '#/components/schemas/armsExtendedReferenceInformation'
+          type: array
+        line_items:
+          items:
+            $ref: '#/components/schemas/armsEquipmentLineItem'
+          type: array
+        reference_id:
+          type: string
+        reference_id_qualifier:
+          type: string
+      type: object
+    armsTerminal:
+      properties:
+        location_identifier:
+          type: string
+        location_qualifier:
+          type: string
+        port_name:
+          type: string
+        terminal_function_code:
+          type: string
+      type: object
+    armsWeightType:
+      enum:
+      - WT_ACTUAL
+      type: string
+    TruckLoadTenderNoteReferenceCode:
+      description: Codes identifying the functional area or purpose for which a note applies.
+      enum:
+      - MUTUALLY_DEFINED
+      type: string
+    armsAdministrativeContact:
+      properties:
+        communication_numbers:
+          items:
+            $ref: '#/components/schemas/armsCommunicationNumber'
+          type: array
+        contact_function_code:
+          type: string
+        contact_inquiry_reference:
+          type: string
+        name:
+          type: string
+      type: object
+    armsBillingInformation:
+      properties:
+        carrier_codes:
+          items:
+            type: string
+          type: array
+        destination:
+          $ref: '#/components/schemas/armsWaybillStation'
+        origin:
+          $ref: '#/components/schemas/armsWaybillStation'
+        rebill_reason_code:
+          $ref: '#/components/schemas/armsRebillReasonCode'
+      type: object
+    armsPartyIdentificationCodeQualifier:
+      enum:
+      - DUNS
+      - DUNS_PLUS_4
+      - TELEPHONE_NUMBER
+      - ABI_ROUTING_CODE
+      - SPLC
+      - CBSA_AUTOMOTIVE_ID
+      - BROKER_FILER_ID
+      - CRA_BUSINESS_NUMBER
+      - CIF_NUMBER
+      - FEDERAL_TAXPAYER_ID
+      - JURISDICTION_CODE
+      - ORIGIN_ASSIGNED_CODE
+      - MUTUALLY_DEFINED
+      type: string
+    armsPartyEntityIdentifierCode:
+      enum:
+      - PARTY_TO_BE_BILLED
+      - ORIGIN_PARTY
+      - DESTINATION_PARTY
+      - BENEFICIAL_OWNER
+      - BILL_TO
+      - IN_CARE_OF_1
+      - CUSTOMS_BROKER
+      - CHASSIS_PROVIDER
+      - CONSIGNEE
+      - CONVERTER
+      - DESTINATION_MAIL_FACILITY
+      - FORWARDER
+      - IMPORTER
+      - MOTOR_CARRIER
+      - NOTIFY_PARTY_1
+      - NOTIFY_PARTY_2
+      - OTHER_DEPARTMENTS
+      - ORIGIN_MAIL_FACILITY
+      - FREIGHT_BILL_PARTY
+      - PICK_UP_PARTY
+      - CERTIFICATION_PARTY
+      - SHIP_FROM
+      - SHIPPER
+      - STEAMSHIP_COMPANY
+      - SHIP_TO
+      - ULTIMATE_CONSIGNEE
+      - INLAND_MEXICAN_BROKER
+      - CANADIAN_CUSTOMS_BROKER
+      - MEXICAN_CUSTOMS_BROKER
+      - US_CUSTOMS_BROKER
+      - MONITORING_PARTY
+      - CUSTOMER
+      type: string
+    armsReferenceInfo:
+      properties:
+        description:
+          type: string
+        reference_id:
+          type: string
+        reference_id_qualifier:
+          type: string
+      type: object
+    v1LadingDescription:
+      properties:
+        commodity_code:
+          type: string
+        commodity_code_qualifier:
+          type: string
+        lading_description:
+          type: string
+        lading_line_item_number:
+          type: string
+        packaging_code:
+          type: string
+      type: object
+    v1ShipmentWeightPackagingQuantityData:
+      properties:
+        lading_quantity:
+          format: double
+          type: number
+        lading_quantity_2:
+          format: double
+          type: number
+        weight:
+          format: double
+          type: number
+        weight_2:
+          format: double
+          type: number
+        weight_qualifier:
+          type: string
+        weight_qualifier_2:
+          type: string
+        weight_unit_code:
+          $ref: '#/components/schemas/v1TruckLoadTenderWeightUnitCode'
+      type: object
+    TruckLoadTenderStopReasonCode:
+      description: Codes specifying the reason for a stop.
+      enum:
+      - COMPLETE
+      - COMPLETE_UNLOAD
+      - LOAD
+      - PART_LOAD
+      - PART_UNLOAD
+      - UNLOAD
+      type: string
+    armsExtendedReferenceInformation:
+      properties:
+        description:
+          type: string
+        reference_id:
+          type: string
+        reference_id_qualifier:
+          type: string
+        reference_timestamp:
+          format: date-time
+          type: string
+      type: object
+    armsEquipmentLineItem:
+      properties:
+        cbp_barcode_number:
+          type: string
+        commodity_code:
+          type: string
+        commodity_code_qualifier:
+          type: string
+        commodity_description:
+          type: string
+        currency_code:
+          type: string
+        customs_shipment_value:
+          format: int32
+          type: integer
+        destination_country_code:
+          type: string
+        marks_and_numbers:
+          type: string
+        origin_country_code:
+          type: string
+        quantity:
+          format: double
+          type: number
+        smallest_exterior_package_type:
+          type: string
+        weight:
+          format: float
+          type: number
+        weight_unit_code:
+          type: string
+      type: object
+    armsCommunicationNumber:
+      properties:
+        number:
+          type: string
+        qualifier:
+          type: string
+      type: object
+    armsWaybillStation:
+      properties:
+        city_name:
+          type: string
+        country_code:
+          type: string
+        fsac:
+          type: string
+        postal_code:
+          type: string
+        splc:
+          type: string
+        state_or_province:
+          type: string
+      type: object
+    armsRebillReasonCode:
+      enum:
+      - RRC_COLLECT
+      - RRC_PREPAID
+      type: string
+    v1CreateTruckLoadTenderRequest:
+      example:
+        truck_load_tender:
+          business_instructions:
+          - description: Purchase order reference number
+            reference_identification: WS-2026-04172
+            reference_identification_qualifier: PO
+          scac: JBHT
+          shipment_identification_number: WS-2026-04172
+          shipment_method_of_payment: PREPAID
+          shipment_parties:
+          - id_code: JBHT
+            name: J.B. Hunt
+            party_type: MOTOR_CARRIER
+          stop_off_details:
+          - date_time_references:
+            - date: '20260320'
+              date_qualifier: EARLIEST_PICKUP_DATE
+            - date: '20260327'
+              date_qualifier: LATEST_PICKUP_DATE
+            lading_descriptions:
+            - lading_description: Soda Ash
+              lading_line_item_number: '1'
+            party:
+              address:
+              - 1234 Soda Way
+              city_name: Green River
+              name: Pickup - Green River
+              party_type: SHIP_FROM
+              postal_code: '82935'
+              state_or_province: WY
+            stop_reason_code: LOAD
+            stop_sequence_number: 1
+          - party:
+              address:
+              - North 36th Street
+              - Troll Ave N
+              city_name: Seattle
+              name: Destination - Seattle
+              party_type: SHIP_TO
+              postal_code: '98103'
+              state_or_province: WA
+            stop_reason_code: UNLOAD
+            stop_sequence_number: 2
+          total_weight: 44000
+          total_weight_qualifier: ACTUAL_NET_WEIGHT
+          weight_unit_code: POUNDS
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
+      type: object
+    v1CreateTruckLoadTenderResponse:
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
+      type: object
+    v1UpdateTruckLoadTenderRequest:
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
+      type: object
+    v1UpdateTruckLoadTenderResponse:
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
+      type: object
+    v1GetTruckLoadTenderResponse:
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: x-arms-api-key
+      type: apiKey
+    AssumeUserAuth:
+      in: header
+      name: x-arms-assume-user
+      type: apiKey

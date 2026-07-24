@@ -1,0 +1,18 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.cedarai.com/user-docs/api-reference/introduction
+versioning:
+  scheme: uri-path
+  current: v1
+  notes: >-
+    Service paths are versioned in the URI (e.g. /t/v1/... for charge/shipper
+    services). The external ARMS OpenAPI reports info.version 1.0.0.
+status_page: https://status.cedarai.com
+status_page_provider: Instatus
+sla:
+  published: false
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No public deprecation policy or RFC 8594 Sunset/Deprecation header support was found.
+deprecated_operations: []

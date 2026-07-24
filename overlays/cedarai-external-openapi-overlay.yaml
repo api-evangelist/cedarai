@@ -1,0 +1,16 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cedar ARMS External API
+  version: 1.0.0
+extends: openapi/cedarai-external-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-18'
+      x-apievangelist-provider: cedarai
+      x-apievangelist-auth: api-key + assumed-user (x-arms-api-key, x-arms-assume-user)
+      x-apievangelist-regions: [us:cedarai.com, eu:cedarai.se]
+      x-apievangelist-pagination: cursor (pageSize/pageNextToken/pagePrevToken)
+      x-apievangelist-webhooks: asyncapi/cedarai-webhooks.yml
+      x-apievangelist-conventions: conventions/cedarai-conventions.yml
+      x-apievangelist-errors: errors/cedarai-problem-types.yml

@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/ operationIds (grounded, verified) + conventions/errors
+skills:
+  - file: cedarai-railcar-inventory.md
+    name: Track and move railcar inventory
+    api: openapi/cedarai-external-openapi.yml
+    operations: [listInventory, listStationTracks, listEquipmentHistory, moveEquipment, switchRequestEquipment]
+  - file: cedarai-train-work-order.md
+    name: Run a train work order
+    api: openapi/cedarai-work-order-openapi.yml
+    operations: [ListWorkOrders, ListWorkOrderTasks, ArriveTrain, DepartTrain, PickupCars, SetoutCars, RecordTrainEvent, ReSequenceTrain]
+  - file: cedarai-shipper-billing.md
+    name: Export charges and reconcile shipper invoices
+    api: openapi/cedarai-charge-openapi.yml
+    operations: [ListChargesTableDef, ListChargesTableSummary, ListChargesTableRows, ListInvoices, GetInvoice, AttachVoucher]

@@ -1,0 +1,547 @@
+openapi: 3.0.1
+info:
+  title: protobuf/arms/charge.proto
+  version: version not set
+servers:
+- description: Production (US)
+  url: https://api-lg-k-h1.arms.cedarai.com
+- description: Production (EU)
+  url: https://api-lg-k-h1.arms.cedarai.se
+security:
+- ApiKeyAuth: []
+  AssumeUserAuth: []
+tags:
+- name: ChargeService
+paths:
+  /t/v1/charges-table-summary:
+    post:
+      tags:
+      - ChargeService
+      summary: Get Charges Table Summary
+      description: 'Returns aggregate summary values for the charges table using the requested filters
+        and aggregations, without returning full row detail. Downstream finance systems can use this endpoint
+        to validate export scope, reconcile totals, and compare Cedar results against imported batches
+        in NetSuite, Sage, or another ERP.
+
+
+        Common reconciliation patterns:
+
+
+        | Aggregate request | Typical downstream use |
+
+        | --- | --- |
+
+        | `COUNT` on `chargeId` | Confirm the number of charges in an export batch. |
+
+        | `SUM` on `amount` | Compare Cedar totals with external invoice or journal totals. |
+
+        | `SUM` on `adjustment_total` | Measure the net effect of adjustments before posting. |
+
+        | `MIN` / `MAX` on `appliedAt` | Verify the date window covered by an incremental export. |
+
+
+        Use the same filter set you would pass to `List Charges Table Rows` when you want summary numbers
+        for the exact same population of charges.'
+      operationId: ListChargesTableSummary
+      parameters:
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/armsGetTableSummaryRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/armsGetTableSummaryResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /t/v1/charges-table-rows:
+    post:
+      tags:
+      - ChargeService
+      summary: List Charges Table Rows
+      description: 'Returns a page of charges export rows using the requested columns, filters, sorting,
+        and pagination. Downstream finance systems such as NetSuite, Sage, or ERP middleware typically
+        call `Get Charges Table Definition` first, choose a subset of fields, and then request rows for
+        export, reconciliation, or incremental sync jobs.
+
+
+        Key request fields:
+
+
+        | Input | How downstream systems commonly use it |
+
+        | --- | --- |
+
+        | `table_data_request.requested_columns` | Select the Cedar fields to include in each exported
+        row. |
+
+        | `table_data_request.additional_filters` | Limit the export to a specific invoice, accounting
+        period, billing type, service type, GL code, customer, or other supported charge dimension. |
+
+        | `table_data_request.sort_columns` | Create a stable export order for repeatable batching and
+        reconciliation. |
+
+        | `page_size`, `page_next_token`, `page_previous_token` | Page through large exports without re-reading
+        the full result set. |
+
+
+        Each row is returned as a column-keyed structure rather than a fixed finance schema, so consumers
+        can request only the columns they actively map into their downstream system.'
+      operationId: ListChargesTableRows
+      parameters:
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/armsListChargesTableRowsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/armsTableData'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+  /t/v1/charges-table-def:
+    get:
+      tags:
+      - ChargeService
+      summary: Get Charges Table Definition
+      description: 'Returns the available charges export columns and default columns. Downstream finance
+        systems such as NetSuite, Sage, or ERP middleware can use this metadata to map Cedar fields before
+        requesting charge rows.
+
+
+        This response is metadata only: it tells consumers which columns are available, how Cedar labels
+        them, which columns are searchable, and which columns Cedar returns by default.
+
+
+        Common export-oriented columns:
+
+
+        | Column | Meaning for downstream systems |
+
+        | --- | --- |
+
+        | `chargeId` | Stable Cedar charge identifier for reconciliation, upserts, or idempotent imports.
+        |
+
+        | `customerLocationAccountNumber` | Customer location account number often used to map a charge
+        into an external account or business unit. |
+
+        | `invoice` | Invoice number or sequence used to group already-invoiced charges. |
+
+        | `accountingPeriod` | Cedar accounting period label that can be used for period-close exports
+        or batching. |
+
+        | `billingType` | High-level charge category such as storage, demurrage, switching, or ISS shipment.
+        |
+
+        | `serviceType` | Service-specific classification that can help downstream mapping rules route
+        charges to the right workflow. |
+
+        | `glCode` | General ledger code used for financial posting and account mapping. |
+
+        | `rateTableEntry` / `rateDescription` | Human-readable pricing fields that explain why the amount
+        was calculated. |
+
+        | `adjustment_total` | Net difference between the original amount and the final adjusted amount.
+        |
+
+
+        The response example below shows a representative subset of these columns.'
+      operationId: ListChargesTableDef
+      parameters:
+      - description: Carrier ID
+        in: header
+        name: Carrier
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                columns:
+                - key: chargeId
+                  name: Charge ID
+                  searchable: true
+                  type: INT
+                - key: customer
+                  name: Customer
+                  searchable: true
+                  type: STRING
+                - key: customerLocation
+                  name: Customer Location
+                  searchable: true
+                  type: STRING
+                - key: customerLocationAccountNumber
+                  name: 'Customer Location Account #'
+                  searchable: true
+                  type: STRING
+                - key: invoice
+                  name: Invoice
+                  searchable: true
+                  type: STRING
+                - key: accountingPeriod
+                  name: Accounting Period
+                  searchable: true
+                  type: STRING
+                - enumValues:
+                  - STORAGE
+                  - DEMURRAGE
+                  - SWITCHING
+                  - JUNCTION SETTLEMENT
+                  - NON-RAILROAD CHARGE
+                  - TRACKAGE
+                  - EXCESS
+                  - MISC.
+                  - ISS SHIPMENT
+                  key: billingType
+                  name: Billing Type
+                  searchable: true
+                  type: STRING
+                - enumValues:
+                  - IN_PROGRESS
+                  - PENDING
+                  - ASSIGNED
+                  - INVOICED
+                  - ARCHIVED
+                  - DELETED
+                  - RESET
+                  - VOID
+                  key: billingStatus
+                  name: Billing Status
+                  searchable: true
+                  type: STRING
+                - key: amount
+                  name: Amount
+                  searchable: true
+                  type: REAL
+                - key: appliedAt
+                  name: Applied At
+                  searchable: true
+                  type: TIMESTAMP
+                - key: serviceType
+                  name: Service Type
+                  searchable: true
+                  type: STRING
+                - key: glCode
+                  name: GL Code
+                  searchable: true
+                  type: STRING
+                - key: rateTableEntry
+                  name: Rate Table Entry
+                  searchable: true
+                  type: STRING
+                - key: rateDescription
+                  name: Rate Description
+                  searchable: true
+                  type: STRING
+                - key: adjustment_total
+                  name: Adjustment Total
+                  searchable: true
+                  type: REAL
+                defaultColumns:
+                - chargeId
+                - customer
+                - customerLocation
+                - billingStatus
+                - amount
+                - appliedAt
+                - invoice
+                - billingType
+                - serviceType
+                - glCode
+                - rateTableEntry
+              schema:
+                $ref: '#/components/schemas/armsTableDef'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+components:
+  schemas:
+    armsGetTableSummaryRequest:
+      properties:
+        aggregates:
+          items:
+            $ref: '#/components/schemas/armsColumnsToAggregate'
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/armsColumnSearchTerm'
+          type: array
+      type: object
+    armsGetTableSummaryResponse:
+      properties:
+        aggregates:
+          items:
+            $ref: '#/components/schemas/armsAggregateData'
+          type: array
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    armsColumnsToAggregate:
+      properties:
+        columnKey:
+          type: string
+        op:
+          $ref: '#/components/schemas/armsAggregateOp'
+      type: object
+    armsColumnSearchTerm:
+      properties:
+        columnKey:
+          type: string
+        op:
+          $ref: '#/components/schemas/armsRequestOp'
+        searchTerm:
+          type: string
+      type: object
+    armsAggregateData:
+      properties:
+        columnKey:
+          type: string
+        intVal:
+          format: int64
+          type: string
+        op:
+          $ref: '#/components/schemas/armsAggregateOp'
+        realVal:
+          format: double
+          type: number
+        stringVal:
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    armsAggregateOp:
+      default: AO_UNSPECIFIED
+      enum:
+      - AO_UNSPECIFIED
+      - AO_COUNT
+      - AO_SUM
+      - AO_AVG
+      - AO_MIN
+      - AO_MAX
+      - AO_STRING_CONCAT
+      - AO_STRING_CONCAT_DISTINCT
+      type: string
+    armsRequestOp:
+      default: RO_DEFAULT
+      enum:
+      - RO_DEFAULT
+      - RO_SUBSTRING
+      - RO_EXACT
+      - RO_STARTSWITH
+      - RO_ENDSWITH
+      - RO_EMPTY
+      - RO_LT
+      - RO_GT
+      - RO_LE
+      - RO_GE
+      - RO_NE
+      - RO_BETWEEN
+      - RO_NOT_EMPTY
+      - RO_NOT_SUBSTRING
+      - RO_NOT_STARTSWITH
+      - RO_NOT_ENDSWITH
+      type: string
+    armsListChargesTableRowsRequest:
+      properties:
+        pageNextToken:
+          type: string
+        pagePreviousToken:
+          type: string
+        pageSize:
+          format: int64
+          type: integer
+        tableDataRequest:
+          $ref: '#/components/schemas/armsRequestTableData'
+      type: object
+    armsTableData:
+      properties:
+        nextToken:
+          type: string
+        prevToken:
+          type: string
+        rows:
+          items:
+            $ref: '#/components/schemas/armsRowData'
+          type: array
+        tableDef:
+          $ref: '#/components/schemas/armsTableDef'
+      type: object
+    armsRequestTableData:
+      properties:
+        additionalFilters:
+          items:
+            $ref: '#/components/schemas/armsColumnSearchTerm'
+          type: array
+        pageNextToken:
+          type: string
+        pagePreviousToken:
+          type: string
+        pageSize:
+          format: int64
+          type: integer
+        requestedColumns:
+          items:
+            $ref: '#/components/schemas/armsColumnSearchTerm'
+          type: array
+        sortColumns:
+          items:
+            $ref: '#/components/schemas/armsSortColumn'
+          type: array
+      type: object
+    armsRowData:
+      properties:
+        data:
+          additionalProperties:
+            $ref: '#/components/schemas/armsColumnData'
+          type: object
+        intKey:
+          format: int64
+          type: string
+        stringKey:
+          type: string
+      type: object
+    armsTableDef:
+      properties:
+        columns:
+          items:
+            $ref: '#/components/schemas/armsColumnDef'
+          type: array
+        defaultColumns:
+          items:
+            type: string
+          type: array
+      type: object
+    armsSortColumn:
+      properties:
+        column:
+          type: string
+        direction:
+          $ref: '#/components/schemas/armsSortDirection'
+      type: object
+    armsColumnData:
+      properties:
+        boolVal:
+          type: boolean
+        columnKey:
+          type: string
+        decimalVal:
+          $ref: '#/components/schemas/googletypeDecimal'
+        intVal:
+          format: int64
+          type: string
+        realVal:
+          format: double
+          type: number
+        secondaryData:
+          properties: {}
+          type: object
+        stringVal:
+          type: string
+        tsVal:
+          format: date-time
+          type: string
+      type: object
+    armsColumnDef:
+      properties:
+        aliases:
+          items:
+            type: string
+          type: array
+        description:
+          type: string
+        enumValues:
+          items:
+            type: string
+          type: array
+        key:
+          type: string
+        name:
+          type: string
+        searchable:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/armsColumnDataType'
+      type: object
+    armsSortDirection:
+      default: ASCENDING
+      enum:
+      - ASCENDING
+      - DESCENDING
+      type: string
+    googletypeDecimal:
+      properties:
+        value:
+          type: string
+      type: object
+    armsColumnDataType:
+      default: STRING
+      enum:
+      - STRING
+      - INT
+      - REAL
+      - TIMESTAMP
+      - DECIMAL
+      - BOOLEAN
+      - TIME
+      type: string
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: x-arms-api-key
+      type: apiKey
+    AssumeUserAuth:
+      in: header
+      name: x-arms-assume-user
+      type: apiKey

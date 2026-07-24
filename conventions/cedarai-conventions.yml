@@ -1,0 +1,69 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.cedarai.com/user-docs/api-reference/introduction
+docs: https://docs.cedarai.com/user-docs/api-reference/introduction
+summary: >-
+  Cross-cutting request/response semantics for the Cedar ARMS external APIs,
+  captured from the published API introduction, webhook docs, and the OpenAPI
+  specs. All endpoints are HTTP POST over HTTP/2 (with HTTP/1.1 fallback).
+authentication:
+  style: api-key + assumed-user (two headers)
+  headers:
+    - name: x-arms-api-key
+      description: Region-scoped API key issued by Cedar; bound to one or more user groups.
+    - name: x-arms-assume-user
+      description: >-
+        Email of the Cedar user the request acts on behalf of; must belong to a
+        user group bound to the API key. Permissions come from the assumed user,
+        not the key.
+  see: authentication/cedarai-authentication.yml
+regions:
+  model: same paths/headers/key-shape; only the hostname TLD changes
+  us:
+    suffix: cedarai.com
+    hosts:
+      - https://api-lg.arms.cedarai.com        # REST + gRPC HTTP/2 (ARMS)
+      - https://api-lg-k-h1.arms.cedarai.com    # gRPC HTTP/1.1 (ARMS)
+      - https://api-lg-k.arms.cedarai.com       # Shipper APIs (Quotes/Invoices)
+      - https://api.linda.cedarai.com           # Notes (Linda)
+  eu:
+    suffix: cedarai.se
+    hosts:
+      - https://api-lg.arms.cedarai.se
+      - https://api-lg-k-h1.arms.cedarai.se
+      - https://api-lg-k.arms.cedarai.se
+      - https://api.linda.cedarai.se
+  note: API keys are region-scoped; a US key will not authenticate against an EU host.
+tenancy:
+  carrier_scoping: >-
+    Most operations require a carrierId query parameter identifying the carrier
+    (railroad) the request operates within.
+pagination:
+  style: cursor
+  request_params: [pageSize, pageNextToken, pagePrevToken]
+  response_fields: [nextToken]
+  notes: >-
+    Cursor-based paging via pageSize plus opaque pageNextToken/pagePrevToken
+    cursors; list responses return a nextToken to fetch the following page.
+idempotency:
+  documented_key_header: false
+  notes: >-
+    No Idempotency-Key header is documented. Charge imports are described as
+    idempotent via the stable chargeId (upsert/reconciliation semantics), and
+    bill-of-lading creation guards against duplicates with a 409 within the
+    lookup window, but there is no general request-replay idempotency contract.
+error_handling:
+  envelope: standard HTTP status codes (not application/problem+json)
+  auth_semantics: >-
+    401 = key/assumed-user not bound to a matching user group; 403 = valid user
+    without permission on the target endpoint.
+  see: errors/cedarai-problem-types.yml
+webhooks:
+  delivery: signed HTTP POST (Ed25519), HTTP/2 with HTTP/1.1 fallback
+  signature_headers: [X-Webhook-Timestamp, X-Webhook-Signature, X-Webhook-KeyId, X-Webhook-Id]
+  deduplication: X-Webhook-Id (UUID v4)
+  see: asyncapi/cedarai-webhooks.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  see: lifecycle/cedarai-lifecycle.yml

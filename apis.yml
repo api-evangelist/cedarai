@@ -1,20 +1,140 @@
 aid: cedarai
 name: Cedarai
-description: Cedarai is a company surfaced as a portfolio company of felicis and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Cedar AI builds ARMS (Automated Rail Management System), a cloud-native, AI-powered
+  transportation management platform for railroads, industrial shippers, transload and
+  intermodal terminals, and fleet/car owners. The ARMS External API exposes REST and gRPC
+  services for railcar inventory and history, waybills and bills of lading, work orders and
+  train movements, switching and class lists, charges, shipper invoices and quotes, truck
+  load tenders, network structure, and threaded notes (Linda) with AI summaries — plus
+  Ed25519-signed webhooks for real-time operational events, across US (cedarai.com) and EU
+  (cedarai.se) regions. Backed by Felicis.
 url: https://raw.githubusercontent.com/api-evangelist/cedarai/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - felicis
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: real-openapi-and-developer-surface
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
+image: https://arms.cedarai.com/cedar-icon.svg
 tags:
 - Company
-apis: []
+- Rail
+- Transportation
+- Logistics
+- Freight
+- Supply Chain
+- Railcar Management
+- Transportation Management System
+- Fleet Management
+- Artificial Intelligence
+apis:
+- aid: cedarai:cedarai-chargeservice-api
+  name: Cedarai ChargeService API
+  description: The ChargeService API from Cedarai — 3 operation(s) for chargeservice.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - ChargeService
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-chargeservice-api-openapi.yml
+- aid: cedarai:cedarai-equipment-history-api
+  name: Cedarai Equipment History API
+  description: The Equipment History API from Cedarai — 1 operation(s) for equipment history.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - Equipment History
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-equipment-history-api-openapi.yml
+- aid: cedarai:cedarai-ims-api
+  name: Cedarai Ims API
+  description: The Ims API from Cedarai — 16 operation(s) for ims.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - Ims
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-ims-api-openapi.yml
+- aid: cedarai:cedarai-invoicesservice-api
+  name: Cedarai InvoicesService API
+  description: The InvoicesService API from Cedarai — 3 operation(s) for invoicesservice.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - InvoicesService
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-invoicesservice-api-openapi.yml
+- aid: cedarai:cedarai-lindaservice-api
+  name: Cedarai LindaService API
+  description: The LindaService API from Cedarai — 9 operation(s) for lindaservice.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - LindaService
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-lindaservice-api-openapi.yml
+- aid: cedarai:cedarai-networkstructureservice-api
+  name: Cedarai NetworkStructureService API
+  description: >-
+    The NetworkStructureService API from Cedarai — 1 operation(s) for networkstructureservice.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - NetworkStructureService
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-networkstructureservice-api-openapi.yml
+- aid: cedarai:cedarai-quotesservice-api
+  name: Cedarai QuotesService API
+  description: The QuotesService API from Cedarai — 3 operation(s) for quotesservice.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - QuotesService
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-quotesservice-api-openapi.yml
+- aid: cedarai:cedarai-truckloadtenderservice-api
+  name: Cedarai TruckLoadTenderService API
+  description: The TruckLoadTenderService API from Cedarai — 5 operation(s) for truckloadtenderservice.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - TruckLoadTenderService
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-truckloadtenderservice-api-openapi.yml
+- aid: cedarai:cedarai-workorderservice-api
+  name: Cedarai WorkOrderService API
+  description: The WorkOrderService API from Cedarai — 10 operation(s) for workorderservice.
+  humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
+  baseURL: https://api-lg.arms.cedarai.com
+  tags:
+  - WorkOrderService
+  properties:
+  - type: OpenAPI
+    url: openapi/cedarai-workorderservice-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -23,3 +143,48 @@ maintainers:
 common:
 - type: Website
   url: https://cedarai.com
+- type: DeveloperPortal
+  url: https://docs.cedarai.com
+- type: Documentation
+  url: https://docs.cedarai.com
+- type: APIReference
+  url: https://docs.cedarai.com/user-docs/api-reference/introduction
+- type: GettingStarted
+  url: https://docs.cedarai.com/user-docs/admin/getting-started
+- type: Login
+  url: https://arms.cedarai.com/
+- type: Blog
+  url: https://cedarai.com/news
+- type: PrivacyPolicy
+  url: https://www.cedarai.com/privacy-policy/
+- type: AcceptableUsePolicy
+  url: https://www.cedarai.com/aup/
+- type: StatusPage
+  url: https://status.cedarai.com
+- type: Authentication
+  url: authentication/cedarai-authentication.yml
+- type: Conventions
+  url: conventions/cedarai-conventions.yml
+- type: ErrorCatalog
+  url: errors/cedarai-problem-types.yml
+- type: Webhooks
+  url: asyncapi/cedarai-webhooks.yml
+- type: Lifecycle
+  url: lifecycle/cedarai-lifecycle.yml
+- type: Conformance
+  url: conformance/cedarai-conformance.yml
+- type: DataModel
+  url: data-model/cedarai-data-model.yml
+- type: MCPServer
+  url: mcp/cedarai-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/cedarai-llms.txt
+- type: DomainSecurity
+  url: security/cedarai-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

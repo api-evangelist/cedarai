@@ -1,0 +1,30 @@
+{
+  "provider": "cedarai",
+  "sources": [
+    "cedarai-chargeservice-api-openapi.yml",
+    "cedarai-equipment-history-api-openapi.yml",
+    "cedarai-ims-api-openapi.yml",
+    "cedarai-invoicesservice-api-openapi.yml",
+    "cedarai-lindaservice-api-openapi.yml",
+    "cedarai-networkstructureservice-api-openapi.yml",
+    "cedarai-quotesservice-api-openapi.yml",
+    "cedarai-truckloadtenderservice-api-openapi.yml",
+    "cedarai-workorderservice-api-openapi.yml"
+  ],
+  "outputs": [
+    "cedarai-chargeservice-api-openapi.yml",
+    "cedarai-equipment-history-api-openapi.yml",
+    "cedarai-ims-api-openapi.yml",
+    "cedarai-invoicesservice-api-openapi.yml",
+    "cedarai-lindaservice-api-openapi.yml",
+    "cedarai-networkstructureservice-api-openapi.yml",
+    "cedarai-quotesservice-api-openapi.yml",
+    "cedarai-truckloadtenderservice-api-openapi.yml",
+    "cedarai-workorderservice-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

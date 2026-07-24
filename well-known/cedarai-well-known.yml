@@ -1,0 +1,37 @@
+generated: '2026-07-18'
+method: searched
+source: live probes of /.well-known/* on cedarai.com, docs.cedarai.com, arms.cedarai.com
+notes: >-
+  No real /.well-known/ discovery documents are published. cedarai.com and
+  www.cedarai.com return 404 for security.txt and openid-configuration. The
+  docs (Mintlify) and app (SPA) hosts return HTTP 200 for every /.well-known/*
+  path but the body is the site's HTML SPA shell (text/html), not a valid
+  well-known document — treated as absent.
+hosts:
+  - host: https://cedarai.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+  - host: https://docs.cedarai.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        valid: false
+        reason: text/html SPA fallback
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        valid: false
+        reason: text/html SPA fallback
+  - host: https://arms.cedarai.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        valid: false
+        reason: text/html SPA fallback
+      - path: /.well-known/security.txt
+        status: 200
+        valid: false
+        reason: text/html SPA fallback
+documents: []

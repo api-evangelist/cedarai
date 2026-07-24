@@ -1,0 +1,30 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/ + https://docs.cedarai.com/user-docs/sso + https://docs.cedarai.com/user-docs/admin/scim
+standards:
+  - id: scim2
+    conforms: true
+    evidence: >-
+      Docs document SCIM provisioning from identity providers (Azure Entra ID)
+      for automated user/group provisioning.
+    source: https://docs.cedarai.com/user-docs/sso/scim/azure
+  - id: saml-sso
+    conforms: true
+    evidence: SSO with Okta and Microsoft (Azure AD), IdP- and SP-initiated flows.
+    source: https://docs.cedarai.com/user-docs/sso/overview
+  - id: oidc-sso
+    conforms: true
+    evidence: SSO with Google/Microsoft/Okta (OIDC-based social + enterprise login for ARMS Mobile).
+    source: https://docs.cedarai.com/user-docs/sso/mobile
+  - id: apikey-auth
+    conforms: true
+    evidence: All OpenAPI operations secured with apiKey header schemes (x-arms-api-key + x-arms-assume-user).
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Error responses use plain HTTP status codes, not application/problem+json.
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securitySchemes are declared in the published specs.
+  - id: rfc8594-sunset
+    conforms: false
+    evidence: No Sunset/Deprecation header support documented.

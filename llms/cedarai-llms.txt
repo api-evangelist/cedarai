@@ -1,0 +1,108 @@
+# Cedar.AI Documentation
+
+## Docs
+
+- [Bulk edit railcar charge history](https://docs.cedarai.com/api-reference/bulk-edit-railcar-charge-history.md): Create and delete multiple charged history records in one request (supports dry run).
+- [Get Charges Table Definition](https://docs.cedarai.com/api-reference/chargeservice/get-charges-table-definition.md): Returns the available charges export columns and default columns. Downstream finance systems such as NetSuite, Sage, or ERP middleware can use this metadata to map Cedar fields before requesting charge rows.
+- [Get Charges Table Summary](https://docs.cedarai.com/api-reference/chargeservice/get-charges-table-summary.md): Returns aggregate summary values for the charges table using the requested filters and aggregations, without returning full row detail. Downstream finance systems can use this endpoint to validate export scope, reconcile totals, and compare Cedar results against imported batches in NetSuite, Sage, o…
+- [List Charges Table Rows](https://docs.cedarai.com/api-reference/chargeservice/list-charges-table-rows.md): Returns a page of charges export rows using the requested columns, filters, sorting, and pagination. Downstream finance systems such as NetSuite, Sage, or ERP middleware typically call `Get Charges Table Definition` first, choose a subset of fields, and then request rows for export, reconciliation,…
+- [Classify a class list](https://docs.cedarai.com/api-reference/classify-a-class-list.md): Creates a class list (switch list) from a list of car numbers by automatically picking destination tracks based on the carrier's configured block-to-track scope.
+- [Complete class list tasks](https://docs.cedarai.com/api-reference/complete-class-list-tasks.md): Marks one or more class list tasks as completed.
+- [Create a class list](https://docs.cedarai.com/api-reference/create-a-class-list.md): Creates a new class list (switch list) with the specified equipment moves.
+- [Create bill of lading](https://docs.cedarai.com/api-reference/create-bill-of-lading.md): Create a bill of lading for a waybill. It will always create a bill of lading regardless of what is provided in the request.
+- [Attaches Voucher](https://docs.cedarai.com/api-reference/invoicesservice/attaches-voucher.md): Associate a voucher to a shipper's invoice
+- [Get Shipper Invoice](https://docs.cedarai.com/api-reference/invoicesservice/get-shipper-invoice.md): Returns a single invoice
+- [List Shipper Invoices](https://docs.cedarai.com/api-reference/invoicesservice/list-shipper-invoices.md): Returns list of invoices
+- [AI summary of a note thread](https://docs.cedarai.com/api-reference/lindaservice/ai-summary-of-a-note-thread.md): Generates a one-paragraph AI summary of the note thread for an entity. Synchronous LLM call — expect 2 to 6 seconds latency. Cache results client-side if you display them frequently; the response is not cached server-side.
+- [Batch get note summaries](https://docs.cedarai.com/api-reference/lindaservice/batch-get-note-summaries.md): Returns note summaries for many entities in one round trip. Designed for list/grid pages that show a notes-count column. Entities with zero notes are omitted from the response.
+- [Create a note](https://docs.cedarai.com/api-reference/lindaservice/create-a-note.md): Creates a new threaded note on an entity (shipment, equipment, waybill, etc.). The caller's verified identity (from JWT or assumed user) becomes the note author. Reference tokens (`<<ref:type:id:displayText>>`) embedded in `content` should also be supplied as structured `references` for reverse-look…
+- [Delete a note](https://docs.cedarai.com/api-reference/lindaservice/delete-a-note.md): Soft-deletes a note. The row is retained for audit but excluded from all reads. Owners may always delete; non-owners require the `linda.notes.deleteAny` permission.
+- [Get note summary for one entity](https://docs.cedarai.com/api-reference/lindaservice/get-note-summary-for-one-entity.md): Returns a one-row summary for a single entity: total note count and the latest note. Use this to populate badges/counters without fetching the full thread.
+- [List notes](https://docs.cedarai.com/api-reference/lindaservice/list-notes.md): Returns notes on a given entity in descending chronological order (newest first). Supports cursor-based pagination via `page_size` and `page_token`. When both `referenced_entity_type` and `referenced_entity_id` are set, the request switches to reverse-lookup mode (notes mentioning the given entity),…
+- [Search notes (full-text)](https://docs.cedarai.com/api-reference/lindaservice/search-notes-full-text.md): Full-text search across all notes for the carrier, ranked by Postgres `ts_rank`. Returns `<mark>`-highlighted snippets via `ts_headline`. The index strips `<<ref:...>>` reference token wrappers and normalizes hashtag-group syntax (`#group(content)`) so chip text and automation-written hashtag conten…
+- [Search referenceable entities for mentions](https://docs.cedarai.com/api-reference/lindaservice/search-referenceable-entities-for-mentions.md): Searches across all configured entity types in parallel and returns the top N matches per type. Used by the note editor's `@`-mention typeahead to look up equipment, shipments, customers, waybills, work orders, invoices, etc. by identifier or display text.
+- [Update a note](https://docs.cedarai.com/api-reference/lindaservice/update-a-note.md): Edits an existing note's content and (optionally) its references. Owners may always edit; non-owners require the `linda.notes.editAny` permission. Set `update_references=true` to replace the prior reference set; otherwise prior references are preserved.
+- [List class list tasks](https://docs.cedarai.com/api-reference/list-class-list-tasks.md): Retrieves the list of tasks associated with specified class lists.
+- [List class lists](https://docs.cedarai.com/api-reference/list-class-lists.md): Retrieves a list of class lists.
+- [List customers](https://docs.cedarai.com/api-reference/list-customers.md): Retrieves a list of customers for the specified carrier.
+- [List groupings](https://docs.cedarai.com/api-reference/list-groupings.md): Returns a simplified list of groupings for a carrier, filtering out consist-related grouping types for third-party consumers.
+- [List railcar charge history](https://docs.cedarai.com/api-reference/list-railcar-charge-history.md): Retrieves charged history records, filterable by equipment, time range, and flags.
+- [List railcar history](https://docs.cedarai.com/api-reference/list-railcar-history.md): Retrieves equipment history records, filterable by equipment, time range, and flags.
+- [List railcar inventory](https://docs.cedarai.com/api-reference/list-railcar-inventory.md): Retrieves a list of railcar inventory items based on specified criteria (pagination, filters like loadStatus, station, track, etc.).
+- [List station tracks](https://docs.cedarai.com/api-reference/list-station-tracks.md): Retrieves a list of station tracks and their associated groupings for a specific carrier.
+- [Get the Network Hierarchy](https://docs.cedarai.com/api-reference/networkstructureservice/get-the-network-hierarchy.md): Get the Carrier Network as a hierarchical tree structure.
+- [Get Quote Preferences](https://docs.cedarai.com/api-reference/quotesservice/get-quote-preferences.md)
+- [Get Shipper Quote](https://docs.cedarai.com/api-reference/quotesservice/get-shipper-quote.md)
+- [List Shipper Quotes](https://docs.cedarai.com/api-reference/quotesservice/list-shipper-quotes.md)
+- [Update Quote Preferences](https://docs.cedarai.com/api-reference/quotesservice/update-quote-preferences.md)
+- [Submit railcar switch request](https://docs.cedarai.com/api-reference/submit-railcar-switch-request.md): Submit switch requests for one or more equipment to spots/tracks.
+- [Toolswork load equipment](https://docs.cedarai.com/api-reference/toolswork-load-equipment.md): Bulk load equipment with groupings and weights; supports on-the-fly grouping creation.
+- [Create Truck Load Tender](https://docs.cedarai.com/api-reference/truckloadtenderservice/create-truck-load-tender.md): Creates a Truck Load Tender.
+- [Delete Truck Load Tender](https://docs.cedarai.com/api-reference/truckloadtenderservice/delete-truck-load-tender.md): Deletes a Truck Load Tender.
+- [Get Truck Load Tender](https://docs.cedarai.com/api-reference/truckloadtenderservice/get-truck-load-tender.md): Returns a single Truck Load Tender.
+- [List Truck Load Tenders](https://docs.cedarai.com/api-reference/truckloadtenderservice/list-truck-load-tenders.md): Returns Truck Load Tenders.
+- [Update Truck Load Tender](https://docs.cedarai.com/api-reference/truckloadtenderservice/update-truck-load-tender.md): Updates a Truck Load Tender.
+- [Update bill of lading](https://docs.cedarai.com/api-reference/update-bill-of-lading.md): Update an existing bill of lading identified by `billOfLadingNumber` (within the last 6 months for this carrier).
+- [Update equipment notes](https://docs.cedarai.com/api-reference/update-equipment-notes.md): Updates notes on one or more pieces of equipment.
+- [Update railcar inventory (move equipment)](https://docs.cedarai.com/api-reference/update-railcar-inventory-move-equipment.md): Move equipment between tracks/spots. Supports sequencing and batch moves.
+- [Arrive train](https://docs.cedarai.com/api-reference/workorderservice/arrive-train.md): Arrive a train to a customer or serving location.
+- [Depart train](https://docs.cedarai.com/api-reference/workorderservice/depart-train.md): Depart a train from a station.
+- [List Train Reason Codes](https://docs.cedarai.com/api-reference/workorderservice/list-train-reason-codes.md): Returns the carrier's train reason codes grouped by category.
+- [List Work Order Tasks](https://docs.cedarai.com/api-reference/workorderservice/list-work-order-tasks.md): Returns a list of tasks for a given work order.
+- [List Work Orders](https://docs.cedarai.com/api-reference/workorderservice/list-work-orders.md): Returns list of Work Orders
+- [Pickup cars](https://docs.cedarai.com/api-reference/workorderservice/pickup-cars.md): Pickup cars. On success, completes the Pickup tasks.
+- [Record Train Event](https://docs.cedarai.com/api-reference/workorderservice/record-train-event.md): Record a train event.
+- [Resequence a train](https://docs.cedarai.com/api-reference/workorderservice/resequence-a-train.md): Used for resequence of active trains. For editing the consist of Pending trains, use UpdateWorkOrder.
+- [Setout Cars](https://docs.cedarai.com/api-reference/workorderservice/setout-cars.md): Setout cars. On success, completes the Setout tasks.
+- [Update a Work Order](https://docs.cedarai.com/api-reference/workorderservice/update-a-work-order.md): Update a Work Order. Used for editing consist of a pending train.
+- [Accounting Integrations](https://docs.cedarai.com/user-docs/accounting-integrations/overview.md): Sync your Cedar ARMS billing data with external accounting software
+- [QuickBooks Online](https://docs.cedarai.com/user-docs/accounting-integrations/quickbooks-online.md): Connect QuickBooks Online and synchronize finalized Cedar ARMS invoices
+- [QuickBooks Web Connector](https://docs.cedarai.com/user-docs/accounting-integrations/quickbooks-web-connector.md): Automatically sync Cedar ARMS invoices to QuickBooks Desktop
+- [Activity Log](https://docs.cedarai.com/user-docs/admin/activity-log.md): Review changes made in the Admin Portal.
+- [Bindings](https://docs.cedarai.com/user-docs/admin/bindings.md): Grant access by linking a user group to a role and a scope.
+- [Dashboard](https://docs.cedarai.com/user-docs/admin/dashboard.md): Get a quick view of access coverage, roles, and recent activity.
+- [Getting Started](https://docs.cedarai.com/user-docs/admin/getting-started.md): Sign in, choose your carrier, and learn the basics of the Admin Portal.
+- [Glossary](https://docs.cedarai.com/user-docs/admin/glossary.md): Key terms used in the Admin Portal.
+- [Organization](https://docs.cedarai.com/user-docs/admin/organization.md): Manage your organization hierarchy, layers, and access controls.
+- [Overview](https://docs.cedarai.com/user-docs/admin/overview.md): A friendly guide to the Cedar Admin Portal for managing users, roles, and access.
+- [Roles](https://docs.cedarai.com/user-docs/admin/roles.md): Roles define what actions a user group can take.
+- [SCIM](https://docs.cedarai.com/user-docs/admin/scim.md): Connect your identity provider to Cedar for automated user provisioning.
+- [Tools & API Keys](https://docs.cedarai.com/user-docs/admin/tools-api-keys.md): Advanced settings for organizations, feature enablements, and API keys.
+- [User Groups](https://docs.cedarai.com/user-docs/admin/user-groups.md): Organize users into groups so you can manage access in one place.
+- [Users](https://docs.cedarai.com/user-docs/admin/users.md): Invite, view, and manage individual users.
+- [Cross-border (Mexico) waybills](https://docs.cedarai.com/user-docs/api-reference/cross-border-mexico.md): Carta Porte data requirements for bill-of-lading calls whose origin or destination is in Mexico.
+- [API Introduction](https://docs.cedarai.com/user-docs/api-reference/introduction.md): REST and gRPC APIs for Cedar ARMS — railcar inventory, waybills, work orders, and network structure.
+- [EDI Waybill Messaging](https://docs.cedarai.com/user-docs/arms/edi-messaging.md): Automated EDI transmission for railroad waybills and car orders
+- [Forward & Store Waybills](https://docs.cedarai.com/user-docs/arms/forward-and-store.md): Railinc-compliant waybill submission with automatic normalization
+- [Haulage Management](https://docs.cedarai.com/user-docs/arms/haulage.md): Automated haulage billing and EDI messaging for interline rail operations
+- [Notes](https://docs.cedarai.com/user-docs/arms/ops/notes.md): Add threaded notes with rich formatting, file attachments, entity references, and AI search to shipments, equipment, waybills, and other records.
+- [Stale Inventory Cleanup](https://docs.cedarai.com/user-docs/arms/stale-inventory-cleanup.md): Automated cleanup system for ghost railcar records
+- [Switch Billing](https://docs.cedarai.com/user-docs/arms/switch-billing.md): Automated billing for terminal switching services
+- [Car Actually Placed Webhook](https://docs.cedarai.com/user-docs/arms/webhooks/car-actually-placed.md): Event payload sent when a car is placed at a station or track
+- [Workflow Effect Webhooks](https://docs.cedarai.com/user-docs/arms/webhooks/overview.md): Real-time event notifications delivered as signed HTTP POST requests
+- [Train Arrival Webhook](https://docs.cedarai.com/user-docs/arms/webhooks/train-arrival.md): Event payload sent when a train arrives at a station
+- [Train Departure Webhook](https://docs.cedarai.com/user-docs/arms/webhooks/train-departure.md): Event payload sent when a train departs from a station
+- [Train Set Webhook](https://docs.cedarai.com/user-docs/arms/webhooks/train-set.md): Event payload sent when a train consist is defined with wagons and route stations
+- [IAM Concepts](https://docs.cedarai.com/user-docs/iam/concepts.md): Users, groups, resources, permissions, roles, and conditions.
+- [Customer Portal and IAM](https://docs.cedarai.com/user-docs/iam/customer-portal.md): How to configure customer-facing access with Cedar.AI IAM policies, roles, and groups.
+- [Customer Users](https://docs.cedarai.com/user-docs/iam/customer-users.md): How to invite, upgrade, and support customers using IAM.
+- [Feature Sets](https://docs.cedarai.com/user-docs/iam/feature-sets.md): Curated columns in the Admin Portal IAM matrix that grant a whole product feature in one click — and stay current as Cedar evolves.
+- [IAM Overview](https://docs.cedarai.com/user-docs/iam/overview.md): Understand Cedar.AI Identity & Access Management (IAM): users, groups, roles, permissions, and policies.
+- [Policies & Roles](https://docs.cedarai.com/user-docs/iam/policies-and-roles.md): Define who can do what on which resource with policies and roles.
+- [Why IAM: Problem & Purpose](https://docs.cedarai.com/user-docs/iam/problem-and-purpose.md): Why Cedar.AI added IAM: flexibility for large organizations and customer access.
+- [Concept UI](https://docs.cedarai.com/user-docs/iam/ui-design.md): Role and binding designers for IAM.
+- [Introduction](https://docs.cedarai.com/user-docs/index.md): Official Cedar.AI docs for AI‑powered transportation management systems: ARMS APIs, SSO, and product guides across ARMS, Transload, Intermodal, Mobile, and Optiswitch.
+- [Gradual rollout](https://docs.cedarai.com/user-docs/sso/gradual-rollout.md): Enable SSO safely with an option to fall back to Cedar identity during rollout.
+- [Microsoft](https://docs.cedarai.com/user-docs/sso/microsoft.md): Configure Microsoft (Azure AD) SSO for Cedar.AI with IdP- and SP-initiated flows.
+- [ARMS Mobile](https://docs.cedarai.com/user-docs/sso/mobile.md): How to log in to ARMS Mobile using Microsoft, Google, and Okta SSO.
+- [Okta](https://docs.cedarai.com/user-docs/sso/okta.md): Configure Okta SSO for Cedar.AI with IdP- and SP-initiated flows.
+- [Overview](https://docs.cedarai.com/user-docs/sso/overview.md): Overview of Cedar.AI SSO with Google, Okta, and Microsoft Azure AD, including IdP- and SP-initiated flows.
+- [Azure SCIM](https://docs.cedarai.com/user-docs/sso/scim/azure.md): Sync users and groups from Microsoft Entra ID (Azure AD) using SCIM.
+- [SCIM Overview](https://docs.cedarai.com/user-docs/sso/scim/overview.md): Manage user provisioning and de-provisioning with SCIM.
+- [Train ID template](https://docs.cedarai.com/user-docs/train_job/id.md): How Train ID templating works and which variables are supported.
+
+## Optional
+
+- [Documentation](https://docs.cedarai.com)
+- [Cedar.AI](https://www.cedarai.com)
+- [Release notes](https://docs.cedarai.com/user-docs/release-notes)

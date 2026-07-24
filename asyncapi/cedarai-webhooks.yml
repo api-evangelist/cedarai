@@ -1,0 +1,39 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.cedarai.com/user-docs/arms/webhooks/overview
+spec_type: Webhooks
+summary: >-
+  Cedar ARMS "Workflow Effect" webhooks deliver real-time operational events as
+  signed HTTP POST requests. A configured workflow event fires in ARMS, Cedar
+  builds a JSON payload, signs it with Ed25519, and POSTs it to the customer's
+  HTTPS endpoint over HTTP/2 (HTTP/1.1 fallback).
+delivery:
+  transport: https-post
+  content_type: application/json
+  signing: Ed25519 (verify with Cedar public key)
+  headers:
+    - name: X-Webhook-Timestamp
+      description: Unix epoch seconds when the request was sent.
+    - name: X-Webhook-Signature
+      description: Base64-encoded Ed25519 signature of the payload.
+    - name: X-Webhook-KeyId
+      description: Identifier of the signing key used (e.g. cedar-webhooks-2026).
+    - name: X-Webhook-Id
+      description: UUID v4 for deduplication.
+events:
+  - event_type: car_actually_placed
+    name: Car Actually Placed
+    description: Sent when a car is placed at a station or track.
+    docs: https://docs.cedarai.com/user-docs/arms/webhooks/car-actually-placed
+  - event_type: TrainArrival
+    name: Train Arrival
+    description: Sent when a train arrives at a station.
+    docs: https://docs.cedarai.com/user-docs/arms/webhooks/train-arrival
+  - event_type: TrainDeparture
+    name: Train Departure
+    description: Sent when a train departs from a station.
+    docs: https://docs.cedarai.com/user-docs/arms/webhooks/train-departure
+  - event_type: train_set
+    name: Train Set
+    description: Sent when a train consist is defined with wagons and route stations.
+    docs: https://docs.cedarai.com/user-docs/arms/webhooks/train-set

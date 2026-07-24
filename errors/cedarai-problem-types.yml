@@ -1,0 +1,53 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/ (4xx/5xx responses across all 8 ARMS specs)
+format: http-status
+notes: >-
+  Cedar ARMS uses conventional HTTP status codes; responses are not declared as
+  application/problem+json (RFC 9457) in the published specs. 401 vs 403 is
+  documented in the API introduction: a valid key with an assumed user that is
+  not in a bound user group returns 401; a valid key + valid user lacking the
+  target permission returns 403.
+problems:
+  - status: 400
+    title: Bad Request
+    meaning: Request was malformed, or an immutable field change was rejected.
+    remediation: Validate the request body and query parameters; do not attempt to change immutable fields.
+    source_operations:
+      - openapi/cedarai-external-openapi.yml#updateBillOfLading
+  - status: 401
+    title: Unauthorized
+    meaning: >-
+      Missing/invalid x-arms-api-key, or the x-arms-assume-user is not a member
+      of a user group bound to the API key.
+    remediation: >-
+      Send a valid region-scoped x-arms-api-key and an x-arms-assume-user that
+      belongs to a user group bound to that key.
+    source_operations:
+      - openapi/cedarai-external-openapi.yml#listInventory
+  - status: 403
+    title: Forbidden
+    meaning: Authenticated but the assumed user lacks permission on the target endpoint.
+    remediation: Grant the assumed user a role/permission covering the operation.
+    source: docs https://docs.cedarai.com/user-docs/api-reference/introduction
+  - status: 404
+    title: Not Found
+    meaning: >-
+      Resource does not exist, or no matching bill of lading was found within
+      the 6-month lookup window.
+    remediation: Confirm identifiers; bill-of-lading lookups are limited to the last 6 months.
+    source_operations:
+      - openapi/cedarai-external-openapi.yml#updateBillOfLading
+  - status: 409
+    title: Conflict
+    meaning: >-
+      A bill with this number already exists within the lookup window, or the
+      lookup key matched multiple bills.
+    remediation: Use a unique bill-of-lading number, or narrow the lookup key to a single match.
+    source_operations:
+      - openapi/cedarai-external-openapi.yml#createBillOfLading
+      - openapi/cedarai-external-openapi.yml#updateBillOfLading
+  - status: 500
+    title: Internal Server Error
+    meaning: Unexpected server-side error.
+    remediation: Retry with backoff; contact Cedar support if persistent.

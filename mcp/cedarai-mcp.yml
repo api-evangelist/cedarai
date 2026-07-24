@@ -1,0 +1,170 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: derived from openapi/ operations (no official Cedar MCP server found)
+server:
+  name: cedarai-arms
+  transport: http
+  url: null
+notes: Candidate tool list mapped 1:1 from ARMS OpenAPI operations. No official hosted Cedar MCP server
+  was found as of the generated date.
+tools:
+- name: ListChargesTableSummary
+  description: Get Charges Table Summary
+  source_operation: openapi/cedarai-charge-openapi.yml#ListChargesTableSummary
+- name: ListChargesTableRows
+  description: List Charges Table Rows
+  source_operation: openapi/cedarai-charge-openapi.yml#ListChargesTableRows
+- name: ListChargesTableDef
+  description: Get Charges Table Definition
+  source_operation: openapi/cedarai-charge-openapi.yml#ListChargesTableDef
+- name: createBillOfLading
+  description: Create bill of lading
+  source_operation: openapi/cedarai-external-openapi.yml#createBillOfLading
+- name: updateBillOfLading
+  description: Update bill of lading
+  source_operation: openapi/cedarai-external-openapi.yml#updateBillOfLading
+- name: classifyClassList
+  description: Classify a class list
+  source_operation: openapi/cedarai-external-openapi.yml#classifyClassList
+- name: listGroupingsThirdParty
+  description: List groupings
+  source_operation: openapi/cedarai-external-openapi.yml#listGroupingsThirdParty
+- name: listClassListTasks
+  description: List class list tasks
+  source_operation: openapi/cedarai-external-openapi.yml#listClassListTasks
+- name: bulkEditChargedHistory
+  description: Bulk edit railcar charge history
+  source_operation: openapi/cedarai-external-openapi.yml#bulkEditChargedHistory
+- name: toolsworkLoadEquipment
+  description: Toolswork load equipment
+  source_operation: openapi/cedarai-external-openapi.yml#toolsworkLoadEquipment
+- name: moveEquipment
+  description: Update railcar inventory (move equipment)
+  source_operation: openapi/cedarai-external-openapi.yml#moveEquipment
+- name: listCustomers
+  description: List customers
+  source_operation: openapi/cedarai-external-openapi.yml#listCustomers
+- name: createClassList
+  description: Create a class list
+  source_operation: openapi/cedarai-external-openapi.yml#createClassList
+- name: updateEquipmentNotes
+  description: Update equipment notes
+  source_operation: openapi/cedarai-external-openapi.yml#updateEquipmentNotes
+- name: listStationTracks
+  description: List station tracks
+  source_operation: openapi/cedarai-external-openapi.yml#listStationTracks
+- name: switchRequestEquipment
+  description: Submit railcar switch request
+  source_operation: openapi/cedarai-external-openapi.yml#switchRequestEquipment
+- name: listChargedHistory
+  description: List railcar charge history
+  source_operation: openapi/cedarai-external-openapi.yml#listChargedHistory
+- name: listClassLists
+  description: List class lists
+  source_operation: openapi/cedarai-external-openapi.yml#listClassLists
+- name: listEquipmentHistory
+  description: List railcar history
+  source_operation: openapi/cedarai-external-openapi.yml#listEquipmentHistory
+- name: completeClassListTasks
+  description: Complete class list tasks
+  source_operation: openapi/cedarai-external-openapi.yml#completeClassListTasks
+- name: listInventory
+  description: List railcar inventory
+  source_operation: openapi/cedarai-external-openapi.yml#listInventory
+- name: AttachVoucher
+  description: Attaches Voucher
+  source_operation: openapi/cedarai-invoices-openapi.yml#AttachVoucher
+- name: ListInvoices
+  description: List Shipper Invoices
+  source_operation: openapi/cedarai-invoices-openapi.yml#ListInvoices
+- name: GetInvoice
+  description: Get Shipper Invoice
+  source_operation: openapi/cedarai-invoices-openapi.yml#GetInvoice
+- name: SearchReferences
+  description: Search referenceable entities for mentions
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#SearchReferences
+- name: BatchGetNoteSummaries
+  description: Batch get note summaries
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#BatchGetNoteSummaries
+- name: ListNotes
+  description: List notes
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#ListNotes
+- name: DeleteNote
+  description: Delete a note
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#DeleteNote
+- name: SearchNotes
+  description: Search notes (full-text)
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#SearchNotes
+- name: GetNoteSummary
+  description: Get note summary for one entity
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#GetNoteSummary
+- name: CreateNote
+  description: Create a note
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#CreateNote
+- name: UpdateNote
+  description: Update a note
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#UpdateNote
+- name: SummarizeEntityNotes
+  description: AI summary of a note thread
+  source_operation: openapi/cedarai-linda-notes-openapi.yml#SummarizeEntityNotes
+- name: DeleteTruckLoadTender
+  description: Delete Truck Load Tender
+  source_operation: openapi/cedarai-load-tender-openapi.yml#DeleteTruckLoadTender
+- name: ListTruckLoadTender
+  description: List Truck Load Tenders
+  source_operation: openapi/cedarai-load-tender-openapi.yml#ListTruckLoadTender
+- name: CreateTruckLoadTender
+  description: Create Truck Load Tender
+  source_operation: openapi/cedarai-load-tender-openapi.yml#CreateTruckLoadTender
+- name: UpdateTruckLoadTender
+  description: Update Truck Load Tender
+  source_operation: openapi/cedarai-load-tender-openapi.yml#UpdateTruckLoadTender
+- name: GetTruckLoadTender
+  description: Get Truck Load Tender
+  source_operation: openapi/cedarai-load-tender-openapi.yml#GetTruckLoadTender
+- name: GetHierarchy
+  description: Get the Network Hierarchy
+  source_operation: openapi/cedarai-network-structure-openapi.yml#GetHierarchy
+- name: UpdateQuotePreferences
+  description: Update Quote Preferences
+  source_operation: openapi/cedarai-quotes-openapi.yml#UpdateQuotePreferences
+- name: GetQuotePreferences
+  description: Get Quote Preferences
+  source_operation: openapi/cedarai-quotes-openapi.yml#GetQuotePreferences
+- name: GetQuote
+  description: Get Shipper Quote
+  source_operation: openapi/cedarai-quotes-openapi.yml#GetQuote
+- name: ListQuotes
+  description: List Shipper Quotes
+  source_operation: openapi/cedarai-quotes-openapi.yml#ListQuotes
+- name: ListTrainReasonCodes
+  description: List Train Reason Codes
+  source_operation: openapi/cedarai-work-order-openapi.yml#ListTrainReasonCodes
+- name: ReSequenceTrain
+  description: Resequence a train
+  source_operation: openapi/cedarai-work-order-openapi.yml#ReSequenceTrain
+- name: SetoutCars
+  description: Setout Cars
+  source_operation: openapi/cedarai-work-order-openapi.yml#SetoutCars
+- name: PickupCars
+  description: Pickup cars
+  source_operation: openapi/cedarai-work-order-openapi.yml#PickupCars
+- name: ListWorkOrders
+  description: List Work Orders
+  source_operation: openapi/cedarai-work-order-openapi.yml#ListWorkOrders
+- name: DepartTrain
+  description: Depart train
+  source_operation: openapi/cedarai-work-order-openapi.yml#DepartTrain
+- name: UpdateWorkOrder
+  description: Update a Work Order
+  source_operation: openapi/cedarai-work-order-openapi.yml#UpdateWorkOrder
+- name: ListWorkOrderTasks
+  description: List Work Order Tasks
+  source_operation: openapi/cedarai-work-order-openapi.yml#ListWorkOrderTasks
+- name: ArriveTrain
+  description: Arrive train
+  source_operation: openapi/cedarai-work-order-openapi.yml#ArriveTrain
+- name: RecordTrainEvent
+  description: Record Train Event
+  source_operation: openapi/cedarai-work-order-openapi.yml#RecordTrainEvent
