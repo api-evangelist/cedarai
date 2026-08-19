@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "protobuf/arms/charge.proto ChargeService NetworkStructureService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-arms-api-key",
+      "value": "{{x-arms-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "NetworkStructureService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the Network Hierarchy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/network-hierarchy",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get the Carrier Network as a hierarchical tree structure."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1759 @@
+{
+  "item": [
+    {
+      "id": "12d91407-10b3-4d49-933f-bfcbf51e7c1d",
+      "name": "LindaService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "07c8031e-1a97-4584-8697-34f8b3d92384",
+          "name": "Search referenceable entities for mentions",
+          "request": {
+            "name": "Search referenceable entities for mentions",
+            "description": {
+              "content": "Searches across all configured entity types in parallel and returns the top N matches per type. Used by the note editor's `@`-mention typeahead to look up equipment, shipments, customers, waybills, work orders, invoices, etc. by identifier or display text.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "search-references"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"limit\": \"<long>\",\n  \"query\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f60c1994-e949-449a-9855-202f444dee1a",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "search-references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"limit\": \"<long>\",\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"display_text\": \"string\",\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"score\": 3408.4476594857183,\n      \"subtitle\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"display_text\": \"string\",\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"score\": 6600.74985506525,\n      \"subtitle\": \"string\",\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8cbd80e0-411e-4123-a671-48f6c25c05b9",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "search-references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"limit\": \"<long>\",\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8734,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "355ac6b2-e7db-41ac-9229-3222698007f4",
+          "name": "Batch get note summaries",
+          "request": {
+            "name": "Batch get note summaries",
+            "description": {
+              "content": "Returns note summaries for many entities in one round trip. Designed for list/grid pages that show a notes-count column. Entities with zero notes are omitted from the response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "batch-get-summaries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entities\": [\n    {\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\"\n    },\n    {\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2ba297df-5402-497b-a4c0-6c1a2fdd5ec4",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "batch-get-summaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entities\": [\n    {\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\"\n    },\n    {\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summaries\": [\n    {\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"latest_note\": {\n        \"attachments\": [\n          {\n            \"attachment_id\": \"string\",\n            \"created_at\": \"1954-03-30T08:33:38.572Z\",\n            \"file_name\": \"string\",\n            \"media_type\": \"string\",\n            \"note_id\": \"string\",\n            \"size_bytes\": \"string\",\n            \"url\": \"string\"\n          },\n          {\n            \"attachment_id\": \"string\",\n            \"created_at\": \"1985-03-27T01:39:20.887Z\",\n            \"file_name\": \"string\",\n            \"media_type\": \"string\",\n            \"note_id\": \"string\",\n            \"size_bytes\": \"string\",\n            \"url\": \"string\"\n          }\n        ],\n        \"content\": \"string\",\n        \"created_at\": \"1966-04-25T18:45:40.589Z\",\n        \"created_by_name\": \"string\",\n        \"created_by_uuid\": \"string\",\n        \"entity_id\": \"string\",\n        \"entity_type\": \"string\",\n        \"note_id\": \"string\",\n        \"references\": [\n          {\n            \"display_text\": \"string\",\n            \"entity_id\": \"string\",\n            \"entity_type\": \"string\",\n            \"is_stale\": true,\n            \"url\": \"string\"\n          },\n          {\n            \"display_text\": \"string\",\n            \"entity_id\": \"string\",\n            \"entity_type\": \"string\",\n            \"is_stale\": false,\n            \"url\": \"string\"\n          }\n        ],\n        \"updated_at\": \"1999-04-26T07:45:17.441Z\"\n      },\n      \"total_count\": 925\n    },\n    {\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"latest_note\": {\n        \"attachments\": [\n          {\n            \"attachment_id\": \"string\",\n            \"created_at\": \"1981-03-05T14:13:33.758Z\",\n            \"file_name\": \"string\",\n            \"media_type\": \"string\",\n            \"note_id\": \"string\",\n            \"size_bytes\": \"string\",\n            \"url\": \"string\"\n          },\n          {\n            \"attachment_id\": \"string\",\n            \"created_at\": \"1962-01-21T21:20:24.581Z\",\n            \"file_name\": \"string\",\n            \"media_type\": \"string\",\n            \"note_id\": \"string\",\n            \"size_bytes\": \"string\",\n            \"url\": \"string\"\n          }\n        ],\n        \"content\": \"string\",\n        \"created_at\": \"1951-10-15T09:58:33.243Z\",\n        \"created_by_name\": \"string\",\n        \"created_by_uuid\": \"string\",\n        \"entity_id\": \"string\",\n        \"entity_type\": \"string\",\n        \"note_id\": \"string\",\n        \"references\": [\n          {\n            \"display_text\": \"string\",\n            \"entity_id\": \"string\",\n            \"entity_type\": \"string\",\n            \"is_stale\": true,\n            \"url\": \"string\"\n          },\n          {\n            \"display_text\": \"string\",\n            \"entity_id\": \"string\",\n            \"entity_type\": \"string\",\n            \"is_stale\": true,\n            \"url\": \"string\"\n          }\n        ],\n        \"updated_at\": \"1965-04-27T00:40:26.862Z\"\n      },\n      \"total_count\": 7391\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "043c5cfb-df77-4678-8fd6-e4d949f79b23",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "batch-get-summaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entities\": [\n    {\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\"\n    },\n    {\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9356,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d4fbdbe-cb1e-44d5-823a-c7894a671753",
+          "name": "List notes",
+          "request": {
+            "name": "List notes",
+            "description": {
+              "content": "Returns notes on a given entity in descending chronological order (newest first). Supports cursor-based pagination via `page_size` and `page_token`. When both `referenced_entity_type` and `referenced_entity_id` are set, the request switches to reverse-lookup mode (notes mentioning the given entity), capped at 100 results without pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"page_token\": \"<string>\",\n  \"referenced_entity_id\": \"<string>\",\n  \"referenced_entity_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f180ccb2-385d-4716-a1d0-a7888196df4d",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"page_token\": \"<string>\",\n  \"referenced_entity_id\": \"<string>\",\n  \"referenced_entity_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_page_token\": \"string\",\n  \"notes\": [\n    {\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"created_at\": \"1960-08-12T05:28:35.946Z\",\n          \"file_name\": \"string\",\n          \"media_type\": \"string\",\n          \"note_id\": \"string\",\n          \"size_bytes\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"created_at\": \"2025-12-25T01:30:24.909Z\",\n          \"file_name\": \"string\",\n          \"media_type\": \"string\",\n          \"note_id\": \"string\",\n          \"size_bytes\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"content\": \"string\",\n      \"created_at\": \"2008-03-05T11:29:28.239Z\",\n      \"created_by_name\": \"string\",\n      \"created_by_uuid\": \"string\",\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"note_id\": \"string\",\n      \"references\": [\n        {\n          \"display_text\": \"string\",\n          \"entity_id\": \"string\",\n          \"entity_type\": \"string\",\n          \"is_stale\": true,\n          \"url\": \"string\"\n        },\n        {\n          \"display_text\": \"string\",\n          \"entity_id\": \"string\",\n          \"entity_type\": \"string\",\n          \"is_stale\": true,\n          \"url\": \"string\"\n        }\n      ],\n      \"updated_at\": \"1999-10-29T15:36:54.931Z\"\n    },\n    {\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"created_at\": \"2005-06-05T00:17:07.601Z\",\n          \"file_name\": \"string\",\n          \"media_type\": \"string\",\n          \"note_id\": \"string\",\n          \"size_bytes\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"created_at\": \"1963-01-31T06:19:14.449Z\",\n          \"file_name\": \"string\",\n          \"media_type\": \"string\",\n          \"note_id\": \"string\",\n          \"size_bytes\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"content\": \"string\",\n      \"created_at\": \"1949-10-04T04:47:43.768Z\",\n      \"created_by_name\": \"string\",\n      \"created_by_uuid\": \"string\",\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"note_id\": \"string\",\n      \"references\": [\n        {\n          \"display_text\": \"string\",\n          \"entity_id\": \"string\",\n          \"entity_type\": \"string\",\n          \"is_stale\": false,\n          \"url\": \"string\"\n        },\n        {\n          \"display_text\": \"string\",\n          \"entity_id\": \"string\",\n          \"entity_type\": \"string\",\n          \"is_stale\": false,\n          \"url\": \"string\"\n        }\n      ],\n      \"updated_at\": \"1998-09-18T04:22:59.668Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d54efbf-a433-4e86-b5fb-37deab3617e8",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"page_token\": \"<string>\",\n  \"referenced_entity_id\": \"<string>\",\n  \"referenced_entity_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9356,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47109400-759f-472a-8014-f8245f593634",
+          "name": "Delete a note",
+          "request": {
+            "name": "Delete a note",
+            "description": {
+              "content": "Soft-deletes a note. The row is retained for audit but excluded from all reads. Owners may always delete; non-owners require the `linda.notes.deleteAny` permission.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4d6a90f4-eac2-4ca9-a7a8-f124fe758616",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef1155c6-50ff-4f51-9b91-7482af848de4",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9356,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6c35a0d-4b3d-4e3d-8b54-f7cc42ce23ca",
+          "name": "Search notes (full-text)",
+          "request": {
+            "name": "Search notes (full-text)",
+            "description": {
+              "content": "Full-text search across all notes for the carrier, ranked by Postgres `ts_rank`. Returns `<mark>`-highlighted snippets via `ts_headline`. The index strips `<<ref:...>>` reference token wrappers and normalizes hashtag-group syntax (`#group(content)`) so chip text and automation-written hashtag content are searchable as plain words.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_type\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"page_token\": \"<string>\",\n  \"query\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f939c6b9-f55b-4c42-b4cf-d0139d4471a4",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_type\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"page_token\": \"<string>\",\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_page_token\": \"string\",\n  \"results\": [\n    {\n      \"content_snippet\": \"string\",\n      \"created_at\": \"2023-02-25T09:18:05.299Z\",\n      \"created_by_name\": \"string\",\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"note_id\": \"string\",\n      \"score\": 4712.928343455364\n    },\n    {\n      \"content_snippet\": \"string\",\n      \"created_at\": \"2023-11-08T06:29:42.875Z\",\n      \"created_by_name\": \"string\",\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"note_id\": \"string\",\n      \"score\": 731.947444213934\n    }\n  ],\n  \"total_count\": 76\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e680407-3eec-41e6-8394-29017bb40635",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_type\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"page_token\": \"<string>\",\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9356,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "182c59ae-6453-4939-9d8a-91f1438f42bc",
+          "name": "Get note summary for one entity",
+          "request": {
+            "name": "Get note summary for one entity",
+            "description": {
+              "content": "Returns a one-row summary for a single entity: total note count and the latest note. Use this to populate badges/counters without fetching the full thread.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "get-summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1283cca7-f084-48b3-9b6e-082ec7f5a6a1",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "get-summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": {\n    \"entity_id\": \"string\",\n    \"entity_type\": \"string\",\n    \"latest_note\": {\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"created_at\": \"1963-10-30T23:05:09.503Z\",\n          \"file_name\": \"string\",\n          \"media_type\": \"string\",\n          \"note_id\": \"string\",\n          \"size_bytes\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"created_at\": \"1979-07-23T12:04:21.395Z\",\n          \"file_name\": \"string\",\n          \"media_type\": \"string\",\n          \"note_id\": \"string\",\n          \"size_bytes\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"content\": \"string\",\n      \"created_at\": \"1988-04-20T03:17:38.405Z\",\n      \"created_by_name\": \"string\",\n      \"created_by_uuid\": \"string\",\n      \"entity_id\": \"string\",\n      \"entity_type\": \"string\",\n      \"note_id\": \"string\",\n      \"references\": [\n        {\n          \"display_text\": \"string\",\n          \"entity_id\": \"string\",\n          \"entity_type\": \"string\",\n          \"is_stale\": false,\n          \"url\": \"string\"\n        },\n        {\n          \"display_text\": \"string\",\n          \"entity_id\": \"string\",\n          \"entity_type\": \"string\",\n          \"is_stale\": false,\n          \"url\": \"string\"\n        }\n      ],\n      \"updated_at\": \"1950-04-19T18:05:39.834Z\"\n    },\n    \"total_count\": 3330\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67fe1dd0-d007-4913-9f70-d3f989e2f1bf",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "get-summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9356,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b5c8c6e-d2c0-458c-9dfa-306c35bcddf0",
+          "name": "Create a note",
+          "request": {
+            "name": "Create a note",
+            "description": {
+              "content": "Creates a new threaded note on an entity (shipment, equipment, waybill, etc.). The caller's verified identity (from JWT or assumed user) becomes the note author. Reference tokens (`<<ref:type:id:displayText>>`) embedded in `content` should also be supplied as structured `references` for reverse-lookup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to. Notes are isolated per carrier.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"references\": [\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"uploads\": [\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    },\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "657deff4-c81c-4e6b-9251-5939b1023495",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to. Notes are isolated per carrier.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"<string>\",\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"references\": [\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"uploads\": [\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    },\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"note\": {\n    \"attachments\": [\n      {\n        \"attachment_id\": \"string\",\n        \"created_at\": \"1970-08-13T04:38:18.850Z\",\n        \"file_name\": \"string\",\n        \"media_type\": \"string\",\n        \"note_id\": \"string\",\n        \"size_bytes\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"attachment_id\": \"string\",\n        \"created_at\": \"2014-05-08T15:54:05.277Z\",\n        \"file_name\": \"string\",\n        \"media_type\": \"string\",\n        \"note_id\": \"string\",\n        \"size_bytes\": \"string\",\n        \"url\": \"string\"\n      }\n    ],\n    \"content\": \"string\",\n    \"created_at\": \"2010-10-27T01:49:50.878Z\",\n    \"created_by_name\": \"string\",\n    \"created_by_uuid\": \"string\",\n    \"entity_id\": \"string\",\n    \"entity_type\": \"string\",\n    \"note_id\": \"string\",\n    \"references\": [\n      {\n        \"display_text\": \"<string>\",\n        \"entity_id\": \"<string>\",\n        \"entity_type\": \"<string>\",\n        \"is_stale\": \"<boolean>\",\n        \"url\": \"<string>\"\n      },\n      {\n        \"display_text\": \"<string>\",\n        \"entity_id\": \"<string>\",\n        \"entity_type\": \"<string>\",\n        \"is_stale\": \"<boolean>\",\n        \"url\": \"<string>\"\n      }\n    ],\n    \"updated_at\": \"1953-04-04T20:48:23.431Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "577c5c3a-1ec5-4ebe-bc1c-239a6a61f9e1",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to. Notes are isolated per carrier.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"<string>\",\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"references\": [\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"uploads\": [\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    },\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9356,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a54ebb4-3991-44ed-ad91-a04d930ede02",
+          "name": "Update a note",
+          "request": {
+            "name": "Update a note",
+            "description": {
+              "content": "Edits an existing note's content and (optionally) its references. Owners may always edit; non-owners require the `linda.notes.editAny` permission. Set `update_references=true` to replace the prior reference set; otherwise prior references are preserved.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"note_id\": \"<string>\",\n  \"references\": [\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"update_references\": \"<boolean>\",\n  \"uploads\": [\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    },\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d3518f44-cbdc-48e9-a3d8-5953fe319d51",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"<string>\",\n  \"note_id\": \"<string>\",\n  \"references\": [\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"update_references\": \"<boolean>\",\n  \"uploads\": [\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    },\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"note\": {\n    \"attachments\": [\n      {\n        \"attachment_id\": \"string\",\n        \"created_at\": \"1970-08-13T04:38:18.850Z\",\n        \"file_name\": \"string\",\n        \"media_type\": \"string\",\n        \"note_id\": \"string\",\n        \"size_bytes\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"attachment_id\": \"string\",\n        \"created_at\": \"2014-05-08T15:54:05.277Z\",\n        \"file_name\": \"string\",\n        \"media_type\": \"string\",\n        \"note_id\": \"string\",\n        \"size_bytes\": \"string\",\n        \"url\": \"string\"\n      }\n    ],\n    \"content\": \"string\",\n    \"created_at\": \"2010-10-27T01:49:50.878Z\",\n    \"created_by_name\": \"string\",\n    \"created_by_uuid\": \"string\",\n    \"entity_id\": \"string\",\n    \"entity_type\": \"string\",\n    \"note_id\": \"string\",\n    \"references\": [\n      {\n        \"display_text\": \"<string>\",\n        \"entity_id\": \"<string>\",\n        \"entity_type\": \"<string>\",\n        \"is_stale\": \"<boolean>\",\n        \"url\": \"<string>\"\n      },\n      {\n        \"display_text\": \"<string>\",\n        \"entity_id\": \"<string>\",\n        \"entity_type\": \"<string>\",\n        \"is_stale\": \"<boolean>\",\n        \"url\": \"<string>\"\n      }\n    ],\n    \"updated_at\": \"1953-04-04T20:48:23.431Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25571dc8-9496-47eb-8189-02ffcee14386",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"<string>\",\n  \"note_id\": \"<string>\",\n  \"references\": [\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"display_text\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"is_stale\": \"<boolean>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"update_references\": \"<boolean>\",\n  \"uploads\": [\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    },\n    {\n      \"file_name\": \"<string>\",\n      \"media_type\": \"<string>\",\n      \"size_bytes\": \"<int64>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9356,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2f6d953-8631-431d-9a8b-839021b3317e",
+          "name": "AI summary of a note thread",
+          "request": {
+            "name": "AI summary of a note thread",
+            "description": {
+              "content": "Generates a one-paragraph AI summary of the note thread for an entity. Synchronous LLM call — expect 2 to 6 seconds latency. Cache results client-side if you display them frequently; the response is not cached server-side.\n\n**Billing:** This endpoint invokes a Cedar.AI language model and is billed under AI pricing. The other notes endpoints (`/v1/notes/list`, `/v1/notes/create`, `/v1/notes/search`, etc.) are not AI-backed and follow standard API metering.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "notes",
+                "summarize-entity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID the request is scoped to.",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-arms-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e82387e1-b49e-4765-be93-b20e4834503d",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "summarize-entity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"note_count\": 9606,\n  \"summary_text\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0f8a8b3-c82c-4f9b-b1b4-572b34d067ca",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "notes",
+                    "summarize-entity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID the request is scoped to.",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9356,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-lg-k-h1.arms.cedarai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-arms-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1395d067-6698-4bfb-8981-6a9032b44efa",
+    "name": "protobuf/arms/charge.proto ChargeService LindaService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,618 @@
+{
+  "item": [
+    {
+      "id": "c49f17d0-4855-4fa3-8e13-0fb149581455",
+      "name": "QuotesService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "775b7d52-922c-4ca7-ba1f-ee7a8149caa3",
+          "name": "Update Quote Preferences",
+          "request": {
+            "name": "Update Quote Preferences",
+            "description": {},
+            "url": {
+              "path": [
+                "shipper",
+                "quote-preferences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destination_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_commodity_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_equipment_profile_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"favorite_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"origin_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a3bbaa1a-f5bc-42c2-a22e-fcbf83148758",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "quote-preferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destination_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_commodity_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_equipment_profile_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"favorite_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"origin_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"destination_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_commodity_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_equipment_profile_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"favorite_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"origin_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd9df9ff-81a8-4071-8a70-892a1a3a0535",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "quote-preferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destination_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_commodity_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_equipment_profile_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"favorite_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"origin_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6063,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\"\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "067bc1c6-4364-4408-8db6-ed2f147235c2",
+          "name": "Get Quote Preferences",
+          "request": {
+            "name": "Get Quote Preferences",
+            "description": {},
+            "url": {
+              "path": [
+                "shipper",
+                "quote-preferences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dcfe551a-e02d-4ecf-b271-da8b50136d3b",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "quote-preferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"destination_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_commodity_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_destination_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_equipment_profile_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"profiles\": [\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        },\n        {\n          \"car_type\": \"<string>\",\n          \"measurements\": [\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"dimension\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"range\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"name\": \"<string>\",\n          \"special_car_type\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"favorite_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_cif_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"favorite_origin_geography_sets\": [\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"origin_saved_facilities\": [\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"cif\": \"<string>\",\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"equipment_profile_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"name\": \"<string>\",\n      \"stccs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8f8e02a-eaa8-4556-bdb9-e5ec228d184c",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "quote-preferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8641,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39fe6d22-80a9-4314-b4a3-0ab9a02e1935",
+          "name": "Get Shipper Quote",
+          "request": {
+            "name": "Get Shipper Quote",
+            "description": {},
+            "url": {
+              "path": [
+                "shipper",
+                "quotes",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Stable quote resource name as returned in Quote.name, e.g. \"quotes/<id>\"."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e5810f0-8a9c-4a6c-97e4-00e7d636f232",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "quotes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Stable quote resource name as returned in Quote.name, e.g. \"quotes/<id>\"."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1984-04-12T04:50:39.078Z\",\n  \"distance\": {\n    \"source\": \"ESTIMATED\",\n    \"value\": {\n      \"value\": \"string\"\n    }\n  },\n  \"furtherance_beyond_destination\": true,\n  \"legs\": [\n    {\n      \"billing_carrier\": \"string\",\n      \"charges\": [\n        {\n          \"amount\": {\n            \"cents\": 7254,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          },\n          \"method_of_payment\": \"RULE_11\",\n          \"per_car_amount\": {\n            \"cents\": 1919,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          },\n          \"rate\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"car_type_conditions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"docket_column\": 7910,\n            \"docket_level\": 5239,\n            \"docket_line\": 8416,\n            \"docket_sub_level\": 7121,\n            \"equipment_ownership_conditions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"matching_equipment_profile_names\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"pndr\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"publication\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"qualifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rated_quantity\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"special_charge_description\": \"string\",\n          \"special_charge_or_allowance_code\": \"string\",\n          \"type\": \"FREIGHT\"\n        },\n        {\n          \"amount\": {\n            \"cents\": 7147,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          },\n          \"method_of_payment\": \"PREPAID\",\n          \"per_car_amount\": {\n            \"cents\": 6726,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          },\n          \"rate\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"car_type_conditions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"docket_column\": 9760,\n            \"docket_level\": 7563,\n            \"docket_line\": 4557,\n            \"docket_sub_level\": 6750,\n            \"equipment_ownership_conditions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"matching_equipment_profile_names\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"pndr\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"publication\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"qualifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rated_quantity\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"special_charge_description\": \"string\",\n          \"special_charge_or_allowance_code\": \"string\",\n          \"type\": \"MILEAGE\"\n        }\n      ],\n      \"destination\": {\n        \"carrier\": \"string\",\n        \"city\": \"string\",\n        \"fsac\": \"string\",\n        \"junction_code\": \"string\",\n        \"latitude\": 1552.028306033849,\n        \"longitude\": 4017.9418411731695,\n        \"splc\": \"string\",\n        \"state\": \"string\"\n      },\n      \"distance\": {\n        \"source\": \"ESTIMATED\",\n        \"value\": {\n          \"value\": \"string\"\n        }\n      },\n      \"origin\": {\n        \"carrier\": \"string\",\n        \"city\": \"string\",\n        \"fsac\": \"string\",\n        \"junction_code\": \"string\",\n        \"latitude\": 1817.4530700919233,\n        \"longitude\": 8987.651762910287,\n        \"splc\": \"string\",\n        \"state\": \"string\"\n      },\n      \"route\": {\n        \"entries\": [\n          {\n            \"carrier\": \"string\",\n            \"outbound_junction\": \"string\",\n            \"sequence_code\": \"string\"\n          },\n          {\n            \"carrier\": \"string\",\n            \"outbound_junction\": \"string\",\n            \"sequence_code\": \"string\"\n          }\n        ],\n        \"val\": \"string\"\n      },\n      \"total\": {\n        \"cents\": 2016,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      }\n    },\n    {\n      \"billing_carrier\": \"string\",\n      \"charges\": [\n        {\n          \"amount\": {\n            \"cents\": 4235,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          },\n          \"method_of_payment\": \"RULE_11\",\n          \"per_car_amount\": {\n            \"cents\": 5268,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          },\n          \"rate\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"car_type_conditions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"docket_column\": 1915,\n            \"docket_level\": 7785,\n            \"docket_line\": 154,\n            \"docket_sub_level\": 5654,\n            \"equipment_ownership_conditions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"matching_equipment_profile_names\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"pndr\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"publication\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"qualifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rated_quantity\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"special_charge_description\": \"string\",\n          \"special_charge_or_allowance_code\": \"string\",\n          \"type\": \"MILEAGE\"\n        },\n        {\n          \"amount\": {\n            \"cents\": 2202,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          },\n          \"method_of_payment\": \"COLLECT\",\n          \"per_car_amount\": {\n            \"cents\": 5393,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          },\n          \"rate\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"car_type_conditions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"docket_column\": 6696,\n            \"docket_level\": 5772,\n            \"docket_line\": 4379,\n            \"docket_sub_level\": 5260,\n            \"equipment_ownership_conditions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"matching_equipment_profile_names\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"pndr\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"publication\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"qualifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rated_quantity\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"special_charge_description\": \"string\",\n          \"special_charge_or_allowance_code\": \"string\",\n          \"type\": \"FREIGHT\"\n        }\n      ],\n      \"destination\": {\n        \"carrier\": \"string\",\n        \"city\": \"string\",\n        \"fsac\": \"string\",\n        \"junction_code\": \"string\",\n        \"latitude\": 5136.530637984421,\n        \"longitude\": 5912.746082525024,\n        \"splc\": \"string\",\n        \"state\": \"string\"\n      },\n      \"distance\": {\n        \"source\": \"PC_MILER\",\n        \"value\": {\n          \"value\": \"string\"\n        }\n      },\n      \"origin\": {\n        \"carrier\": \"string\",\n        \"city\": \"string\",\n        \"fsac\": \"string\",\n        \"junction_code\": \"string\",\n        \"latitude\": 2546.022704236727,\n        \"longitude\": 5053.5444426888025,\n        \"splc\": \"string\",\n        \"state\": \"string\"\n      },\n      \"route\": {\n        \"entries\": [\n          {\n            \"carrier\": \"string\",\n            \"outbound_junction\": \"string\",\n            \"sequence_code\": \"string\"\n          },\n          {\n            \"carrier\": \"string\",\n            \"outbound_junction\": \"string\",\n            \"sequence_code\": \"string\"\n          }\n        ],\n        \"val\": \"string\"\n      },\n      \"total\": {\n        \"cents\": 8739,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      }\n    }\n  ],\n  \"name\": \"string\",\n  \"number_of_cars\": 8659,\n  \"prior_movement_before_origin\": false,\n  \"route\": {\n    \"entries\": [\n      {\n        \"carrier\": \"string\",\n        \"outbound_junction\": \"string\",\n        \"sequence_code\": \"string\"\n      },\n      {\n        \"carrier\": \"string\",\n        \"outbound_junction\": \"string\",\n        \"sequence_code\": \"string\"\n      }\n    ],\n    \"val\": \"string\"\n  },\n  \"total\": {\n    \"cents\": 9519,\n    \"currency\": \"string\",\n    \"dollars\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4afc1f0-3a48-4ee0-808c-ebae9c46fdd3",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "quotes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Stable quote resource name as returned in Quote.name, e.g. \"quotes/<id>\"."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8641,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4c2399b-db9b-4e3f-824e-97d7776af959",
+          "name": "List Shipper Quotes",
+          "request": {
+            "name": "List Shipper Quotes",
+            "description": {},
+            "url": {
+              "path": [
+                "shipper",
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"aar_car_type_pattern\": \"<string>\",\n  \"car_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contents\": {\n    \"quantity\": {\n      \"amount\": {\n        \"value\": \"<string>\"\n      },\n      \"units\": \"<string>\"\n    },\n    \"stccs_or_prefixes\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"contract_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"destination\": {\n    \"carrier_fsac\": {\n      \"carrier\": \"<string>\",\n      \"fsac\": \"<string>\"\n    },\n    \"city_state\": {\n      \"city\": \"<string>\",\n      \"state_or_province\": \"<string>\"\n    },\n    \"junction\": {\n      \"junction_code\": \"<string>\"\n    },\n    \"splc\": {\n      \"splc\": \"<string>\"\n    }\n  },\n  \"destination_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"destination_unknown\": \"<boolean>\",\n  \"destinations\": [\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    },\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    }\n  ],\n  \"equipment_ownership_statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"equipment_profiles\": [\n    {\n      \"car_type\": \"<string>\",\n      \"measurements\": [\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        },\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        }\n      ],\n      \"name\": \"<string>\",\n      \"special_car_type\": \"<string>\"\n    },\n    {\n      \"car_type\": \"<string>\",\n      \"measurements\": [\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        },\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        }\n      ],\n      \"name\": \"<string>\",\n      \"special_car_type\": \"<string>\"\n    }\n  ],\n  \"exclude_carriers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_junctions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"method_of_payment\": \"<string>\",\n  \"number_of_cars\": \"<integer>\",\n  \"origin\": {\n    \"carrier_fsac\": {\n      \"carrier\": \"<string>\",\n      \"fsac\": \"<string>\"\n    },\n    \"city_state\": {\n      \"city\": \"<string>\",\n      \"state_or_province\": \"<string>\"\n    },\n    \"junction\": {\n      \"junction_code\": \"<string>\"\n    },\n    \"splc\": {\n      \"splc\": \"<string>\"\n    }\n  },\n  \"origin_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"origin_unknown\": \"<boolean>\",\n  \"origins\": [\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    },\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    }\n  ],\n  \"route\": {\n    \"entries\": [\n      {\n        \"carrier\": \"<string>\",\n        \"outbound_junction\": \"<string>\",\n        \"sequence_code\": \"<string>\"\n      },\n      {\n        \"carrier\": \"<string>\",\n        \"outbound_junction\": \"<string>\",\n        \"sequence_code\": \"<string>\"\n      }\n    ],\n    \"val\": \"<string>\"\n  },\n  \"ship_date\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "449750bb-1148-47df-9a9d-2c6141d3d982",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aar_car_type_pattern\": \"<string>\",\n  \"car_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contents\": {\n    \"quantity\": {\n      \"amount\": {\n        \"value\": \"<string>\"\n      },\n      \"units\": \"<string>\"\n    },\n    \"stccs_or_prefixes\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"contract_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"destination\": {\n    \"carrier_fsac\": {\n      \"carrier\": \"<string>\",\n      \"fsac\": \"<string>\"\n    },\n    \"city_state\": {\n      \"city\": \"<string>\",\n      \"state_or_province\": \"<string>\"\n    },\n    \"junction\": {\n      \"junction_code\": \"<string>\"\n    },\n    \"splc\": {\n      \"splc\": \"<string>\"\n    }\n  },\n  \"destination_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"destination_unknown\": \"<boolean>\",\n  \"destinations\": [\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    },\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    }\n  ],\n  \"equipment_ownership_statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"equipment_profiles\": [\n    {\n      \"car_type\": \"<string>\",\n      \"measurements\": [\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        },\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        }\n      ],\n      \"name\": \"<string>\",\n      \"special_car_type\": \"<string>\"\n    },\n    {\n      \"car_type\": \"<string>\",\n      \"measurements\": [\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        },\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        }\n      ],\n      \"name\": \"<string>\",\n      \"special_car_type\": \"<string>\"\n    }\n  ],\n  \"exclude_carriers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_junctions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"method_of_payment\": \"<string>\",\n  \"number_of_cars\": \"<integer>\",\n  \"origin\": {\n    \"carrier_fsac\": {\n      \"carrier\": \"<string>\",\n      \"fsac\": \"<string>\"\n    },\n    \"city_state\": {\n      \"city\": \"<string>\",\n      \"state_or_province\": \"<string>\"\n    },\n    \"junction\": {\n      \"junction_code\": \"<string>\"\n    },\n    \"splc\": {\n      \"splc\": \"<string>\"\n    }\n  },\n  \"origin_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"origin_unknown\": \"<boolean>\",\n  \"origins\": [\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    },\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    }\n  ],\n  \"route\": {\n    \"entries\": [\n      {\n        \"carrier\": \"<string>\",\n        \"outbound_junction\": \"<string>\",\n        \"sequence_code\": \"<string>\"\n      },\n      {\n        \"carrier\": \"<string>\",\n        \"outbound_junction\": \"<string>\",\n        \"sequence_code\": \"<string>\"\n      }\n    ],\n    \"val\": \"<string>\"\n  },\n  \"ship_date\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quotes\": [\n    {\n      \"created_at\": \"2001-02-13T16:23:23.031Z\",\n      \"distance\": {\n        \"source\": \"PC_MILER\",\n        \"value\": {\n          \"value\": \"<string>\"\n        }\n      },\n      \"furtherance_beyond_destination\": false,\n      \"legs\": [\n        {\n          \"billing_carrier\": \"string\",\n          \"charges\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"method_of_payment\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"per_car_amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rate\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rated_quantity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_or_allowance_code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"method_of_payment\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"per_car_amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rate\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rated_quantity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_or_allowance_code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"destination\": {\n            \"carrier\": \"string\",\n            \"city\": \"string\",\n            \"fsac\": \"string\",\n            \"junction_code\": \"string\",\n            \"latitude\": 8805.371286642488,\n            \"longitude\": 6961.76566892846,\n            \"splc\": \"string\",\n            \"state\": \"string\"\n          },\n          \"distance\": {\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"origin\": {\n            \"carrier\": \"string\",\n            \"city\": \"string\",\n            \"fsac\": \"string\",\n            \"junction_code\": \"string\",\n            \"latitude\": 8601.48867552774,\n            \"longitude\": 6882.140420550221,\n            \"splc\": \"string\",\n            \"state\": \"string\"\n          },\n          \"route\": {\n            \"entries\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"val\": \"<string>\"\n          },\n          \"total\": {\n            \"cents\": 3678,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          }\n        },\n        {\n          \"billing_carrier\": \"string\",\n          \"charges\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"method_of_payment\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"per_car_amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rate\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rated_quantity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_or_allowance_code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"method_of_payment\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"per_car_amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rate\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rated_quantity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_or_allowance_code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"destination\": {\n            \"carrier\": \"string\",\n            \"city\": \"string\",\n            \"fsac\": \"string\",\n            \"junction_code\": \"string\",\n            \"latitude\": 7566.573035414162,\n            \"longitude\": 332.8678052658785,\n            \"splc\": \"string\",\n            \"state\": \"string\"\n          },\n          \"distance\": {\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"origin\": {\n            \"carrier\": \"string\",\n            \"city\": \"string\",\n            \"fsac\": \"string\",\n            \"junction_code\": \"string\",\n            \"latitude\": 8890.090322649248,\n            \"longitude\": 5669.156468479934,\n            \"splc\": \"string\",\n            \"state\": \"string\"\n          },\n          \"route\": {\n            \"entries\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"val\": \"<string>\"\n          },\n          \"total\": {\n            \"cents\": 6129,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          }\n        }\n      ],\n      \"name\": \"string\",\n      \"number_of_cars\": 4718,\n      \"prior_movement_before_origin\": false,\n      \"route\": {\n        \"entries\": [\n          {\n            \"carrier\": \"<string>\",\n            \"outbound_junction\": \"<string>\",\n            \"sequence_code\": \"<string>\"\n          },\n          {\n            \"carrier\": \"<string>\",\n            \"outbound_junction\": \"<string>\",\n            \"sequence_code\": \"<string>\"\n          }\n        ],\n        \"val\": \"<string>\"\n      },\n      \"total\": {\n        \"cents\": 754,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      }\n    },\n    {\n      \"created_at\": \"1965-03-07T17:51:50.669Z\",\n      \"distance\": {\n        \"source\": \"ESTIMATED\",\n        \"value\": {\n          \"value\": \"<string>\"\n        }\n      },\n      \"furtherance_beyond_destination\": true,\n      \"legs\": [\n        {\n          \"billing_carrier\": \"string\",\n          \"charges\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"method_of_payment\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"per_car_amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rate\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rated_quantity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_or_allowance_code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"method_of_payment\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"per_car_amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rate\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rated_quantity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_or_allowance_code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"destination\": {\n            \"carrier\": \"string\",\n            \"city\": \"string\",\n            \"fsac\": \"string\",\n            \"junction_code\": \"string\",\n            \"latitude\": 9505.867227677081,\n            \"longitude\": 6193.410990422887,\n            \"splc\": \"string\",\n            \"state\": \"string\"\n          },\n          \"distance\": {\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"origin\": {\n            \"carrier\": \"string\",\n            \"city\": \"string\",\n            \"fsac\": \"string\",\n            \"junction_code\": \"string\",\n            \"latitude\": 1307.8573146306583,\n            \"longitude\": 4319.720514695641,\n            \"splc\": \"string\",\n            \"state\": \"string\"\n          },\n          \"route\": {\n            \"entries\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"val\": \"<string>\"\n          },\n          \"total\": {\n            \"cents\": 4379,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          }\n        },\n        {\n          \"billing_carrier\": \"string\",\n          \"charges\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"method_of_payment\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"per_car_amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rate\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rated_quantity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_or_allowance_code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"method_of_payment\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"per_car_amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rate\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rated_quantity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"special_charge_or_allowance_code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"destination\": {\n            \"carrier\": \"string\",\n            \"city\": \"string\",\n            \"fsac\": \"string\",\n            \"junction_code\": \"string\",\n            \"latitude\": 7231.258675951482,\n            \"longitude\": 3006.2498159028196,\n            \"splc\": \"string\",\n            \"state\": \"string\"\n          },\n          \"distance\": {\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"origin\": {\n            \"carrier\": \"string\",\n            \"city\": \"string\",\n            \"fsac\": \"string\",\n            \"junction_code\": \"string\",\n            \"latitude\": 1862.9285750457502,\n            \"longitude\": 5164.969891012902,\n            \"splc\": \"string\",\n            \"state\": \"string\"\n          },\n          \"route\": {\n            \"entries\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"val\": \"<string>\"\n          },\n          \"total\": {\n            \"cents\": 1151,\n            \"currency\": \"string\",\n            \"dollars\": \"string\"\n          }\n        }\n      ],\n      \"name\": \"string\",\n      \"number_of_cars\": 8748,\n      \"prior_movement_before_origin\": false,\n      \"route\": {\n        \"entries\": [\n          {\n            \"carrier\": \"<string>\",\n            \"outbound_junction\": \"<string>\",\n            \"sequence_code\": \"<string>\"\n          },\n          {\n            \"carrier\": \"<string>\",\n            \"outbound_junction\": \"<string>\",\n            \"sequence_code\": \"<string>\"\n          }\n        ],\n        \"val\": \"<string>\"\n      },\n      \"total\": {\n        \"cents\": 1894,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ea813b3-9b26-4a22-b7ff-3b6ea9f48b77",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aar_car_type_pattern\": \"<string>\",\n  \"car_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contents\": {\n    \"quantity\": {\n      \"amount\": {\n        \"value\": \"<string>\"\n      },\n      \"units\": \"<string>\"\n    },\n    \"stccs_or_prefixes\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"contract_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"destination\": {\n    \"carrier_fsac\": {\n      \"carrier\": \"<string>\",\n      \"fsac\": \"<string>\"\n    },\n    \"city_state\": {\n      \"city\": \"<string>\",\n      \"state_or_province\": \"<string>\"\n    },\n    \"junction\": {\n      \"junction_code\": \"<string>\"\n    },\n    \"splc\": {\n      \"splc\": \"<string>\"\n    }\n  },\n  \"destination_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"destination_unknown\": \"<boolean>\",\n  \"destinations\": [\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    },\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    }\n  ],\n  \"equipment_ownership_statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"equipment_profiles\": [\n    {\n      \"car_type\": \"<string>\",\n      \"measurements\": [\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        },\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        }\n      ],\n      \"name\": \"<string>\",\n      \"special_car_type\": \"<string>\"\n    },\n    {\n      \"car_type\": \"<string>\",\n      \"measurements\": [\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        },\n        {\n          \"dimension\": \"<string>\",\n          \"range\": {\n            \"from\": \"<integer>\",\n            \"to\": \"<integer>\"\n          }\n        }\n      ],\n      \"name\": \"<string>\",\n      \"special_car_type\": \"<string>\"\n    }\n  ],\n  \"exclude_carriers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_junctions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"method_of_payment\": \"<string>\",\n  \"number_of_cars\": \"<integer>\",\n  \"origin\": {\n    \"carrier_fsac\": {\n      \"carrier\": \"<string>\",\n      \"fsac\": \"<string>\"\n    },\n    \"city_state\": {\n      \"city\": \"<string>\",\n      \"state_or_province\": \"<string>\"\n    },\n    \"junction\": {\n      \"junction_code\": \"<string>\"\n    },\n    \"splc\": {\n      \"splc\": \"<string>\"\n    }\n  },\n  \"origin_cifs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"origin_unknown\": \"<boolean>\",\n  \"origins\": [\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    },\n    {\n      \"carrier_fsac\": {\n        \"carrier\": \"<string>\",\n        \"fsac\": \"<string>\"\n      },\n      \"city_state\": {\n        \"city\": \"<string>\",\n        \"state_or_province\": \"<string>\"\n      },\n      \"junction\": {\n        \"junction_code\": \"<string>\"\n      },\n      \"splc\": {\n        \"splc\": \"<string>\"\n      }\n    }\n  ],\n  \"route\": {\n    \"entries\": [\n      {\n        \"carrier\": \"<string>\",\n        \"outbound_junction\": \"<string>\",\n        \"sequence_code\": \"<string>\"\n      },\n      {\n        \"carrier\": \"<string>\",\n        \"outbound_junction\": \"<string>\",\n        \"sequence_code\": \"<string>\"\n      }\n    ],\n    \"val\": \"<string>\"\n  },\n  \"ship_date\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8641,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-lg-k-h1.arms.cedarai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-arms-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bdd68231-c5b9-471c-af4b-89756686ac4c",
+    "name": "protobuf/arms/charge.proto ChargeService QuotesService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "protobuf/arms/charge.proto ChargeService QuotesService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-arms-api-key",
+      "value": "{{x-arms-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "QuotesService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Quote Preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/shipper/quote-preferences"
+          },
+          "docs": "Get Quote Preferences"
+        },
+        {
+          "info": {
+            "name": "Update Quote Preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/shipper/quote-preferences",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Quote Preferences"
+        },
+        {
+          "info": {
+            "name": "Get Shipper Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/shipper/quotes/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stable quote resource name as returned in Quote.name, e.g. \"quotes/<id>\"."
+              }
+            ]
+          },
+          "docs": "Get Shipper Quote"
+        },
+        {
+          "info": {
+            "name": "List Shipper Quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/shipper/quotes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Shipper Quotes"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

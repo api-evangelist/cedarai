@@ -1,0 +1,507 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "protobuf/arms/charge.proto ChargeService Ims API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-arms-api-key",
+      "value": "{{x-arms-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ims",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create bill of lading",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/waybills/bill-of-lading",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a bill of lading for a waybill.\nIt will always create a bill of lading regardless of what is provided in the request.\n\nWhen a `billOfLadingNumber` already exists within the last 6 months for this carrier (regardless of lead equipment), the request is rejected with HTTP 409 — use the update endpoint instead, including to correct lead equipment on an existing bill.\n\nWhen `waybillTemplateId` is set, Cedar merges template data with the request. Static parties (shipper, consignee, freight bill"
+        },
+        {
+          "info": {
+            "name": "Update bill of lading",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/waybills/bill-of-lading",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing bill of lading identified by `billOfLadingNumber` (within the last 6 months for this carrier).\n\nImmutable fields: `billOfLadingNumber`, `waybillNumber`, and `waybillDate`.\n\nLead equipment (`equipmentDetails[0].equipmentInitial` / `equipmentNumber`) may be changed via update. Cedar archives the prior bill and creates a replacement bill with the new lead equipment. When a prior outbound 404 EDI was sent for the archived bill, Cedar sends a cancellation 404 (BX01=04, ZC1=CA) for "
+        },
+        {
+          "info": {
+            "name": "Classify a class list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/work-orders/class-lists/classify",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a class list (switch list) from a list of car numbers by automatically picking destination tracks based on the carrier's configured block-to-track scope.\n\nThis is the API equivalent of the inventory **Classify** dialog: you provide just the cars, and Cedar mirrors the UI logic to compute where each car goes. Customers replacing the existing class-list API typically batch 5–60 cars per call, scoped to the lead/shift the crew is working — see the `switchListBatch` example for a realistic s"
+        },
+        {
+          "info": {
+            "name": "List groupings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/groupings/list",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a simplified list of groupings for a carrier, filtering out consist-related grouping types for third-party consumers."
+        },
+        {
+          "info": {
+            "name": "List class list tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/work-orders/class-lists/tasks",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves the list of tasks associated with specified class lists.\n\nUsage notes:\n- Pagination: Use pageSize, pageNextToken, and pagePrevToken to navigate paginated results.\n- Filtering: Combine multiple criteria (e.g., workOrderId, status, equipmentName) to narrow results.\n- Date ranges: carrierDateRange is assumed to be in the carrier's timezone."
+        },
+        {
+          "info": {
+            "name": "Bulk edit railcar charge history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/equipment/bulk-edit-charged-history",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create and delete multiple charged history records in one request (supports dry run)."
+        },
+        {
+          "info": {
+            "name": "Toolswork load equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/equipment/load-toolswork",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk load equipment with groupings and weights; supports on-the-fly grouping creation."
+        },
+        {
+          "info": {
+            "name": "Update railcar inventory (move equipment)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/equipment/move",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move equipment between tracks/spots. Supports sequencing and batch moves.\n\nUsage notes:\n- Use to.grouping.resourceId to target a track and to.groupingIndex to control position (0 = front, -1 = back).\n- Provide updateIntermodalUnits=true to keep intermodal units in sync when moving equipment."
+        },
+        {
+          "info": {
+            "name": "List customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/customers",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a list of customers for the specified carrier."
+        },
+        {
+          "info": {
+            "name": "Create a class list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/work-orders/class-lists/create",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new class list (switch list) with the specified equipment moves.\n\nUsage notes:\n- Each item represents an equipment move to a target track location.\n- The jobId is a user-specified label for the class list."
+        },
+        {
+          "info": {
+            "name": "Update equipment notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/equipment/notes/update",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates notes on one or more pieces of equipment.\n\nUsage notes:\n- Use equipmentIds + notes for bulk updates (same note on multiple equipment).\n- Use the updates array for per-equipment notes (different note per equipment).\n- Pass null for the note value to clear an existing note.\n- Notes are limited to 280 characters.\n- The response returns the updated equipment objects with third-party visible fields.\n\nPermission required: `inventoryManagement.equipment.updateNotes`"
+        },
+        {
+          "info": {
+            "name": "List station tracks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/groupings/station-tracks",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a list of station tracks and their associated groupings for a specific carrier."
+        },
+        {
+          "info": {
+            "name": "Submit railcar switch request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/equipment/switch-request",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit switch requests for one or more equipment to spots/tracks.\n\nUsage notes:\n- When a spot does not exist yet, providing a spot name will create it on the fly.\n- requestType codes: PL (Pull), IP (In-place), TR (Transfer), RELEASE, LEAVE."
+        },
+        {
+          "info": {
+            "name": "List railcar charge history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/equipment/charged-history",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves charged history records, filterable by equipment, time range, and flags."
+        },
+        {
+          "info": {
+            "name": "List class lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/work-orders/class-lists",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a list of class lists.\n\nUsage notes:\n- Pagination: Use pageSize, pageNextToken, and pagePrevToken to navigate paginated results.\n- Filtering: Combine multiple criteria (e.g., status, customerName, equipmentName) to narrow results.\n- Date ranges: carrierDateRange is assumed to be in the carrier's timezone."
+        },
+        {
+          "info": {
+            "name": "Complete class list tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/work-orders/tasks/complete",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks one or more class list tasks as completed.\n\nUsage notes:\n- Each item in the request specifies a taskId and optionally a finalTrackId (the track the equipment was moved to).\n- When all tasks on a class list are completed, the class list is automatically archived.\n- Use this endpoint after moving equipment (via the Move Equipment API) to mark the corresponding class list tasks as done.\n- The completedAt timestamp defaults to the current time if not specified."
+        },
+        {
+          "info": {
+            "name": "List railcar inventory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/ims/equipment/inventory",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a list of railcar inventory items based on specified criteria (pagination, filters like loadStatus, station, track, etc.).\n\nUsage notes:\n- Pagination: Use pageSize, pageNextToken, and pagePrevToken to navigate paginated results.\n- Filtering: Combine multiple criteria (e.g., loadStatus, aarCarType, station, track, tag) to narrow results.\n- IDs: Station, track, and tag identifiers should come from the listStationTracks endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

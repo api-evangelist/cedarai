@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "protobuf/arms/charge.proto ChargeService TruckLoadTenderService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-arms-api-key",
+      "value": "{{x-arms-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TruckLoadTenderService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete Truck Load Tender",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/load-tender/delete",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes a Truck Load Tender."
+        },
+        {
+          "info": {
+            "name": "List Truck Load Tenders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/load-tender/list",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns Truck Load Tenders."
+        },
+        {
+          "info": {
+            "name": "Create Truck Load Tender",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/load-tender/create",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Truck Load Tender."
+        },
+        {
+          "info": {
+            "name": "Update Truck Load Tender",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/load-tender/update",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a Truck Load Tender."
+        },
+        {
+          "info": {
+            "name": "Get Truck Load Tender",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/load-tender/get",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a single Truck Load Tender."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

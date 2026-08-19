@@ -1,0 +1,542 @@
+{
+  "item": [
+    {
+      "id": "9abbfd5e-0e48-4847-ab02-0cd1e33cee15",
+      "name": "ChargeService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "952c8b68-0800-4351-8355-be8c6b618b1a",
+          "name": "Get Charges Table Summary",
+          "request": {
+            "name": "Get Charges Table Summary",
+            "description": {
+              "content": "Returns aggregate summary values for the charges table using the requested filters and aggregations, without returning full row detail. Downstream finance systems can use this endpoint to validate export scope, reconcile totals, and compare Cedar results against imported batches in NetSuite, Sage, or another ERP.\n\nCommon reconciliation patterns:\n\n| Aggregate request | Typical downstream use |\n| --- | --- |\n| `COUNT` on `chargeId` | Confirm the number of charges in an export batch. |\n| `SUM` on `amount` | Compare Cedar totals with external invoice or journal totals. |\n| `SUM` on `adjustment_total` | Measure the net effect of adjustments before posting. |\n| `MIN` / `MAX` on `appliedAt` | Verify the date window covered by an incremental export. |\n\nUse the same filter set you would pass to `List Charges Table Rows` when you want summary numbers for the exact same population of charges.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "charges-table-summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"aggregates\": [\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"AO_UNSPECIFIED\"\n    },\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"AO_UNSPECIFIED\"\n    }\n  ],\n  \"filters\": [\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"RO_DEFAULT\",\n      \"searchTerm\": \"<string>\"\n    },\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"RO_DEFAULT\",\n      \"searchTerm\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d478eeed-ef2a-4859-b651-409c8102be24",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "charges-table-summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aggregates\": [\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"AO_UNSPECIFIED\"\n    },\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"AO_UNSPECIFIED\"\n    }\n  ],\n  \"filters\": [\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"RO_DEFAULT\",\n      \"searchTerm\": \"<string>\"\n    },\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"RO_DEFAULT\",\n      \"searchTerm\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"aggregates\": [\n    {\n      \"columnKey\": \"string\",\n      \"intVal\": \"string\",\n      \"op\": \"AO_UNSPECIFIED\",\n      \"realVal\": 464.96475601033535,\n      \"stringVal\": \"string\"\n    },\n    {\n      \"columnKey\": \"string\",\n      \"intVal\": \"string\",\n      \"op\": \"AO_UNSPECIFIED\",\n      \"realVal\": 2135.748453086328,\n      \"stringVal\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ed139d7-057c-48ee-b316-eb32b9aabaa5",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "charges-table-summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aggregates\": [\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"AO_UNSPECIFIED\"\n    },\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"AO_UNSPECIFIED\"\n    }\n  ],\n  \"filters\": [\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"RO_DEFAULT\",\n      \"searchTerm\": \"<string>\"\n    },\n    {\n      \"columnKey\": \"<string>\",\n      \"op\": \"RO_DEFAULT\",\n      \"searchTerm\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3236,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "802c01b0-c329-4da9-a5cf-aa2a30257f31",
+          "name": "List Charges Table Rows",
+          "request": {
+            "name": "List Charges Table Rows",
+            "description": {
+              "content": "Returns a page of charges export rows using the requested columns, filters, sorting, and pagination. Downstream finance systems such as NetSuite, Sage, or ERP middleware typically call `Get Charges Table Definition` first, choose a subset of fields, and then request rows for export, reconciliation, or incremental sync jobs.\n\nKey request fields:\n\n| Input | How downstream systems commonly use it |\n| --- | --- |\n| `table_data_request.requested_columns` | Select the Cedar fields to include in each exported row. |\n| `table_data_request.additional_filters` | Limit the export to a specific invoice, accounting period, billing type, service type, GL code, customer, or other supported charge dimension. |\n| `table_data_request.sort_columns` | Create a stable export order for repeatable batching and reconciliation. |\n| `page_size`, `page_next_token`, `page_previous_token` | Page through large exports without re-reading the full result set. |\n\nEach row is returned as a column-keyed structure rather than a fixed finance schema, so consumers can request only the columns they actively map into their downstream system.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "charges-table-rows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pageNextToken\": \"<string>\",\n  \"pagePreviousToken\": \"<string>\",\n  \"pageSize\": \"<long>\",\n  \"tableDataRequest\": {\n    \"additionalFilters\": [\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      },\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      }\n    ],\n    \"pageNextToken\": \"<string>\",\n    \"pagePreviousToken\": \"<string>\",\n    \"pageSize\": \"<long>\",\n    \"requestedColumns\": [\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      },\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      }\n    ],\n    \"sortColumns\": [\n      {\n        \"column\": \"<string>\",\n        \"direction\": \"ASCENDING\"\n      },\n      {\n        \"column\": \"<string>\",\n        \"direction\": \"ASCENDING\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3210cca-3684-4053-a1a6-475706d39724",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "charges-table-rows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageNextToken\": \"<string>\",\n  \"pagePreviousToken\": \"<string>\",\n  \"pageSize\": \"<long>\",\n  \"tableDataRequest\": {\n    \"additionalFilters\": [\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      },\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      }\n    ],\n    \"pageNextToken\": \"<string>\",\n    \"pagePreviousToken\": \"<string>\",\n    \"pageSize\": \"<long>\",\n    \"requestedColumns\": [\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      },\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      }\n    ],\n    \"sortColumns\": [\n      {\n        \"column\": \"<string>\",\n        \"direction\": \"ASCENDING\"\n      },\n      {\n        \"column\": \"<string>\",\n        \"direction\": \"ASCENDING\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextToken\": \"string\",\n  \"prevToken\": \"string\",\n  \"rows\": [\n    {\n      \"data\": {\n        \"key_0\": {\n          \"boolVal\": false,\n          \"columnKey\": \"string\",\n          \"decimalVal\": {\n            \"value\": \"string\"\n          },\n          \"intVal\": \"string\",\n          \"realVal\": 7597.201197127986,\n          \"secondaryData\": {},\n          \"stringVal\": \"string\",\n          \"tsVal\": \"1989-10-04T05:24:47.716Z\"\n        },\n        \"key_1\": {\n          \"boolVal\": false,\n          \"columnKey\": \"string\",\n          \"decimalVal\": {\n            \"value\": \"string\"\n          },\n          \"intVal\": \"string\",\n          \"realVal\": 1510.6593580666383,\n          \"secondaryData\": {},\n          \"stringVal\": \"string\",\n          \"tsVal\": \"2012-09-28T17:53:32.666Z\"\n        }\n      },\n      \"intKey\": \"string\",\n      \"stringKey\": \"string\"\n    },\n    {\n      \"data\": {\n        \"key_0\": {\n          \"boolVal\": true,\n          \"columnKey\": \"string\",\n          \"decimalVal\": {\n            \"value\": \"string\"\n          },\n          \"intVal\": \"string\",\n          \"realVal\": 8216.524951060243,\n          \"secondaryData\": {},\n          \"stringVal\": \"string\",\n          \"tsVal\": \"1972-07-24T00:33:48.385Z\"\n        }\n      },\n      \"intKey\": \"string\",\n      \"stringKey\": \"string\"\n    }\n  ],\n  \"tableDef\": {\n    \"columns\": [\n      {\n        \"aliases\": [\n          \"string\",\n          \"string\"\n        ],\n        \"description\": \"string\",\n        \"enumValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"searchable\": false,\n        \"type\": \"STRING\"\n      },\n      {\n        \"aliases\": [\n          \"string\",\n          \"string\"\n        ],\n        \"description\": \"string\",\n        \"enumValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"searchable\": true,\n        \"type\": \"STRING\"\n      }\n    ],\n    \"defaultColumns\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96e9635d-2508-438d-8463-8d1c23761c25",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "charges-table-rows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageNextToken\": \"<string>\",\n  \"pagePreviousToken\": \"<string>\",\n  \"pageSize\": \"<long>\",\n  \"tableDataRequest\": {\n    \"additionalFilters\": [\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      },\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      }\n    ],\n    \"pageNextToken\": \"<string>\",\n    \"pagePreviousToken\": \"<string>\",\n    \"pageSize\": \"<long>\",\n    \"requestedColumns\": [\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      },\n      {\n        \"columnKey\": \"<string>\",\n        \"op\": \"RO_DEFAULT\",\n        \"searchTerm\": \"<string>\"\n      }\n    ],\n    \"sortColumns\": [\n      {\n        \"column\": \"<string>\",\n        \"direction\": \"ASCENDING\"\n      },\n      {\n        \"column\": \"<string>\",\n        \"direction\": \"ASCENDING\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3106,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39cb1a5b-1fab-4f42-878c-3c643e952fb6",
+          "name": "Get Charges Table Definition",
+          "request": {
+            "name": "Get Charges Table Definition",
+            "description": {
+              "content": "Returns the available charges export columns and default columns. Downstream finance systems such as NetSuite, Sage, or ERP middleware can use this metadata to map Cedar fields before requesting charge rows.\n\nThis response is metadata only: it tells consumers which columns are available, how Cedar labels them, which columns are searchable, and which columns Cedar returns by default.\n\nCommon export-oriented columns:\n\n| Column | Meaning for downstream systems |\n| --- | --- |\n| `chargeId` | Stable Cedar charge identifier for reconciliation, upserts, or idempotent imports. |\n| `customerLocationAccountNumber` | Customer location account number often used to map a charge into an external account or business unit. |\n| `invoice` | Invoice number or sequence used to group already-invoiced charges. |\n| `accountingPeriod` | Cedar accounting period label that can be used for period-close exports or batching. |\n| `billingType` | High-level charge category such as storage, demurrage, switching, or ISS shipment. |\n| `serviceType` | Service-specific classification that can help downstream mapping rules route charges to the right workflow. |\n| `glCode` | General ledger code used for financial posting and account mapping. |\n| `rateTableEntry` / `rateDescription` | Human-readable pricing fields that explain why the amount was calculated. |\n| `adjustment_total` | Net difference between the original amount and the final adjusted amount. |\n\nThe response example below shows a representative subset of these columns.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "charges-table-def"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d04dd337-f38a-4d61-9103-dcf24e83f5ce",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "charges-table-def"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"columns\": [\n    {\n      \"key\": \"chargeId\",\n      \"name\": \"Charge ID\",\n      \"searchable\": true,\n      \"type\": \"INT\"\n    },\n    {\n      \"key\": \"customer\",\n      \"name\": \"Customer\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"customerLocation\",\n      \"name\": \"Customer Location\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"customerLocationAccountNumber\",\n      \"name\": \"Customer Location Account #\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"invoice\",\n      \"name\": \"Invoice\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"accountingPeriod\",\n      \"name\": \"Accounting Period\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"enumValues\": [\n        \"STORAGE\",\n        \"DEMURRAGE\",\n        \"SWITCHING\",\n        \"JUNCTION SETTLEMENT\",\n        \"NON-RAILROAD CHARGE\",\n        \"TRACKAGE\",\n        \"EXCESS\",\n        \"MISC.\",\n        \"ISS SHIPMENT\"\n      ],\n      \"key\": \"billingType\",\n      \"name\": \"Billing Type\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"enumValues\": [\n        \"IN_PROGRESS\",\n        \"PENDING\",\n        \"ASSIGNED\",\n        \"INVOICED\",\n        \"ARCHIVED\",\n        \"DELETED\",\n        \"RESET\",\n        \"VOID\"\n      ],\n      \"key\": \"billingStatus\",\n      \"name\": \"Billing Status\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"amount\",\n      \"name\": \"Amount\",\n      \"searchable\": true,\n      \"type\": \"REAL\"\n    },\n    {\n      \"key\": \"appliedAt\",\n      \"name\": \"Applied At\",\n      \"searchable\": true,\n      \"type\": \"TIMESTAMP\"\n    },\n    {\n      \"key\": \"serviceType\",\n      \"name\": \"Service Type\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"glCode\",\n      \"name\": \"GL Code\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"rateTableEntry\",\n      \"name\": \"Rate Table Entry\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"rateDescription\",\n      \"name\": \"Rate Description\",\n      \"searchable\": true,\n      \"type\": \"STRING\"\n    },\n    {\n      \"key\": \"adjustment_total\",\n      \"name\": \"Adjustment Total\",\n      \"searchable\": true,\n      \"type\": \"REAL\"\n    }\n  ],\n  \"defaultColumns\": [\n    \"chargeId\",\n    \"customer\",\n    \"customerLocation\",\n    \"billingStatus\",\n    \"amount\",\n    \"appliedAt\",\n    \"invoice\",\n    \"billingType\",\n    \"serviceType\",\n    \"glCode\",\n    \"rateTableEntry\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "276d0271-2b97-4eaf-bb45-ca4f8cc880aa",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "charges-table-def"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3106,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-lg-k-h1.arms.cedarai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-arms-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2ccb87fc-611e-4a5c-8bbe-14622419f066",
+    "name": "protobuf/arms/charge.proto ChargeService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

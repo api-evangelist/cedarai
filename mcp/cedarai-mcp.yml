@@ -168,3 +168,9 @@ tools:
 - name: RecordTrainEvent
   description: Record Train Event
   source_operation: openapi/cedarai-work-order-openapi.yml#RecordTrainEvent
+deployment:
+  mode: none
+  verified: derived
+  tools: 53
+  checked: '2026-08-12'
+  source: catalog MCP census

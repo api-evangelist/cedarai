@@ -1,0 +1,269 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "protobuf/arms/charge.proto ChargeService LindaService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-arms-api-key",
+      "value": "{{x-arms-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "LindaService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search referenceable entities for mentions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/search-references",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Searches across all configured entity types in parallel and returns the top N matches per type. Used by the note editor's `@`-mention typeahead to look up equipment, shipments, customers, waybills, work orders, invoices, etc. by identifier or display text."
+        },
+        {
+          "info": {
+            "name": "Batch get note summaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/batch-get-summaries",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns note summaries for many entities in one round trip. Designed for list/grid pages that show a notes-count column. Entities with zero notes are omitted from the response."
+        },
+        {
+          "info": {
+            "name": "List notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/list",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns notes on a given entity in descending chronological order (newest first). Supports cursor-based pagination via `page_size` and `page_token`. When both `referenced_entity_type` and `referenced_entity_id` are set, the request switches to reverse-lookup mode (notes mentioning the given entity), capped at 100 results without pagination."
+        },
+        {
+          "info": {
+            "name": "Delete a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/delete",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes a note. The row is retained for audit but excluded from all reads. Owners may always delete; non-owners require the `linda.notes.deleteAny` permission."
+        },
+        {
+          "info": {
+            "name": "Search notes (full-text)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/search",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Full-text search across all notes for the carrier, ranked by Postgres `ts_rank`. Returns `<mark>`-highlighted snippets via `ts_headline`. The index strips `<<ref:...>>` reference token wrappers and normalizes hashtag-group syntax (`#group(content)`) so chip text and automation-written hashtag content are searchable as plain words."
+        },
+        {
+          "info": {
+            "name": "Get note summary for one entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/get-summary",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a one-row summary for a single entity: total note count and the latest note. Use this to populate badges/counters without fetching the full thread."
+        },
+        {
+          "info": {
+            "name": "Create a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/create",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new threaded note on an entity (shipment, equipment, waybill, etc.). The caller's verified identity (from JWT or assumed user) becomes the note author. Reference tokens (`<<ref:type:id:displayText>>`) embedded in `content` should also be supplied as structured `references` for reverse-lookup."
+        },
+        {
+          "info": {
+            "name": "Update a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/update",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Edits an existing note's content and (optionally) its references. Owners may always edit; non-owners require the `linda.notes.editAny` permission. Set `update_references=true` to replace the prior reference set; otherwise prior references are preserved."
+        },
+        {
+          "info": {
+            "name": "AI summary of a note thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/v1/notes/summarize-entity",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-arms-api-key",
+              "value": "{{x-arms-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a one-paragraph AI summary of the note thread for an entity. Synchronous LLM call — expect 2 to 6 seconds latency. Cache results client-side if you display them frequently; the response is not cached server-side.\n\n**Billing:** This endpoint invokes a Cedar.AI language model and is billed under AI pricing. The other notes endpoints (`/v1/notes/list`, `/v1/notes/create`, `/v1/notes/search`, etc.) are not AI-backed and follow standard API metering."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

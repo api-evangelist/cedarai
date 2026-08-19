@@ -1,0 +1,223 @@
+{
+  "item": [
+    {
+      "id": "51f25b85-780f-46b8-a65e-bb5be46f4f80",
+      "name": "NetworkStructureService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "96ac1962-0dc7-4537-b8e2-7e14ba46c62e",
+          "name": "Get the Network Hierarchy",
+          "request": {
+            "name": "Get the Network Hierarchy",
+            "description": {
+              "content": "Get the Carrier Network as a hierarchical tree structure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "network-hierarchy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"<string>\",\n  \"sortByAssociation\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "96735576-190c-4ddc-81ce-57e895d3e829",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "network-hierarchy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scope\": \"main\",\n  \"sort_by_association\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hierarchy\": {\n    \"roots\": [\n      {\n        \"children\": [\n          {\n            \"children\": [\n              {\n                \"children\": [\n                  {\n                    \"children\": [],\n                    \"region\": {\n                      \"attributes\": {\n                        \"is_virtual\": \"Yes\"\n                      },\n                      \"groupingId\": \"1234\",\n                      \"groupingType\": \"track\",\n                      \"legacyGroupingId\": \"123\",\n                      \"name\": \"Track 1\",\n                      \"sortOrder\": 0\n                    }\n                  }\n                ],\n                \"region\": {\n                  \"attributes\": {},\n                  \"groupingId\": \"789\",\n                  \"groupingType\": \"station\",\n                  \"legacyGroupingId\": \"789\",\n                  \"name\": \"Station 1\",\n                  \"sortOrder\": 10\n                }\n              }\n            ],\n            \"region\": {\n              \"attributes\": {},\n              \"groupingId\": \"456\",\n              \"groupingType\": \"area\",\n              \"legacyGroupingId\": \"456\",\n              \"name\": \"Area 1\",\n              \"sortOrder\": 10\n            }\n          }\n        ],\n        \"region\": {\n          \"attributes\": {},\n          \"groupingId\": \"12345\",\n          \"groupingType\": \"road\",\n          \"legacyGroupingId\": \"123\",\n          \"name\": \"ABC\",\n          \"sortOrder\": 0\n        }\n      }\n    ],\n    \"scope\": \"main\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cd6d68f-af75-48c0-a1b2-6bd2d73387c1",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "network-hierarchy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scope\": \"main\",\n  \"sort_by_association\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5491,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-lg-k-h1.arms.cedarai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-arms-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "23cba446-b81b-4ec7-ba63-ed10e82a7bc0",
+    "name": "protobuf/arms/charge.proto ChargeService NetworkStructureService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

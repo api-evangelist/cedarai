@@ -1,0 +1,1789 @@
+{
+  "item": [
+    {
+      "id": "90d90b2b-8c93-490c-8dcf-5564e96f4774",
+      "name": "WorkOrderService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9ffd4700-b8b4-4102-b859-c4f3eef9cfda",
+          "name": "List Train Reason Codes",
+          "request": {
+            "name": "List Train Reason Codes",
+            "description": {
+              "content": "Returns the carrier's train reason codes grouped by category.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "list-train-reason-codes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f73b7bd6-eaab-40a9-a47b-c66cc7f58f8b",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "list-train-reason-codes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reasonCodes\": [\n    {\n      \"category\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"category\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7418628a-37ae-43aa-a83c-3f05918586dc",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "list-train-reason-codes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3165,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ef0cbd7-cee0-49c4-8f9a-32213d518b24",
+          "name": "Resequence a train",
+          "request": {
+            "name": "Resequence a train",
+            "description": {
+              "content": "Used for resequence of active trains. For editing the consist of Pending trains, use UpdateWorkOrder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "resequence-train"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"autoSetoutPickup\": \"<boolean>\",\n  \"trainConsistEquipmentUuids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\",\n  \"exception\": \"<string>\",\n  \"ignoreCarsWithCompletedSetout\": \"<boolean>\",\n  \"lostTrackId\": \"<int64>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a8211180-311c-4581-a958-1769e66f3e2e",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "resequence-train"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"autoSetoutPickup\": \"<boolean>\",\n  \"trainConsistEquipmentUuids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\",\n  \"exception\": \"<string>\",\n  \"ignoreCarsWithCompletedSetout\": \"<boolean>\",\n  \"lostTrackId\": \"<int64>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ebb33a9-a0d1-49d0-9872-09693e0efa99",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "resequence-train"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"autoSetoutPickup\": \"<boolean>\",\n  \"trainConsistEquipmentUuids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\",\n  \"exception\": \"<string>\",\n  \"ignoreCarsWithCompletedSetout\": \"<boolean>\",\n  \"lostTrackId\": \"<int64>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eadacb0c-4a5c-42e8-9060-dd23ca7da693",
+          "name": "Setout Cars",
+          "request": {
+            "name": "Setout Cars",
+            "description": {
+              "content": "Setout cars. On success, completes the Setout tasks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "setout-cars"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exceptions\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    }\n  ],\n  \"items\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"position\": \"<integer>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"trackId\": \"<uint64>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"position\": \"<integer>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"trackId\": \"<uint64>\"\n    }\n  ],\n  \"workOrderId\": \"<string>\",\n  \"isLostConsist\": \"<boolean>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6900c127-92b3-4023-afd3-7a83caaa590d",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "setout-cars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"exceptions\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    }\n  ],\n  \"items\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"position\": \"<integer>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"trackId\": \"<uint64>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"position\": \"<integer>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"trackId\": \"<uint64>\"\n    }\n  ],\n  \"workOrderId\": \"<string>\",\n  \"isLostConsist\": \"<boolean>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f105125-7456-4cac-a71c-6ed63027cc86",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "setout-cars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"exceptions\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    }\n  ],\n  \"items\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"position\": \"<integer>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"trackId\": \"<uint64>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"position\": \"<integer>\",\n      \"setoutTaskId\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"trackId\": \"<uint64>\"\n    }\n  ],\n  \"workOrderId\": \"<string>\",\n  \"isLostConsist\": \"<boolean>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7167553e-3cb1-4dc3-88fd-87475490b260",
+          "name": "Pickup cars",
+          "request": {
+            "name": "Pickup cars",
+            "description": {
+              "content": "Pickup cars. On success, completes the Pickup tasks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "pickup-cars"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"pickupTaskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"pickupTaskId\": \"<string>\"\n    }\n  ],\n  \"trainConsistEquipmentUuids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\",\n  \"exceptions\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"pickupTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"pickupTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    }\n  ],\n  \"taskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eb886d54-6fc4-4808-80c6-e2dba78a30e0",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "pickup-cars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"pickupTaskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"pickupTaskId\": \"<string>\"\n    }\n  ],\n  \"trainConsistEquipmentUuids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\",\n  \"exceptions\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"pickupTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"pickupTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    }\n  ],\n  \"taskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5325a3aa-e4bf-4589-8d17-8fd84924341b",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "pickup-cars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"pickupTaskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"pickupTaskId\": \"<string>\"\n    }\n  ],\n  \"trainConsistEquipmentUuids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\",\n  \"exceptions\": [\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"pickupTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    },\n    {\n      \"equipmentId\": \"<uint64>\",\n      \"exception\": \"<string>\",\n      \"pickupTaskId\": \"<string>\",\n      \"taskId\": \"<string>\"\n    }\n  ],\n  \"taskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff8bdd39-800b-47ff-a915-0a3a652a785f",
+          "name": "List Work Orders",
+          "request": {
+            "name": "List Work Orders",
+            "description": {
+              "content": "Returns list of Work Orders",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "list-work-orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attributes\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"customerLocationIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"designatedDateRange\": {\n    \"endTime\": \"<dateTime>\",\n    \"startTime\": \"<dateTime>\"\n  },\n  \"destinationLocationIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"directionFilter\": \"WORK_ORDER_DIRECTION_FILTER_UNSPECIFIED\",\n  \"equipmentName\": \"<string>\",\n  \"inTransit\": \"<boolean>\",\n  \"includeScheduledStops\": \"<boolean>\",\n  \"includeTasks\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"originLocationIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pageNextToken\": \"<string>\",\n  \"pagePreviousToken\": \"<string>\",\n  \"pageSize\": \"<long>\",\n  \"servingLocationIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"statuses\": [\n    \"PENDING\",\n    \"PENDING\"\n  ],\n  \"taskLocationIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1a83731b-bdad-4a81-92d6-94ad9a6aed42",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "list-work-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": {\n    \"priority\": \"high\",\n    \"shift\": \"day\"\n  },\n  \"customer_location_ids\": [\n    \"33333\"\n  ],\n  \"designated_date_range\": {\n    \"end\": \"2024-01-31T23:59:59Z\",\n    \"start\": \"2024-01-01T00:00:00Z\"\n  },\n  \"destination_location_ids\": [\n    \"22222\"\n  ],\n  \"equipment_name\": \"BNSF 123456\",\n  \"include_tasks\": true,\n  \"name\": \"Daily Switch Job\",\n  \"origin_location_ids\": [\n    \"11111\"\n  ],\n  \"page_next_token\": \"eyJwYWdlIjogMiwgImxhc3RfaWQiOiAiMTIzNDUifQ==\",\n  \"page_size\": 50,\n  \"serving_location_ids\": [\n    \"44444\"\n  ],\n  \"statuses\": [\n    \"ACTIVE\",\n    \"PENDING\"\n  ],\n  \"work_order_ids\": [\n    \"12345\",\n    \"67890\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_token\": \"eyJwYWdlIjogMiwgImxhc3RfaWQiOiAiMTIzNDYifQ==\",\n  \"prev_token\": \"\",\n  \"results\": [\n    {\n      \"crew_ids\": [\n        \"crew1\",\n        \"crew2\"\n      ],\n      \"designated_date\": \"2024-01-15T00:00:00Z\",\n      \"equipment_ids\": [\n        \"uuid_car1\",\n        \"uuid_car2\"\n      ],\n      \"status\": \"ACTIVE\",\n      \"train_id\": \"Train 123\",\n      \"work_order_id\": \"12345\"\n    },\n    {\n      \"crew_ids\": [\n        \"crew3\"\n      ],\n      \"designated_date\": \"2024-01-16T00:00:00Z\",\n      \"equipment_ids\": [\n        \"uuid_car3\"\n      ],\n      \"status\": \"PENDING\",\n      \"train_id\": \"Train 456\",\n      \"work_order_id\": \"6789\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f26688b-85a4-4c56-bd6c-4bc241be10b7",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "list-work-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": {\n    \"priority\": \"high\",\n    \"shift\": \"day\"\n  },\n  \"customer_location_ids\": [\n    \"33333\"\n  ],\n  \"designated_date_range\": {\n    \"end\": \"2024-01-31T23:59:59Z\",\n    \"start\": \"2024-01-01T00:00:00Z\"\n  },\n  \"destination_location_ids\": [\n    \"22222\"\n  ],\n  \"equipment_name\": \"BNSF 123456\",\n  \"include_tasks\": true,\n  \"name\": \"Daily Switch Job\",\n  \"origin_location_ids\": [\n    \"11111\"\n  ],\n  \"page_next_token\": \"eyJwYWdlIjogMiwgImxhc3RfaWQiOiAiMTIzNDUifQ==\",\n  \"page_size\": 50,\n  \"serving_location_ids\": [\n    \"44444\"\n  ],\n  \"statuses\": [\n    \"ACTIVE\",\n    \"PENDING\"\n  ],\n  \"work_order_ids\": [\n    \"12345\",\n    \"67890\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4228b73e-5357-4a4a-a95d-7a2ea1199803",
+          "name": "Depart train",
+          "request": {
+            "name": "Depart train",
+            "description": {
+              "content": "Depart a train from a station.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "depart-train"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workOrderId\": \"<string>\",\n  \"autoCloseTasks\": \"<boolean>\",\n  \"exception\": \"<string>\",\n  \"stationId\": \"<int64>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5f6027da-916d-405a-9451-3490974fcdbc",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "depart-train"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workOrderId\": \"<string>\",\n  \"autoCloseTasks\": \"<boolean>\",\n  \"exception\": \"<string>\",\n  \"stationId\": \"<int64>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "568c235d-88c6-471d-ab91-300b9d2af8eb",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "depart-train"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workOrderId\": \"<string>\",\n  \"autoCloseTasks\": \"<boolean>\",\n  \"exception\": \"<string>\",\n  \"stationId\": \"<int64>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6a48eb2-d8de-403a-a006-adbf4c7faf08",
+          "name": "Update a Work Order",
+          "request": {
+            "name": "Update a Work Order",
+            "description": {
+              "content": "Update a Work Order. Used for editing consist of a pending train.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "update-work-order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attributes\": {},\n  \"crewIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"customerLocationId\": \"<int64>\",\n  \"designatedDate\": \"<dateTime>\",\n  \"equipmentIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"forceClose\": \"<boolean>\",\n  \"initialEquipmentIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"readyToDepart\": \"<boolean>\",\n  \"servingLocationId\": \"<int64>\",\n  \"status\": \"PENDING\",\n  \"taskExceptionUpdates\": [\n    {\n      \"exception\": \"<string>\",\n      \"taskId\": \"<string>\"\n    },\n    {\n      \"exception\": \"<string>\",\n      \"taskId\": \"<string>\"\n    }\n  ],\n  \"taskUpdateLocationMasks\": [\n    {\n      \"customerLocationId\": \"<int64>\",\n      \"servingLocationId\": \"<int64>\",\n      \"taskType\": \"PICKUP\"\n    },\n    {\n      \"customerLocationId\": \"<int64>\",\n      \"servingLocationId\": \"<int64>\",\n      \"taskType\": \"PICKUP\"\n    }\n  ],\n  \"taskUpdates\": [\n    {\n      \"assignedLocation\": {\n        \"spotName\": \"<string>\",\n        \"trackId\": \"<uint64>\",\n        \"trackName\": \"<string>\"\n      },\n      \"customerLocationId\": \"<int64>\",\n      \"equipmentId\": \"<uint64>\",\n      \"servingLocationId\": \"<int64>\",\n      \"taskId\": \"<string>\",\n      \"taskType\": \"PICKUP\",\n      \"workDefinitionId\": \"<string>\"\n    },\n    {\n      \"assignedLocation\": {\n        \"spotName\": \"<string>\",\n        \"trackId\": \"<uint64>\",\n        \"trackName\": \"<string>\"\n      },\n      \"customerLocationId\": \"<int64>\",\n      \"equipmentId\": \"<uint64>\",\n      \"servingLocationId\": \"<int64>\",\n      \"taskId\": \"<string>\",\n      \"taskType\": \"PICKUP\",\n      \"workDefinitionId\": \"<string>\"\n    }\n  ],\n  \"trainId\": \"<string>\",\n  \"updateMask\": \"<string>\",\n  \"workOrderId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cafaba63-fa4f-4243-bc02-be148b867128",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "update-work-order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crew_ids\": [\n    \"crew1\",\n    \"crew2\"\n  ],\n  \"equipment_ids\": [\n    \"uuid_car1\",\n    \"uuid_car2\"\n  ],\n  \"status\": \"ACTIVE\",\n  \"train_id\": \"Train 123\",\n  \"update_mask\": {\n    \"paths\": [\n      \"train_id\",\n      \"crew_ids\",\n      \"equipment_ids\",\n      \"status\"\n    ]\n  },\n  \"work_order_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"attributes\": {},\n  \"autoCompleteTasks\": false,\n  \"blueprint\": {\n    \"attributesDefault\": {},\n    \"cancelled\": true,\n    \"destinationCustomerLocationId\": \"string\",\n    \"destinationServingLocationId\": \"string\",\n    \"enableLocalTrainMode\": true,\n    \"job\": {\n      \"attributesDefault\": {},\n      \"autoCompleteTasks\": true,\n      \"isAvailableToAdvance\": true,\n      \"isAvailableToClassify\": true,\n      \"isAvailableToDeliver\": false,\n      \"isAvailableToInterchange\": false,\n      \"isAvailableToMove\": false,\n      \"jobId\": \"string\",\n      \"minNumOfEots\": 1756,\n      \"minNumOfLocos\": 2474,\n      \"name\": \"string\",\n      \"requireLocoSetoutBeforeComplete\": true,\n      \"templatizedName\": \"string\",\n      \"trainSetDisabled\": true,\n      \"type\": \"string\"\n    },\n    \"jobId\": \"string\",\n    \"name\": \"string\",\n    \"originCustomerLocationId\": \"string\",\n    \"originServingLocationId\": \"string\",\n    \"schedule\": \"string\",\n    \"useTrainFunction\": true,\n    \"workDefinitionIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"workDefinitions\": [\n      {\n        \"activityCode\": \"string\",\n        \"arrivalTime\": \"2022-05-07T01:44:33.332Z\",\n        \"cancelled\": false,\n        \"customerLocationId\": \"string\",\n        \"departureTime\": \"2022-06-18T17:51:05.269Z\",\n        \"futureCustomerLocationId\": \"string\",\n        \"futureServingLocationId\": \"string\",\n        \"isPickupAndSetout\": false,\n        \"name\": \"string\",\n        \"pickupFilter\": {\n          \"departureTrainId\": \"string\",\n          \"intersectedGroupFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"priority\": 4424,\n          \"timeFilter\": {\n            \"isAnd\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timeFilters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"wantDateDaysFromNow\": 109,\n          \"wantDateOffsetEnd\": 4502,\n          \"wantDateOffsetStart\": 140\n        },\n        \"servingLocationId\": \"string\",\n        \"setoutFilter\": {\n          \"departureTrainId\": \"string\",\n          \"intersectedGroupFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"priority\": 1264,\n          \"timeFilter\": {\n            \"isAnd\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timeFilters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"wantDateDaysFromNow\": 2245,\n          \"wantDateOffsetEnd\": 8687,\n          \"wantDateOffsetStart\": 1120\n        },\n        \"workDefinitionId\": \"string\"\n      },\n      {\n        \"activityCode\": \"string\",\n        \"arrivalTime\": \"1954-03-22T14:40:25.598Z\",\n        \"cancelled\": false,\n        \"customerLocationId\": \"string\",\n        \"departureTime\": \"1976-11-26T20:17:34.538Z\",\n        \"futureCustomerLocationId\": \"string\",\n        \"futureServingLocationId\": \"string\",\n        \"isPickupAndSetout\": false,\n        \"name\": \"string\",\n        \"pickupFilter\": {\n          \"departureTrainId\": \"string\",\n          \"intersectedGroupFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"priority\": 6410,\n          \"timeFilter\": {\n            \"isAnd\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timeFilters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"wantDateDaysFromNow\": 71,\n          \"wantDateOffsetEnd\": 5909,\n          \"wantDateOffsetStart\": 7433\n        },\n        \"servingLocationId\": \"string\",\n        \"setoutFilter\": {\n          \"departureTrainId\": \"string\",\n          \"intersectedGroupFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"priority\": 4929,\n          \"timeFilter\": {\n            \"isAnd\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timeFilters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"wantDateDaysFromNow\": 7269,\n          \"wantDateOffsetEnd\": 7607,\n          \"wantDateOffsetStart\": 1200\n        },\n        \"workDefinitionId\": \"string\"\n      }\n    ],\n    \"workOrderBlueprintId\": \"string\"\n  },\n  \"createdAt\": \"string\",\n  \"crews\": [\n    {\n      \"createdAt\": \"1998-09-06T18:19:17.806Z\",\n      \"crewId\": \"string\",\n      \"deletedAt\": \"2024-03-07T08:17:17.441Z\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"middleName\": \"string\",\n      \"picture\": \"0AuDEHX7Nti55GQIGyRWvLzj\",\n      \"role\": \"string\",\n      \"touchedByUser\": {\n        \"displayName\": \"string\",\n        \"email\": \"string\",\n        \"userId\": 4365,\n        \"userUuid\": \"string\"\n      },\n      \"updatedAt\": \"2021-04-07T15:58:40.874Z\",\n      \"user\": {\n        \"displayName\": \"string\",\n        \"email\": \"string\",\n        \"userId\": 9496,\n        \"userUuid\": \"string\"\n      }\n    },\n    {\n      \"createdAt\": \"1996-08-17T01:53:22.636Z\",\n      \"crewId\": \"string\",\n      \"deletedAt\": \"1953-03-30T13:13:25.985Z\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"middleName\": \"string\",\n      \"picture\": \"1GGnMOJ=\",\n      \"role\": \"string\",\n      \"touchedByUser\": {\n        \"displayName\": \"string\",\n        \"email\": \"string\",\n        \"userId\": 3337,\n        \"userUuid\": \"string\"\n      },\n      \"updatedAt\": \"1961-01-27T10:58:00.687Z\",\n      \"user\": {\n        \"displayName\": \"string\",\n        \"email\": \"string\",\n        \"userId\": 7515,\n        \"userUuid\": \"string\"\n      }\n    }\n  ],\n  \"customerLocationId\": \"string\",\n  \"departureHeading\": 5325.762291149332,\n  \"departureLocoConsistIndex\": 3774,\n  \"designatedDate\": \"1948-11-19T13:32:38.310Z\",\n  \"destinationCustomerLocationId\": \"string\",\n  \"destinationServingLocationId\": \"string\",\n  \"inTransit\": false,\n  \"initialTrainConsistId\": \"string\",\n  \"job\": {\n    \"attributesDefault\": {},\n    \"autoCompleteTasks\": false,\n    \"isAvailableToAdvance\": false,\n    \"isAvailableToClassify\": false,\n    \"isAvailableToDeliver\": true,\n    \"isAvailableToInterchange\": true,\n    \"isAvailableToMove\": false,\n    \"jobId\": \"string\",\n    \"minNumOfEots\": 7312,\n    \"minNumOfLocos\": 3522,\n    \"name\": \"string\",\n    \"requireLocoSetoutBeforeComplete\": false,\n    \"templatizedName\": \"string\",\n    \"trainSetDisabled\": false,\n    \"type\": \"string\"\n  },\n  \"jobId\": \"string\",\n  \"lastEventId\": \"string\",\n  \"latestTrainEventId\": \"string\",\n  \"lostTrainConsistId\": \"string\",\n  \"originCustomerLocationId\": \"string\",\n  \"originServingLocationId\": \"string\",\n  \"readyToDepart\": false,\n  \"scheduledStops\": [\n    {\n      \"activityCode\": \"string\",\n      \"arrivalTime\": \"2013-01-04T18:11:08.921Z\",\n      \"cancelled\": false,\n      \"customerLocationId\": \"string\",\n      \"departureTime\": \"2004-10-18T12:47:19.297Z\",\n      \"servingLocationId\": \"string\",\n      \"workDefinitionId\": \"string\"\n    },\n    {\n      \"activityCode\": \"string\",\n      \"arrivalTime\": \"1971-03-24T01:54:00.026Z\",\n      \"cancelled\": true,\n      \"customerLocationId\": \"string\",\n      \"departureTime\": \"1985-10-11T08:14:50.284Z\",\n      \"servingLocationId\": \"string\",\n      \"workDefinitionId\": \"string\"\n    }\n  ],\n  \"servingLocationId\": \"string\",\n  \"status\": \"PENDING\",\n  \"tasks\": [\n    {\n      \"assignedLocation\": {\n        \"spotName\": \"<string>\",\n        \"trackId\": \"<uint64>\",\n        \"trackName\": \"<string>\"\n      },\n      \"closedAt\": \"2001-06-09T09:39:07.790Z\",\n      \"createdAt\": \"1979-04-28T03:29:02.392Z\",\n      \"customerLocationId\": \"string\",\n      \"equipmentId\": \"string\",\n      \"exception\": \"string\",\n      \"isForInitialConsist\": false,\n      \"pairedTaskId\": \"string\",\n      \"servingLocationId\": \"string\",\n      \"sortBy\": \"string\",\n      \"status\": \"NOT_STARTED\",\n      \"switchRequest\": {\n        \"batchId\": \"string\",\n        \"completedAt\": \"2024-10-06T19:02:34.264Z\",\n        \"createdAt\": \"1951-04-07T07:57:39.018Z\",\n        \"customerId\": \"string\",\n        \"deletedBy\": {},\n        \"equipment\": {\n          \"arrivalState\": \"AS_INBOUND\",\n          \"equipmentId\": 7645,\n          \"equipmentInitial\": \"string\",\n          \"equipmentNumber\": \"string\",\n          \"equipmentUuid\": \"string\",\n          \"groupings\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"loadStatus\": \"string\",\n          \"location\": {\n            \"index\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"track\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"parentGroupings\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"umler\": {\n            \"abt57YrDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"abtDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"articulated\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"attributes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"axleCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bodyMaterial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"boxSideDoorOrientation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeShoeType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"carGrade\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"couplerStyle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cubicFeetCapacity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"doorLubeDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"elementEquipmentGroup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endOfTrainOnly\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentInitial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"floorStrengthClassification\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"gallonageCapacity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLength\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLengthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"inspectionDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lessee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimitLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimitUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markOwnerCategory\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"mechanicalDesignation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"netWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"netWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"operatingBrakes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLength\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLengthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"owner\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"plateCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"residualSideBearings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shoveAdjCarToRest\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shoveCarToRest\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"trainPositionSensitive\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"umet\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"umlerUpdatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unitEquipmentGroup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"verificationKey\": \"string\",\n          \"verificationKeys\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"waybill\": {\n            \"armsTrackingId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"billOfLadingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"capacityLoadCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"crossReferenceEquipment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"defaultReceiver\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destinationJunction\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destinationStation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentDetails\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extendedReferenceInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lineItems\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originCarrierCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originJunction\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originStation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originSystem\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parties\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionSourceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"route\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentPaymentMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentQualifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialHandlingCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transportationMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillStatus\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"weightUnitCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"equipmentId\": \"string\",\n        \"etaTime\": \"2012-01-24T11:00:16.230Z\",\n        \"externalFulfillingParty\": \"string\",\n        \"externalStatus\": \"string\",\n        \"notes\": \"string\",\n        \"requestType\": \"SWITCH_REQUEST_TYPE_UNSPECIFIED\",\n        \"requestTypeV2\": \"string\",\n        \"spotId\": \"string\",\n        \"spotName\": \"string\",\n        \"status\": \"string\",\n        \"switchRequestId\": \"string\",\n        \"touchedAt\": \"2005-04-14T06:45:06.208Z\",\n        \"touchedBy\": {},\n        \"track\": {\n          \"attributes\": {},\n          \"customerLocation\": {\n            \"abbreviatedName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"blockCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currencyCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerIdentificationNumbers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerLocationId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerLocationUuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"freightBillEdiReceiver\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"generalLedgerNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isReportingLocation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"phoneNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"serviceTypeIds\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"usedForBilling\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"equipmentIndexEnabled\": true,\n          \"frozen\": true,\n          \"groupingId\": \"string\",\n          \"groupingType\": \"string\",\n          \"name\": \"string\",\n          \"sortOrder\": 9395,\n          \"status\": \"ACTIVE\"\n        },\n        \"trackId\": \"string\",\n        \"wantDate\": \"string\"\n      },\n      \"taskDataSource\": \"string\",\n      \"taskId\": \"string\",\n      \"taskIndex\": 3317,\n      \"taskType\": \"PICKUP\",\n      \"touchedBy\": {},\n      \"updatedAt\": \"2014-06-19T01:58:50.190Z\",\n      \"workDefinitionId\": \"string\",\n      \"workOrderId\": \"string\"\n    },\n    {\n      \"assignedLocation\": {\n        \"spotName\": \"<string>\",\n        \"trackId\": \"<uint64>\",\n        \"trackName\": \"<string>\"\n      },\n      \"closedAt\": \"2026-08-09T06:05:44.008Z\",\n      \"createdAt\": \"1950-03-30T04:23:17.021Z\",\n      \"customerLocationId\": \"string\",\n      \"equipmentId\": \"string\",\n      \"exception\": \"string\",\n      \"isForInitialConsist\": true,\n      \"pairedTaskId\": \"string\",\n      \"servingLocationId\": \"string\",\n      \"sortBy\": \"string\",\n      \"status\": \"NOT_STARTED\",\n      \"switchRequest\": {\n        \"batchId\": \"string\",\n        \"completedAt\": \"1994-01-18T02:52:37.132Z\",\n        \"createdAt\": \"2019-10-21T03:38:06.038Z\",\n        \"customerId\": \"string\",\n        \"deletedBy\": {},\n        \"equipment\": {\n          \"arrivalState\": \"AS_INBOUND\",\n          \"equipmentId\": 9413,\n          \"equipmentInitial\": \"string\",\n          \"equipmentNumber\": \"string\",\n          \"equipmentUuid\": \"string\",\n          \"groupings\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"loadStatus\": \"string\",\n          \"location\": {\n            \"index\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"track\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"parentGroupings\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"umler\": {\n            \"abt57YrDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"abtDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"articulated\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"attributes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"axleCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bodyMaterial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"boxSideDoorOrientation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeShoeType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"carGrade\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"couplerStyle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cubicFeetCapacity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"doorLubeDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"elementEquipmentGroup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endOfTrainOnly\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentInitial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"floorStrengthClassification\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"gallonageCapacity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLength\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLengthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"inspectionDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lessee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimitLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimitUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markOwnerCategory\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"mechanicalDesignation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"netWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"netWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"operatingBrakes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLength\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLengthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"owner\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"plateCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"residualSideBearings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shoveAdjCarToRest\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shoveCarToRest\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"trainPositionSensitive\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"umet\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"umlerUpdatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unitEquipmentGroup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"verificationKey\": \"string\",\n          \"verificationKeys\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"waybill\": {\n            \"armsTrackingId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"billOfLadingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"capacityLoadCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"crossReferenceEquipment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"defaultReceiver\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destinationJunction\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destinationStation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentDetails\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extendedReferenceInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lineItems\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originCarrierCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originJunction\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originStation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originSystem\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parties\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionSourceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"route\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentPaymentMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentQualifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialHandlingCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transportationMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillStatus\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"weightUnitCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"equipmentId\": \"string\",\n        \"etaTime\": \"1956-06-01T06:27:10.080Z\",\n        \"externalFulfillingParty\": \"string\",\n        \"externalStatus\": \"string\",\n        \"notes\": \"string\",\n        \"requestType\": \"SWITCH_REQUEST_TYPE_UNSPECIFIED\",\n        \"requestTypeV2\": \"string\",\n        \"spotId\": \"string\",\n        \"spotName\": \"string\",\n        \"status\": \"string\",\n        \"switchRequestId\": \"string\",\n        \"touchedAt\": \"1986-06-07T23:45:10.609Z\",\n        \"touchedBy\": {},\n        \"track\": {\n          \"attributes\": {},\n          \"customerLocation\": {\n            \"abbreviatedName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"blockCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currencyCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerIdentificationNumbers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerLocationId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerLocationUuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"freightBillEdiReceiver\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"generalLedgerNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isReportingLocation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"phoneNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"serviceTypeIds\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"usedForBilling\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"equipmentIndexEnabled\": false,\n          \"frozen\": false,\n          \"groupingId\": \"string\",\n          \"groupingType\": \"string\",\n          \"name\": \"string\",\n          \"sortOrder\": 2281,\n          \"status\": \"ACTIVE\"\n        },\n        \"trackId\": \"string\",\n        \"wantDate\": \"string\"\n      },\n      \"taskDataSource\": \"string\",\n      \"taskId\": \"string\",\n      \"taskIndex\": 4821,\n      \"taskType\": \"PICKUP\",\n      \"touchedBy\": {},\n      \"updatedAt\": \"1993-02-20T01:06:00.901Z\",\n      \"workDefinitionId\": \"string\",\n      \"workOrderId\": \"string\"\n    }\n  ],\n  \"touchedBy\": {},\n  \"trainConsistId\": \"string\",\n  \"trainId\": \"string\",\n  \"workOrderBlueprintId\": \"string\",\n  \"workOrderId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05e17c98-a33e-4573-b292-12c1b0a2cbbe",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "update-work-order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crew_ids\": [\n    \"crew1\",\n    \"crew2\"\n  ],\n  \"equipment_ids\": [\n    \"uuid_car1\",\n    \"uuid_car2\"\n  ],\n  \"status\": \"ACTIVE\",\n  \"train_id\": \"Train 123\",\n  \"update_mask\": {\n    \"paths\": [\n      \"train_id\",\n      \"crew_ids\",\n      \"equipment_ids\",\n      \"status\"\n    ]\n  },\n  \"work_order_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0579ef25-61b2-4d6e-a9fb-91b40d3af77c",
+          "name": "List Work Order Tasks",
+          "request": {
+            "name": "List Work Order Tasks",
+            "description": {
+              "content": "Returns a list of tasks for a given work order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "list-work-order-tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerLocationId\": \"<int64>\",\n  \"equipmentIds\": [\n    \"<int64>\",\n    \"<int64>\"\n  ],\n  \"justCreatedNow\": \"<boolean>\",\n  \"servingLocationId\": \"<int64>\",\n  \"status\": \"NOT_STARTED\",\n  \"taskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"taskType\": \"PICKUP\",\n  \"workDefinitionIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc0f6424-27b6-4bc7-8074-1e736171ae12",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "list-work-order-tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerLocationId\": \"<int64>\",\n  \"equipmentIds\": [\n    \"<int64>\",\n    \"<int64>\"\n  ],\n  \"justCreatedNow\": \"<boolean>\",\n  \"servingLocationId\": \"<int64>\",\n  \"status\": \"NOT_STARTED\",\n  \"taskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"taskType\": \"PICKUP\",\n  \"workDefinitionIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"assignedLocation\": {\n        \"spotName\": \"<string>\",\n        \"trackId\": \"<uint64>\",\n        \"trackName\": \"<string>\"\n      },\n      \"closedAt\": \"1947-08-25T11:55:27.968Z\",\n      \"createdAt\": \"1996-12-13T01:35:36.933Z\",\n      \"customerLocationId\": \"string\",\n      \"equipmentId\": \"string\",\n      \"exception\": \"string\",\n      \"isForInitialConsist\": false,\n      \"pairedTaskId\": \"string\",\n      \"servingLocationId\": \"string\",\n      \"sortBy\": \"string\",\n      \"status\": \"NOT_STARTED\",\n      \"switchRequest\": {\n        \"batchId\": \"string\",\n        \"completedAt\": \"1999-09-18T00:09:18.986Z\",\n        \"createdAt\": \"2007-06-03T16:19:42.180Z\",\n        \"customerId\": \"string\",\n        \"deletedBy\": {},\n        \"equipment\": {\n          \"arrivalState\": \"AS_INBOUND\",\n          \"equipmentId\": 6336,\n          \"equipmentInitial\": \"string\",\n          \"equipmentNumber\": \"string\",\n          \"equipmentUuid\": \"string\",\n          \"groupings\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"loadStatus\": \"string\",\n          \"location\": {\n            \"index\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"track\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"parentGroupings\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"umler\": {\n            \"abt57YrDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"abtDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"articulated\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"attributes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"axleCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bodyMaterial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"boxSideDoorOrientation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeShoeType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"carGrade\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"couplerStyle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cubicFeetCapacity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"doorLubeDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"elementEquipmentGroup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endOfTrainOnly\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentInitial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"floorStrengthClassification\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"gallonageCapacity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLength\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLengthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"inspectionDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lessee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimitLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimitUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markOwnerCategory\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"mechanicalDesignation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"netWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"netWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"operatingBrakes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLength\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLengthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"owner\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"plateCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"residualSideBearings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shoveAdjCarToRest\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shoveCarToRest\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"trainPositionSensitive\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"umet\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"umlerUpdatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unitEquipmentGroup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"verificationKey\": \"string\",\n          \"verificationKeys\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"waybill\": {\n            \"armsTrackingId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"billOfLadingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"capacityLoadCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"crossReferenceEquipment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"defaultReceiver\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destinationJunction\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destinationStation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentDetails\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extendedReferenceInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lineItems\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originCarrierCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originJunction\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originStation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originSystem\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parties\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionSourceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"route\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentPaymentMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentQualifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialHandlingCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transportationMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillStatus\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"weightUnitCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"equipmentId\": \"string\",\n        \"etaTime\": \"1955-06-12T16:07:35.393Z\",\n        \"externalFulfillingParty\": \"string\",\n        \"externalStatus\": \"string\",\n        \"notes\": \"string\",\n        \"requestType\": \"SWITCH_REQUEST_TYPE_UNSPECIFIED\",\n        \"requestTypeV2\": \"string\",\n        \"spotId\": \"string\",\n        \"spotName\": \"string\",\n        \"status\": \"string\",\n        \"switchRequestId\": \"string\",\n        \"touchedAt\": \"2021-05-03T18:42:09.841Z\",\n        \"touchedBy\": {},\n        \"track\": {\n          \"attributes\": {},\n          \"customerLocation\": {\n            \"abbreviatedName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"blockCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currencyCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerIdentificationNumbers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerLocationId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerLocationUuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"freightBillEdiReceiver\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"generalLedgerNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isReportingLocation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"phoneNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"serviceTypeIds\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"usedForBilling\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"equipmentIndexEnabled\": true,\n          \"frozen\": true,\n          \"groupingId\": \"string\",\n          \"groupingType\": \"string\",\n          \"name\": \"string\",\n          \"sortOrder\": 7339,\n          \"status\": \"ACTIVE\"\n        },\n        \"trackId\": \"string\",\n        \"wantDate\": \"string\"\n      },\n      \"taskDataSource\": \"string\",\n      \"taskId\": \"string\",\n      \"taskIndex\": 6510,\n      \"taskType\": \"PICKUP\",\n      \"touchedBy\": {},\n      \"updatedAt\": \"1968-10-20T23:59:44.327Z\",\n      \"workDefinitionId\": \"string\",\n      \"workOrderId\": \"string\"\n    },\n    {\n      \"assignedLocation\": {\n        \"spotName\": \"<string>\",\n        \"trackId\": \"<uint64>\",\n        \"trackName\": \"<string>\"\n      },\n      \"closedAt\": \"1950-06-25T10:36:31.370Z\",\n      \"createdAt\": \"1979-04-12T05:56:24.617Z\",\n      \"customerLocationId\": \"string\",\n      \"equipmentId\": \"string\",\n      \"exception\": \"string\",\n      \"isForInitialConsist\": false,\n      \"pairedTaskId\": \"string\",\n      \"servingLocationId\": \"string\",\n      \"sortBy\": \"string\",\n      \"status\": \"NOT_STARTED\",\n      \"switchRequest\": {\n        \"batchId\": \"string\",\n        \"completedAt\": \"2009-09-11T03:36:37.211Z\",\n        \"createdAt\": \"1976-01-06T08:06:41.800Z\",\n        \"customerId\": \"string\",\n        \"deletedBy\": {},\n        \"equipment\": {\n          \"arrivalState\": \"AS_INBOUND\",\n          \"equipmentId\": 9416,\n          \"equipmentInitial\": \"string\",\n          \"equipmentNumber\": \"string\",\n          \"equipmentUuid\": \"string\",\n          \"groupings\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"loadStatus\": \"string\",\n          \"location\": {\n            \"index\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"track\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"parentGroupings\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"umler\": {\n            \"abt57YrDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"abtDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"articulated\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"attributes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"axleCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bodyMaterial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"boxSideDoorOrientation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeShoeType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"brakeWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"carGrade\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"couplerStyle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cubicFeetCapacity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"doorLubeDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"elementEquipmentGroup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endOfTrainOnly\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentInitial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"floorStrengthClassification\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"gallonageCapacity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grossRailWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLength\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"insideLengthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"inspectionDueDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lessee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimitLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loadLimitUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markOwnerCategory\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"mechanicalDesignation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"netWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"netWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"operatingBrakes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outerExtremeHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideExtremeWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideHeightExtremeWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLength\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLengthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outsideLengthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"owner\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"plateCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"residualSideBearings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shoveAdjCarToRest\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shoveCarToRest\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeightFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorHeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidthFt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sideDoorWidthUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeightLb\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tareWeightUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"trainPositionSensitive\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"umet\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"umlerUpdatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unitEquipmentGroup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"verificationKey\": \"string\",\n          \"verificationKeys\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"waybill\": {\n            \"armsTrackingId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"billOfLadingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"capacityLoadCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"crossReferenceEquipment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"defaultReceiver\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destinationJunction\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destinationStation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"equipmentDetails\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extendedReferenceInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lineItems\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originCarrierCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originJunction\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originStation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"originSystem\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parties\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionSourceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"revisionTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"route\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentPaymentMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"shipmentQualifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialHandlingCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transportationMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybillStatus\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"weightUnitCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"equipmentId\": \"string\",\n        \"etaTime\": \"1982-07-02T22:40:32.587Z\",\n        \"externalFulfillingParty\": \"string\",\n        \"externalStatus\": \"string\",\n        \"notes\": \"string\",\n        \"requestType\": \"SWITCH_REQUEST_TYPE_UNSPECIFIED\",\n        \"requestTypeV2\": \"string\",\n        \"spotId\": \"string\",\n        \"spotName\": \"string\",\n        \"status\": \"string\",\n        \"switchRequestId\": \"string\",\n        \"touchedAt\": \"1975-01-31T14:27:41.110Z\",\n        \"touchedBy\": {},\n        \"track\": {\n          \"attributes\": {},\n          \"customerLocation\": {\n            \"abbreviatedName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"blockCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currencyCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerIdentificationNumbers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerLocationId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customerLocationUuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"freightBillEdiReceiver\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"generalLedgerNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isReportingLocation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"phoneNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"serviceTypeIds\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"usedForBilling\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"equipmentIndexEnabled\": false,\n          \"frozen\": false,\n          \"groupingId\": \"string\",\n          \"groupingType\": \"string\",\n          \"name\": \"string\",\n          \"sortOrder\": 837,\n          \"status\": \"ACTIVE\"\n        },\n        \"trackId\": \"string\",\n        \"wantDate\": \"string\"\n      },\n      \"taskDataSource\": \"string\",\n      \"taskId\": \"string\",\n      \"taskIndex\": 1113,\n      \"taskType\": \"PICKUP\",\n      \"touchedBy\": {},\n      \"updatedAt\": \"2026-03-30T19:05:51.398Z\",\n      \"workDefinitionId\": \"string\",\n      \"workOrderId\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21d9f249-68dc-4587-b8ae-4bff6a3f4879",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "list-work-order-tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerLocationId\": \"<int64>\",\n  \"equipmentIds\": [\n    \"<int64>\",\n    \"<int64>\"\n  ],\n  \"justCreatedNow\": \"<boolean>\",\n  \"servingLocationId\": \"<int64>\",\n  \"status\": \"NOT_STARTED\",\n  \"taskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"taskType\": \"PICKUP\",\n  \"workDefinitionIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workOrderId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc9b6d74-7b94-416f-9bc4-965b8eb16bdc",
+          "name": "Arrive train",
+          "request": {
+            "name": "Arrive train",
+            "description": {
+              "content": "Arrive a train to a customer or serving location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "arrive-train"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isFront\": \"<boolean>\",\n  \"trackId\": \"<int64>\",\n  \"workOrderId\": \"<string>\",\n  \"customerLocationId\": \"<int64>\",\n  \"exception\": \"<string>\",\n  \"servingLocationId\": \"<int64>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5e18342e-6ac1-434b-9c0d-b351377f5316",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "arrive-train"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isFront\": \"<boolean>\",\n  \"trackId\": \"<int64>\",\n  \"workOrderId\": \"<string>\",\n  \"customerLocationId\": \"<int64>\",\n  \"exception\": \"<string>\",\n  \"servingLocationId\": \"<int64>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e447c3a-b1d0-4cf1-b26a-6bc9ce9d6c6f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "arrive-train"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isFront\": \"<boolean>\",\n  \"trackId\": \"<int64>\",\n  \"workOrderId\": \"<string>\",\n  \"customerLocationId\": \"<int64>\",\n  \"exception\": \"<string>\",\n  \"servingLocationId\": \"<int64>\",\n  \"timestamp\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "504cb8ad-b254-44bf-b67b-9ba6832b93c6",
+          "name": "Record Train Event",
+          "request": {
+            "name": "Record Train Event",
+            "description": {
+              "content": "Record a train event.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "t",
+                "v1",
+                "record-train-event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventLocation\": {\n    \"fsac\": \"<string>\",\n    \"groupingId\": \"<int64>\"\n  },\n  \"eventMessage\": \"<string>\",\n  \"externalSystemEvent\": {\n    \"eventId\": \"<string>\",\n    \"eventTimestamp\": \"<dateTime>\",\n    \"eventTypeKey\": \"<string>\",\n    \"systemName\": \"<string>\",\n    \"user\": {\n      \"displayName\": \"<string>\",\n      \"email\": \"<string>\"\n    }\n  },\n  \"finalApprovalEventDetails\": {\n    \"consistEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"notes\": \"<string>\",\n  \"otherEventDetails\": \"<object>\",\n  \"safetyCheckEventDetails\": {\n    \"failedEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"passedEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"status\": \"PASSED\"\n  },\n  \"workOrderId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e67d6806-7f2f-4f81-a1d9-90b074b5d1f5",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "record-train-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventLocation\": {\n    \"fsac\": \"<string>\",\n    \"groupingId\": \"<int64>\"\n  },\n  \"eventMessage\": \"<string>\",\n  \"externalSystemEvent\": {\n    \"eventId\": \"<string>\",\n    \"eventTimestamp\": \"<dateTime>\",\n    \"eventTypeKey\": \"<string>\",\n    \"systemName\": \"<string>\",\n    \"user\": {\n      \"displayName\": \"<string>\",\n      \"email\": \"<string>\"\n    }\n  },\n  \"finalApprovalEventDetails\": {\n    \"consistEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"notes\": \"<string>\",\n  \"otherEventDetails\": \"<object>\",\n  \"safetyCheckEventDetails\": {\n    \"failedEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"passedEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"status\": \"PASSED\"\n  },\n  \"workOrderId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fa74c88-0f29-426b-a39a-da3a399814c3",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "t",
+                    "v1",
+                    "record-train-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventLocation\": {\n    \"fsac\": \"<string>\",\n    \"groupingId\": \"<int64>\"\n  },\n  \"eventMessage\": \"<string>\",\n  \"externalSystemEvent\": {\n    \"eventId\": \"<string>\",\n    \"eventTimestamp\": \"<dateTime>\",\n    \"eventTypeKey\": \"<string>\",\n    \"systemName\": \"<string>\",\n    \"user\": {\n      \"displayName\": \"<string>\",\n      \"email\": \"<string>\"\n    }\n  },\n  \"finalApprovalEventDetails\": {\n    \"consistEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"notes\": \"<string>\",\n  \"otherEventDetails\": \"<object>\",\n  \"safetyCheckEventDetails\": {\n    \"failedEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"passedEquipmentUuids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"status\": \"PASSED\"\n  },\n  \"workOrderId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7791,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-lg-k-h1.arms.cedarai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-arms-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "751fe77d-bea1-461d-a860-a7c0b9420452",
+    "name": "protobuf/arms/charge.proto ChargeService WorkOrderService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

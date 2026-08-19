@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "protobuf/arms/charge.proto ChargeService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-arms-api-key",
+      "value": "{{x-arms-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ChargeService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Charges Table Summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/charges-table-summary",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns aggregate summary values for the charges table using the requested filters and aggregations, without returning full row detail. Downstream finance systems can use this endpoint to validate export scope, reconcile totals, and compare Cedar results against imported batches in NetSuite, Sage, or another ERP.\n\nCommon reconciliation patterns:\n\n| Aggregate request | Typical downstream use |\n| --- | --- |\n| `COUNT` on `chargeId` | Confirm the number of charges in an export batch. |\n| `SUM` on `"
+        },
+        {
+          "info": {
+            "name": "List Charges Table Rows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/charges-table-rows",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a page of charges export rows using the requested columns, filters, sorting, and pagination. Downstream finance systems such as NetSuite, Sage, or ERP middleware typically call `Get Charges Table Definition` first, choose a subset of fields, and then request rows for export, reconciliation, or incremental sync jobs.\n\nKey request fields:\n\n| Input | How downstream systems commonly use it |\n| --- | --- |\n| `table_data_request.requested_columns` | Select the Cedar fields to include in each e"
+        },
+        {
+          "info": {
+            "name": "Get Charges Table Definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/t/v1/charges-table-def",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the available charges export columns and default columns. Downstream finance systems such as NetSuite, Sage, or ERP middleware can use this metadata to map Cedar fields before requesting charge rows.\n\nThis response is metadata only: it tells consumers which columns are available, how Cedar labels them, which columns are searchable, and which columns Cedar returns by default.\n\nCommon export-oriented columns:\n\n| Column | Meaning for downstream systems |\n| --- | --- |\n| `chargeId` | Stable "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

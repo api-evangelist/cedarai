@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "protobuf/arms/charge.proto ChargeService Equipment History API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-arms-api-key",
+      "value": "{{x-arms-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Equipment History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List railcar history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/equipment-history/",
+            "params": [
+              {
+                "name": "carrierId",
+                "value": "",
+                "type": "query",
+                "description": "Carrier identifier; required for all endpoints"
+              },
+              {
+                "name": "viewAsUserGroup",
+                "value": "",
+                "type": "query",
+                "description": "Optional user group context"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves equipment history records, filterable by equipment, time range, and flags."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

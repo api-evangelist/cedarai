@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "protobuf/arms/charge.proto ChargeService InvoicesService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-arms-api-key",
+      "value": "{{x-arms-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "InvoicesService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Attaches Voucher",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/shipper/invoices/:id/vouchers",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the id of the invoice"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Associate a voucher to a shipper's invoice"
+        },
+        {
+          "info": {
+            "name": "List Shipper Invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/shipper/invoices",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "audit_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter invoices matching any of the specified audit statuses"
+              },
+              {
+                "name": "voucher_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter invoices matching any of the voucher statuses"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The requested page size"
+              },
+              {
+                "name": "page_previous_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_next_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns list of invoices"
+        },
+        {
+          "info": {
+            "name": "Get Shipper Invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-lg-k-h1.arms.cedarai.com/shipper/invoices/:id",
+            "headers": [
+              {
+                "name": "Carrier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the id of the invoice"
+              }
+            ]
+          },
+          "docs": "Returns a single invoice"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

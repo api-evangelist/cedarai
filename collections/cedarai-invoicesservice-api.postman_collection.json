@@ -1,0 +1,646 @@
+{
+  "item": [
+    {
+      "id": "da9f8cf5-5a86-409a-9173-bc65140ba57c",
+      "name": "InvoicesService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "be65ed1d-831a-40ce-9444-42aecc2adb2e",
+          "name": "Attaches Voucher",
+          "request": {
+            "name": "Attaches Voucher",
+            "description": {
+              "content": "Associate a voucher to a shipper's invoice",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipper",
+                "invoices",
+                ":id",
+                "vouchers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) the id of the invoice"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"voucher_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3760b41b-4490-4a36-a98e-b0d891b162b0",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "invoices",
+                    ":id",
+                    "vouchers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) the id of the invoice"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"voucher_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54eb20cd-5691-4b3e-96a8-673b1bc26cb4",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "invoices",
+                    ":id",
+                    "vouchers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) the id of the invoice"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"voucher_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2044,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    {\n      \"@type\": \"string\"\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc09a3aa-f312-4603-9d69-a8e77f32b8d6",
+          "name": "List Shipper Invoices",
+          "request": {
+            "name": "List Shipper Invoices",
+            "description": {
+              "content": "Returns list of invoices",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipper",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "audit_status",
+                  "value": "<string>",
+                  "description": "Filter invoices matching any of the specified audit statuses"
+                },
+                {
+                  "disabled": false,
+                  "key": "audit_status",
+                  "value": "<string>",
+                  "description": "Filter invoices matching any of the specified audit statuses"
+                },
+                {
+                  "disabled": false,
+                  "key": "voucher_status",
+                  "value": "<string>",
+                  "description": "Filter invoices matching any of the voucher statuses"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<long>",
+                  "description": "The requested page size"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_previous_token",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_next_token",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "368b64f3-1134-4279-bc4d-9ba6a3601f5d",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "audit_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "audit_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "voucher_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page_previous_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_next_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"invoices\": [\n    {\n      \"accrual_amount_this_carrier\": {\n        \"cents\": 9880,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"accrual_amount_waybill_total\": {\n        \"cents\": 2854,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"accrual_freight_amount\": {\n        \"cents\": 1804,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"accrual_fuel_amount\": {\n        \"cents\": 4033,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"accrual_misc_amount\": {\n        \"cents\": 9192,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"audit_comments\": \"string\",\n      \"audit_status\": \"REJECTED\",\n      \"balance\": {\n        \"cents\": 672,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"bill_of_lading_date\": \"string\",\n      \"bill_of_lading_identifier\": \"string\",\n      \"billed_freight_amount\": {\n        \"cents\": 3129,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"billed_fuel_amount\": {\n        \"cents\": 7975,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"billed_misc_amount\": {\n        \"cents\": 1590,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"billing_carrier\": \"string\",\n      \"billing_date\": \"string\",\n      \"commodity_code\": \"string\",\n      \"commodity_description\": \"string\",\n      \"destination\": {\n        \"city\": \"string\",\n        \"name\": \"string\",\n        \"state_or_province\": \"string\"\n      },\n      \"equipment\": [\n        {\n          \"initial\": \"string\",\n          \"number\": \"string\"\n        },\n        {\n          \"initial\": \"string\",\n          \"number\": \"string\"\n        }\n      ],\n      \"extended_references\": [\n        {\n          \"qualifier\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"qualifier\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"freight_bill_number\": \"string\",\n      \"id\": \"string\",\n      \"invoice_documents\": [\n        {\n          \"created_at\": \"string\",\n          \"edi_invoice\": {\n            \"invoice_x12\": \"string\",\n            \"send_date\": \"string\"\n          },\n          \"parsed_invoice\": {\n            \"bill_of_lading_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"billing_carrier\": \"string\",\n            \"billing_date\": \"string\",\n            \"commodity_code\": \"string\",\n            \"commodity_description\": \"string\",\n            \"destination\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"document_uuid\": \"string\",\n            \"equipment_ids\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"freight_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"freight_bill_number\": \"string\",\n            \"fuel_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoice_number\": \"string\",\n            \"lead_equipment_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"misc_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"origin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"paying_party\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_due_date\": \"string\",\n            \"pdf_page_number\": 4830,\n            \"qualifier\": \"string\",\n            \"quantity\": 6871,\n            \"total_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybill_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"created_at\": \"string\",\n          \"edi_invoice\": {\n            \"invoice_x12\": \"string\",\n            \"send_date\": \"string\"\n          },\n          \"parsed_invoice\": {\n            \"bill_of_lading_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"billing_carrier\": \"string\",\n            \"billing_date\": \"string\",\n            \"commodity_code\": \"string\",\n            \"commodity_description\": \"string\",\n            \"destination\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"document_uuid\": \"string\",\n            \"equipment_ids\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"freight_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"freight_bill_number\": \"string\",\n            \"fuel_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoice_number\": \"string\",\n            \"lead_equipment_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"misc_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"origin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"paying_party\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_due_date\": \"string\",\n            \"pdf_page_number\": 9388,\n            \"qualifier\": \"string\",\n            \"quantity\": 5244,\n            \"total_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybill_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"invoice_number\": \"string\",\n      \"origin\": {\n        \"city\": \"string\",\n        \"name\": \"string\",\n        \"state_or_province\": \"string\"\n      },\n      \"paying_party\": {\n        \"name\": \"string\",\n        \"number\": \"string\"\n      },\n      \"payment_due_date\": \"string\",\n      \"post_audit_dispatch_status\": \"PENDING_SEND\",\n      \"rule_11_destination\": {\n        \"city\": \"string\",\n        \"state\": \"string\"\n      },\n      \"rule_11_origin\": {\n        \"city\": \"string\",\n        \"state\": \"string\"\n      },\n      \"shipment_name\": \"string\",\n      \"total_amount\": {\n        \"cents\": 7769,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"transportation_destination\": {\n        \"city\": \"string\",\n        \"state\": \"string\"\n      },\n      \"transportation_origin\": {\n        \"city\": \"string\",\n        \"state\": \"string\"\n      },\n      \"voucher_id\": \"string\",\n      \"waybill_date\": \"string\",\n      \"waybill_number\": 4819\n    },\n    {\n      \"accrual_amount_this_carrier\": {\n        \"cents\": 4124,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"accrual_amount_waybill_total\": {\n        \"cents\": 3199,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"accrual_freight_amount\": {\n        \"cents\": 9312,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"accrual_fuel_amount\": {\n        \"cents\": 5186,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"accrual_misc_amount\": {\n        \"cents\": 6478,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"audit_comments\": \"string\",\n      \"audit_status\": \"PENDING_APPROVAL\",\n      \"balance\": {\n        \"cents\": 7518,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"bill_of_lading_date\": \"string\",\n      \"bill_of_lading_identifier\": \"string\",\n      \"billed_freight_amount\": {\n        \"cents\": 56,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"billed_fuel_amount\": {\n        \"cents\": 9608,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"billed_misc_amount\": {\n        \"cents\": 7113,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"billing_carrier\": \"string\",\n      \"billing_date\": \"string\",\n      \"commodity_code\": \"string\",\n      \"commodity_description\": \"string\",\n      \"destination\": {\n        \"city\": \"string\",\n        \"name\": \"string\",\n        \"state_or_province\": \"string\"\n      },\n      \"equipment\": [\n        {\n          \"initial\": \"string\",\n          \"number\": \"string\"\n        },\n        {\n          \"initial\": \"string\",\n          \"number\": \"string\"\n        }\n      ],\n      \"extended_references\": [\n        {\n          \"qualifier\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"qualifier\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"freight_bill_number\": \"string\",\n      \"id\": \"string\",\n      \"invoice_documents\": [\n        {\n          \"created_at\": \"string\",\n          \"edi_invoice\": {\n            \"invoice_x12\": \"string\",\n            \"send_date\": \"string\"\n          },\n          \"parsed_invoice\": {\n            \"bill_of_lading_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"billing_carrier\": \"string\",\n            \"billing_date\": \"string\",\n            \"commodity_code\": \"string\",\n            \"commodity_description\": \"string\",\n            \"destination\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"document_uuid\": \"string\",\n            \"equipment_ids\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"freight_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"freight_bill_number\": \"string\",\n            \"fuel_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoice_number\": \"string\",\n            \"lead_equipment_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"misc_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"origin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"paying_party\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_due_date\": \"string\",\n            \"pdf_page_number\": 4305,\n            \"qualifier\": \"string\",\n            \"quantity\": 8763,\n            \"total_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybill_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"created_at\": \"string\",\n          \"edi_invoice\": {\n            \"invoice_x12\": \"string\",\n            \"send_date\": \"string\"\n          },\n          \"parsed_invoice\": {\n            \"bill_of_lading_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"billing_carrier\": \"string\",\n            \"billing_date\": \"string\",\n            \"commodity_code\": \"string\",\n            \"commodity_description\": \"string\",\n            \"destination\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"document_uuid\": \"string\",\n            \"equipment_ids\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"freight_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"freight_bill_number\": \"string\",\n            \"fuel_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoice_number\": \"string\",\n            \"lead_equipment_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"misc_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"origin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"paying_party\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_due_date\": \"string\",\n            \"pdf_page_number\": 3323,\n            \"qualifier\": \"string\",\n            \"quantity\": 9206,\n            \"total_amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"waybill_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"invoice_number\": \"string\",\n      \"origin\": {\n        \"city\": \"string\",\n        \"name\": \"string\",\n        \"state_or_province\": \"string\"\n      },\n      \"paying_party\": {\n        \"name\": \"string\",\n        \"number\": \"string\"\n      },\n      \"payment_due_date\": \"string\",\n      \"post_audit_dispatch_status\": \"ERROR\",\n      \"rule_11_destination\": {\n        \"city\": \"string\",\n        \"state\": \"string\"\n      },\n      \"rule_11_origin\": {\n        \"city\": \"string\",\n        \"state\": \"string\"\n      },\n      \"shipment_name\": \"string\",\n      \"total_amount\": {\n        \"cents\": 7478,\n        \"currency\": \"string\",\n        \"dollars\": \"string\"\n      },\n      \"transportation_destination\": {\n        \"city\": \"string\",\n        \"state\": \"string\"\n      },\n      \"transportation_origin\": {\n        \"city\": \"string\",\n        \"state\": \"string\"\n      },\n      \"voucher_id\": \"string\",\n      \"waybill_date\": \"string\",\n      \"waybill_number\": 7281\n    }\n  ],\n  \"next_token\": \"string\",\n  \"previous_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a1d5dc0-7f9c-4f4f-a83e-f9ce028a8280",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "audit_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "audit_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "voucher_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page_previous_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_next_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9347,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a75011bc-8817-4921-939c-8be70b26a1b2",
+          "name": "Get Shipper Invoice",
+          "request": {
+            "name": "Get Shipper Invoice",
+            "description": {
+              "content": "Returns a single invoice",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipper",
+                "invoices",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) the id of the invoice"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                "key": "Carrier",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52ac1299-5b80-42da-97a1-921156b01c15",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) the id of the invoice"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"invoice\": {\n    \"accrual_amount_this_carrier\": {\n      \"cents\": 9377,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"accrual_amount_waybill_total\": {\n      \"cents\": 2437,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"accrual_freight_amount\": {\n      \"cents\": 1056,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"accrual_fuel_amount\": {\n      \"cents\": 5332,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"accrual_misc_amount\": {\n      \"cents\": 6147,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"audit_comments\": \"string\",\n    \"audit_status\": \"APPROVED\",\n    \"balance\": {\n      \"cents\": 4120,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"bill_of_lading_date\": \"string\",\n    \"bill_of_lading_identifier\": \"string\",\n    \"billed_freight_amount\": {\n      \"cents\": 8581,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"billed_fuel_amount\": {\n      \"cents\": 3648,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"billed_misc_amount\": {\n      \"cents\": 1194,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"billing_carrier\": \"string\",\n    \"billing_date\": \"string\",\n    \"commodity_code\": \"string\",\n    \"commodity_description\": \"string\",\n    \"destination\": {\n      \"city\": \"string\",\n      \"name\": \"string\",\n      \"state_or_province\": \"string\"\n    },\n    \"equipment\": [\n      {\n        \"initial\": \"string\",\n        \"number\": \"string\"\n      },\n      {\n        \"initial\": \"string\",\n        \"number\": \"string\"\n      }\n    ],\n    \"extended_references\": [\n      {\n        \"qualifier\": \"string\",\n        \"value\": \"string\"\n      },\n      {\n        \"qualifier\": \"string\",\n        \"value\": \"string\"\n      }\n    ],\n    \"freight_bill_number\": \"string\",\n    \"id\": \"string\",\n    \"invoice_documents\": [\n      {\n        \"created_at\": \"string\",\n        \"edi_invoice\": {\n          \"invoice_x12\": \"string\",\n          \"send_date\": \"string\"\n        },\n        \"parsed_invoice\": {\n          \"bill_of_lading_id\": {\n            \"date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"identifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"billing_carrier\": \"string\",\n          \"billing_date\": \"string\",\n          \"commodity_code\": \"string\",\n          \"commodity_description\": \"string\",\n          \"destination\": {\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_or_province\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"document_uuid\": \"string\",\n          \"equipment_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"freight_amount\": {\n            \"cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dollars\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"freight_bill_number\": \"string\",\n          \"fuel_amount\": {\n            \"cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dollars\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"invoice_number\": \"string\",\n          \"lead_equipment_id\": {\n            \"initial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"misc_amount\": {\n            \"cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dollars\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"origin\": {\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_or_province\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"paying_party\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payment_due_date\": \"string\",\n          \"pdf_page_number\": 7146,\n          \"qualifier\": \"string\",\n          \"quantity\": 3982,\n          \"total_amount\": {\n            \"cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dollars\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"type\": \"PDF_INVOICE\",\n          \"waybill_id\": {\n            \"date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"created_at\": \"string\",\n        \"edi_invoice\": {\n          \"invoice_x12\": \"string\",\n          \"send_date\": \"string\"\n        },\n        \"parsed_invoice\": {\n          \"bill_of_lading_id\": {\n            \"date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"identifier\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"billing_carrier\": \"string\",\n          \"billing_date\": \"string\",\n          \"commodity_code\": \"string\",\n          \"commodity_description\": \"string\",\n          \"destination\": {\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_or_province\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"document_uuid\": \"string\",\n          \"equipment_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"freight_amount\": {\n            \"cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dollars\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"freight_bill_number\": \"string\",\n          \"fuel_amount\": {\n            \"cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dollars\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"invoice_number\": \"string\",\n          \"lead_equipment_id\": {\n            \"initial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"misc_amount\": {\n            \"cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dollars\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"origin\": {\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_or_province\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"paying_party\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payment_due_date\": \"string\",\n          \"pdf_page_number\": 4017,\n          \"qualifier\": \"string\",\n          \"quantity\": 6917,\n          \"total_amount\": {\n            \"cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dollars\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"type\": \"EXCEL_INVOICE\",\n          \"waybill_id\": {\n            \"date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"invoice_number\": \"string\",\n    \"origin\": {\n      \"city\": \"string\",\n      \"name\": \"string\",\n      \"state_or_province\": \"string\"\n    },\n    \"paying_party\": {\n      \"name\": \"string\",\n      \"number\": \"string\"\n    },\n    \"payment_due_date\": \"string\",\n    \"post_audit_dispatch_status\": \"ERROR\",\n    \"rule_11_destination\": {\n      \"city\": \"string\",\n      \"state\": \"string\"\n    },\n    \"rule_11_origin\": {\n      \"city\": \"string\",\n      \"state\": \"string\"\n    },\n    \"shipment_name\": \"string\",\n    \"total_amount\": {\n      \"cents\": 2122,\n      \"currency\": \"string\",\n      \"dollars\": \"string\"\n    },\n    \"transportation_destination\": {\n      \"city\": \"string\",\n      \"state\": \"string\"\n    },\n    \"transportation_origin\": {\n      \"city\": \"string\",\n      \"state\": \"string\"\n    },\n    \"voucher_id\": \"string\",\n    \"waybill_date\": \"string\",\n    \"waybill_number\": 2030\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a4d3033-ffe7-4ea1-9aab-5a696f8761e1",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipper",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) the id of the invoice"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-arms-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Carrier ID - can be a numeric id or a string identifier",
+                    "key": "Carrier",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9347,\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-lg-k-h1.arms.cedarai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-arms-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "161b8d1d-9662-4994-9335-37a1342b9782",
+    "name": "protobuf/arms/charge.proto ChargeService InvoicesService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
