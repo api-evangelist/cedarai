@@ -155,6 +155,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/cedarai-capability-edges.yml
+  name: Cedarai Business Capability Map
 - type: Overlay
   url: overlays/cedarai-external-openapi-overlay.yaml
 - type: Website

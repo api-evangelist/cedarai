@@ -1,0 +1,37 @@
+slug: cedarai
+provider: Cedarai
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: InvoicesService
+  spec_file: cedarai-invoicesservice-api-openapi.yml
+  capability_id: BC-2530.20
+  capability_id_l1: BC-2530
+  capability_name: Freight Audit and Payment Management
+  confidence: 0.75
+  evidence: 'GET /shipper/invoices  ListInvoices  List Shipper Invoices ... schemas: InvoiceAuditStatus,
+    InvoicePostAuditDispatchStatus, v1ApDocumentType, AttachVoucher'
+  reason: Shipper-side handling of carrier freight invoices with explicit audit statuses, AP document
+    types and voucher attachment — freight audit and payment of carrier invoices rather than customer
+    invoicing.
+- tag: WorkOrderService
+  spec_file: cedarai-workorderservice-api-openapi.yml
+  capability_id: BC-2420
+  capability_id_l1: BC-2420
+  capability_name: Transport Operations Management
+  confidence: 0.7
+  evidence: POST /t/v1/depart-train  DepartTrain  Depart train; POST /t/v1/setout-cars  SetoutCars  Setout
+    Cars
+  reason: Executes rail transport movements — train arrival/departure, resequencing, car pickup and setout,
+    work-order tasks and train event recording. Clearly transport execution; L1 only because the moves
+    straddle line-haul operations, dispatch and yard switching.
