@@ -1,15 +1,19 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: protobuf/arms/charge.proto ChargeService Equipment History API
-  version: version not set
+  title: ARMS External Equipment History API
+  version: 1.0.0
+  description: OpenAPI specification generated from external API schemas. Endpoints require query parameter carrierId and headers x-arms-api-key and x-arms-assume-user.
+  license:
+    name: Proprietary
+    url: https://cedarai.com
 servers:
-- description: Production (US)
-  url: https://api-lg-k-h1.arms.cedarai.com
-- description: Production (EU)
-  url: https://api-lg-k-h1.arms.cedarai.se
+- url: https://api-lg.arms.cedarai.com
+  description: Production (US)
+- url: https://api-lg.arms.cedarai.se
+  description: Production (EU)
 security:
 - ApiKeyAuth: []
-  AssumeUserAuth: []
+  AssumeUser: []
 tags:
 - name: Equipment History
 paths:
@@ -50,124 +54,6 @@ paths:
       - Equipment History
 components:
   schemas:
-    HistoryGroupingNameFilter:
-      type: object
-      properties:
-        groupingType:
-          type: string
-          title: Grouping Type
-        name:
-          type: string
-          title: Name
-      required:
-      - groupingType
-      - name
-    LineItem:
-      type: object
-      properties:
-        number:
-          type: integer
-        descriptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItemDescription'
-        quantity:
-          $ref: '#/components/schemas/LineItemQuantity'
-        measurements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Measurement'
-        priceAuthorities:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceAuthority'
-    HazmatReferenceNumber:
-      type: object
-      properties:
-        referenceIdQualifier:
-          type: string
-        referenceId:
-          type: string
-        date:
-          type: string
-    InterchangeMoveAuthority:
-      type: object
-      description: Interchange move authority on equipment (X12 IMA).
-      properties:
-        movementAuthorityCode:
-          type: string
-          enum:
-          - A
-          - B
-          - C
-          - D
-          - DS
-          - E
-          - G
-          - HM
-          - I
-          - L
-          - N
-          - NC
-          - NU
-          - O
-          - OA
-          - OS
-          - P
-          - R
-          - RB
-          - S
-          - W
-          - X
-        carrierCode:
-          type: string
-        terminalTariffApplicationCode:
-          type: string
-          enum:
-          - D
-          - E
-          - F
-        stateTariffApplicationCode:
-          type: string
-          enum:
-          - N
-          - S
-        rejectReasonCode:
-          type: string
-          enum:
-          - AD
-          - BA
-          - BC
-          - BD
-          - BG
-          - BL
-          - BO
-          - BV
-          - BW
-          - CN
-          - CR
-          - CW
-          - DD
-          - DR
-          - DS
-          - DV
-          - ER
-          - FD
-          - FR
-          - HB
-          - HH
-          - HX
-          - LK
-          - OG
-          - OV
-          - RF
-          - RH
-          - SU
-          - ZZ
-    GroupingRule:
-      type: object
-      description: Optional grouping rule configuration.
-      additionalProperties: true
     Station:
       type: object
       properties:
@@ -182,463 +68,6 @@ components:
         countryCode:
           type: string
         splc:
-          type: string
-    EmptyCarDisposition:
-      type: object
-      properties:
-        destinationConsigneeName:
-          type: string
-        destinationConsigneeIdQualifier:
-          type: string
-        destinationConsigneeId:
-          type: string
-        destinationCityName:
-          type: string
-        destinationStateOrProvince:
-          type: string
-        destinationPostalCode:
-          type: string
-        destinationCountryCode:
-          type: string
-        destinationAddress:
-          type: string
-        destinationRoute:
-          type: array
-          items:
-            $ref: '#/components/schemas/RouteEntry'
-    CommunicationNumber:
-      type: object
-      properties:
-        qualifier:
-          type: string
-        number:
-          type: string
-    Umler:
-      allOf:
-      - $ref: '#/components/schemas/UmlerCommon'
-    WorkOrderResource:
-      type: object
-      properties:
-        resourceId:
-          type: integer
-        uuid:
-          type: string
-          description: UUID that complements the legacy numeric resourceId.
-        workOrderId:
-          type: string
-        status:
-          type: string
-          enum:
-          - PENDING
-          - ACTIVE
-          - CLOSED
-        trainId:
-          type: string
-        inTransit:
-          type: boolean
-        lastEventId:
-          type: integer
-        hasBeenDeparted:
-          type: boolean
-    CanadianDangerousRequirements:
-      type: object
-      properties:
-        emergencyResponsePlanNumber:
-          type: string
-        communicationNumber:
-          type: string
-        packagingGroupCode:
-          type: string
-        firstSubsidiaryClassification:
-          type: string
-        secondSubsidiaryClassification:
-          type: string
-        thirdSubsidiaryClassification:
-          type: string
-        subsidiaryRiskIndicator:
-          type: string
-        netExplosiveQuantity:
-          type: number
-        canadianHazardousNotation:
-          type: string
-        specialCommodityIndicatorCode:
-          type: string
-        additionalCommunicationNumber:
-          type: string
-        netExplosiveQuantityUnitCode: cc0c4147-6a4a-4816-bee4-7ffe00fb1d06
-        hazmatShipmentInfoQualifier:
-          type: string
-        hazmatQuantity:
-          type: number
-        hazmatQuantityUnitCode: ba996b62-4cc6-44f9-bd5f-8e435efc6e36
-    IntermodalUnitResource:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          enum:
-          - IntermodalUnit
-        resourceId:
-          type: integer
-        uuid:
-          type: string
-          description: UUID that complements the legacy numeric resourceId.
-    RouteEntry:
-      type: object
-      properties:
-        carrierCode:
-          type: string
-        junctionCode:
-          type: string
-        routingSequenceCode:
-          type: string
-          enum:
-          - '1'
-          - '2'
-          - '3'
-          - '4'
-          - '5'
-          - '6'
-          - '7'
-          - '8'
-          - '9'
-          - '10'
-          - '11'
-          - '12'
-          - '13'
-          - '14'
-          - '15'
-          - '16'
-          - '17'
-          - '18'
-          - '19'
-          - '20'
-          - A
-          - D
-          - H
-          - I
-          - JD
-          - JI
-          - JO
-          - M
-          - R
-          - S
-          - V
-        splc:
-          type: string
-        intermodalServiceCode:
-          type: string
-        additionalSwitchCarrierCodes:
-          type: array
-          items:
-            type: string
-    LineItemQuantity:
-      type: object
-      properties:
-        billedAsQuantity:
-          type: number
-        billedAsQualifier:
-          type: string
-          enum:
-          - DM
-          - GL
-          - NC
-          - ND
-          - NP
-          - NU
-          - NV
-        weight:
-          type: number
-        weightQualifier:
-          type: string
-          enum:
-          - A3
-          - B
-          - C
-          - E
-          - G
-          - J
-          - K
-          - M
-          - N
-          - O
-          - S
-          - X
-        volume:
-          type: number
-        volumeUnitQualifier:
-          type: string
-          enum:
-          - B
-          - C
-          - D
-          - E
-          - F
-          - G
-          - H
-          - L
-          - M
-          - N
-          - R
-          - S
-          - T
-          - U
-          - V
-          - X
-        ladingQuantity:
-          type: number
-        packagingFormCode:
-          type: string
-        dunnageDescription:
-          type: string
-        weightUnitCode:
-          type: string
-        typeOfServiceCode:
-          type: string
-    RelaxedEquipment:
-      allOf:
-      - $ref: '#/components/schemas/Equipment'
-    LineItemDescription:
-      type: object
-      properties:
-        ladingDescription:
-          type: string
-        commodityCode:
-          type: string
-        commodityCodeQualifier:
-          type: string
-          enum:
-          - '3'
-          - J
-          - L
-          - T
-        packagingCode:
-          type: string
-        marksAndNumbers:
-          type: string
-        marksAndNumbersQualifier:
-          type: string
-        hazmatRatingCommodityCodeQualifier:
-          type: string
-        hazmatRatingCommodityCode:
-          type: string
-        compartmentIdCode:
-          type: string
-    EquipmentShipmentInformation:
-      type: object
-      description: Per-equipment customs and tariff block (Carta Porte). Required on cross-border US–Mexico waybills; attach under waybill.equipmentDetails[], not waybill.lineItems[].
-      properties:
-        referenceIdQualifier:
-          type: string
-          description: Reference identification qualifier (X12 REF01). Use "UNC" for UNSPSC-classified Carta Porte commodities.
-        referenceId:
-          type: string
-          description: Reference value (X12 REF02). For Carta Porte, the UNSPSC code when referenceIdQualifier is UNC.
-        description:
-          type: string
-        extendedReferenceInfo:
-          type: array
-          description: Extended references on this shipment-info block. Carta Porte requires MTC (Mexico tariff) entries; hazardous shipments also require MHC.
-          items:
-            $ref: '#/components/schemas/ExtendedReferenceInformation'
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/EquipmentLineItem'
-    HazardousCertification:
-      type: object
-      properties:
-        name:
-          type: string
-    IntermodalStatusDetails:
-      type: object
-      properties:
-        shipmentStatusCode:
-          type: string
-          enum:
-          - A
-          - AE
-          - AI
-          - AL
-          - AO
-          - AR
-          - B
-          - BO
-          - CA
-          - CB
-          - CC
-          - CS
-          - CT
-          - D
-          - DA
-          - DC
-          - DP
-          - DR
-          - DS
-          - DT
-          - EA
-          - ER
-          - G
-          - GI
-          - I
-          - J
-          - K
-          - L
-          - LE
-          - MA
-          - MD
-          - ME
-          - MI
-          - MO
-          - MR
-          - MT
-          - N
-          - NC
-          - ND
-          - NF
-          - NG
-          - NH
-          - 'NO'
-          - NP
-          - NS
-          - NT
-          - O
-          - OA
-          - OH
-          - P
-          - PA
-          - PB
-          - PC
-          - PD
-          - PE
-          - PF
-          - PG
-          - PH
-          - PI
-          - PJ
-          - PK
-          - PL
-          - PM
-          - PN
-          - PO
-          - PP
-          - R
-          - RF
-          - RL
-          - RN
-          - RY
-          - SA
-          - SC
-          - SF
-          - SO
-          - T
-          - TE
-          - UR
-          - UV
-          - WH
-          - WR
-          - YR
-        shipmentStatusTime:
-          type: string
-    WagonDamage:
-      type: object
-      properties:
-        reportId:
-          type: string
-          description: Report identifier for the damage.
-        damageStatus:
-          type: integer
-          description: Status code for the damage.
-        damageCode:
-          type: string
-          description: Damage code.
-        damageDescription:
-          type: string
-          description: Description of the damage.
-        damageIsNew:
-          type: boolean
-          description: Whether the damage is new.
-        eventTimestamp:
-          type: string
-          format: date-time
-          description: Timestamp of the damage event.
-    ProtectiveService:
-      type: object
-      properties:
-        ruleCode:
-          type: string
-        serviceCode:
-          type: string
-          enum:
-          - D
-          - HDN
-          - HDNC
-          - HSC
-          - M
-          - MN
-          - MNU
-        temperatureUnit:
-          type: string
-          enum:
-          - CE
-          - FA
-        optimalTemperature:
-          type: number
-        scac:
-          type: string
-        fsac:
-          type: string
-        cityName:
-          type: string
-        stateOrProvince:
-          type: string
-        precooled:
-          type: boolean
-        heaterLocation:
-          type: string
-          enum:
-          - Y
-          - N
-        commodityType:
-          type: string
-          enum:
-          - Y
-          - N
-        doorwaySpace:
-          type: string
-          enum:
-          - Y
-          - N
-        originTemperature:
-          type: number
-    PriceAuthority:
-      type: object
-      properties:
-        referenceIdQualifier:
-          type: string
-        referenceId:
-          type: string
-        primaryPublicationAuthority:
-          type: string
-        regulatoryAgencyCode:
-          type: string
-        tariffAgencyCode:
-          type: string
-        issuingCarrierIdentifier:
-          type: string
-        suffix:
-          type: string
-        itemNumber:
-          type: string
-        supplementIdentifier:
-          type: string
-        sectionNumber:
-          type: string
-        itemNumberSuffix:
-          type: string
-        effectiveDate:
-          type: string
-        expirationDate:
           type: string
     HazardousInformation:
       type: object
@@ -701,98 +130,127 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Party'
-    ExtendedReferenceInformation:
-      type: object
-      description: Extended reference information from the waybill. Production notes are entries where referenceIdQualifier is "ZZ" and description is "TrpNotes"; the note text is in referenceId.
-      properties:
-        referenceIdQualifier:
-          type: string
-          description: Reference identification qualifier (e.g. "ZZ" for mutually defined references).
-        referenceId:
-          type: string
-          description: Reference value. For production notes (ZZ/TrpNotes), this contains the note text.
-        description:
-          type: string
-          description: Description of the reference (e.g. "TrpNotes" for production notes).
-        date:
-          type: string
-        timestamp:
-          type: string
-    HazardousClassificationInformation:
+    EquipmentDetails:
       type: object
       properties:
-        hazardousClass:
+        equipmentInitial:
           type: string
-        hazardousClassQualifier:
-          type: string
-          enum:
-          - P
-          - S
-        hazardousPlacardNotation:
-          type: string
-        hazardousEndorsement:
-          type: string
-        reportableQuantityCode:
-          type: string
-          enum:
-          - RQ
-        flashpointUnitCode: 1a248ad4-8c6e-47e2-9757-02942eb582cb
-        flashpointTemperature:
-          type: number
-        controlUnitCode: 2cf8c761-7ddb-4c62-a8a8-5775c800bb4f
-        controlTemperature:
-          type: number
-        emergencyUnitCode: e12f4109-5e55-4d76-871a-77a85ec711fd
-        emergencyTemperature:
-          type: number
-        netExplosiveWeightUnitCode:
-          type: string
-        netExplosiveWeight:
-          type: number
-    EquipmentLineItem:
-      type: object
-      description: Per-commodity line on equipment shipment information (X12 417 N1 loop). Used for Carta Porte on cross-border waybills; quantity is a flat number, not the nested LineItemQuantity on waybill.lineItems[].
-      properties:
-        quantity:
-          type: number
-          description: Commodity quantity (X12 N1001).
-        commodityDescription:
-          type: string
-        marksAndNumbers:
-          type: string
-        commodityCodeQualifier:
-          type: string
-          enum:
-          - '3'
-          - J
-          - L
-          - T
-        commodityCode:
-          type: string
-        customsShipmentValue:
+        equipmentNumber:
           type: integer
-        weightUnitCode:
+        netWeightLbs:
+          type: number
+        grossWeightLbs:
+          type: number
+        weightType:
           type: string
           enum:
-          - E
-          - K
-          - L
-          - S
-          - T
-        weight:
+          - ESTIMATED
+          - ACTUAL
+        tareWeightLbs:
           type: number
-          description: Commodity weight (X12 N1008).
-        cbpBarcodeNumber:
+        weightAllowance:
+          type: number
+        dunnage:
+          type: number
+        ownershipCode:
           type: string
-        smallestExteriorPackageType:
+          enum:
+          - L
+          - R
+          - T
+        descriptionCode:
           type: string
-          description: Required for Carta Porte shipmentInfo line items (X12 N1010).
-        originCountryCode:
+        owningCarrierCode:
           type: string
-        destinationCountryCode:
+        position:
           type: string
-        currencyCode:
+        lengthIn:
+          type: number
+        tareQualifierCode:
           type: string
+          enum:
+          - A
+          - M
+        checkDigit:
+          type: integer
+        heightIn:
+          type: number
+        widthIn:
+          type: number
+        isoContainerCode:
+          type: string
+        carrierCode:
+          type: string
+        aarCarType:
+          type: string
+        sealNumbers:
+          type: array
+          description: Seal numbers on equipment (X12 M7).
+          items:
+            type: string
+        chassisInitial:
+          type: string
+        chassisNumber:
+          type: integer
+        terminals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Terminal'
+        interchangeMoveAuthorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterchangeMoveAuthority'
+        shipmentInfo:
+          type: array
+          description: Per-equipment Carta Porte data for cross-border waybills. See Cross-border (Mexico) waybills in the API docs.
+          items:
+            $ref: '#/components/schemas/EquipmentShipmentInformation'
+    Grouping:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Grouping
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        name:
+          type: string
+        groupingType:
+          type: string
+        colorToken:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/AttributesBase'
+        rules:
+          $ref: '#/components/schemas/GroupingRule'
+        equipmentIndexEnabled:
+          type: boolean
+          enum:
+          - false
+        deletedAt:
+          type: string
+        updatedAt:
+          type: string
+        objectType:
+          type: string
+          enum:
+          - EQUIPMENT
+          - CONTAINER
+      required:
+      - resourceType
+      - resourceId
+      - groupingType
+      - attributes
+      - rules
+      - equipmentIndexEnabled
+      - objectType
+    Umler:
+      allOf:
+      - $ref: '#/components/schemas/UmlerCommon'
     Waybill:
       type: object
       properties:
@@ -1052,326 +510,6 @@ components:
           - ARCHIVED
         createdAt:
           type: string
-    Release:
-      type: object
-      properties:
-        releaseCode:
-          type: string
-          enum:
-          - B
-          - R
-        releaseDate:
-          type: string
-        releaseTime:
-          type: string
-    EPARequiredData:
-      type: object
-      properties:
-        epaWasteStreamNumberCode:
-          type: string
-        wasteCharacteristicsCode:
-          type: string
-        hazardousWasteNumberStateOrProvince:
-          type: string
-        hazardousWasteNumber:
-          type: string
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-    ListEquipmentHistoryOutput:
-      type: object
-      properties:
-        nextToken:
-          type: string
-          title: Next Token
-        prevToken:
-          type: string
-          title: Prev Token
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/EquipmentHistoryItem'
-          title: Items
-      required:
-      - items
-    Equipment:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          enum:
-          - Equipment
-        resourceId:
-          type: integer
-        uuid:
-          type: string
-          description: UUID that complements the legacy numeric resourceId.
-        equipmentInitial:
-          type: string
-        equipmentNumber:
-          type: integer
-        aarCarType:
-          type: string
-        equipmentType:
-          type: string
-          enum:
-          - CAR
-          - LOCOMOTIVE
-          - CABOOSE
-          - TRAIN_DEVICE
-        descriptionCode:
-          type: string
-        arrivalState:
-          type: string
-          enum:
-          - INBOUND
-          - ONLINE
-          - OUTBOUND
-        parentGroupings:
-          type: array
-          items:
-            $ref: '#/components/schemas/EquipmentParentGrouping'
-        waybill:
-          $ref: '#/components/schemas/Waybill'
-        umler:
-          $ref: '#/components/schemas/UmlerCommon'
-        notes:
-          type: string
-        intermodalUnits:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntermodalUnitResource'
-        loadStatus:
-          type: string
-          enum:
-          - LOAD
-          - EMPTY
-          - UNKNOWN
-        ichrTime:
-          type: string
-          format: date-time
-        workOrder:
-          $ref: '#/components/schemas/WorkOrderResource'
-        workOrders:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkOrderResource'
-    EquipmentParentGrouping:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          enum:
-          - Grouping
-        resourceId:
-          type: integer
-        uuid:
-          type: string
-          description: UUID that complements the legacy numeric resourceId.
-        name:
-          type: string
-        groupingType:
-          type: string
-        sortOrder:
-          type: integer
-        colorToken:
-          type: string
-        groupingIndex:
-          type: integer
-    CrossReferenceEquipment:
-      type: object
-      properties:
-        referenceIdQualifier:
-          type: string
-        referenceId:
-          type: string
-        equipmentInitial:
-          type: string
-        equipmentNumber:
-          type: integer
-        crossReferenceTypeCode:
-          type: string
-          enum:
-          - A
-          - B
-          - C
-          - F
-          - G
-          - K
-          - L
-          - M
-          - T
-        equipmentOwnerScac:
-          type: string
-        equipmentLength:
-          type: string
-        equipmentOperatorScac:
-          type: string
-        equipmentIsDamaged:
-          type: boolean
-        checkDigit:
-          type: integer
-    AdministrativeContact:
-      type: object
-      properties:
-        contactFunctionCode:
-          type: string
-        name:
-          type: string
-        communicationNumbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommunicationNumber'
-        contactInquiryReference:
-          type: string
-    Party:
-      type: object
-      properties:
-        partyType:
-          type: string
-          enum:
-          - '11'
-          - AO
-          - AP
-          - AQ
-          - BN
-          - BT
-          - C1
-          - CB
-          - CD
-          - CE
-          - CH
-          - CN
-          - CV
-          - DH
-          - DM
-          - FW
-          - HW
-          - HX
-          - HZ
-          - IM
-          - MC
-          - N1
-          - OH
-          - OM
-          - PF
-          - PU
-          - PV
-          - RP
-          - SF
-          - SH
-          - SS
-          - ST
-          - SU
-          - TR
-          - UC
-          - XB
-          - XQ
-          - XR
-          - XU
-          - ZS
-        name:
-          type: string
-        idCodeQualifier:
-          type: string
-          enum:
-          - '1'
-          - '2'
-          - '9'
-          - '12'
-          - '17'
-          - '20'
-          - AB
-          - AI
-          - BF
-          - BN
-          - C5
-          - FI
-          - IN
-          - M5
-          - '93'
-        idCode:
-          type: string
-        entitySubIdentifierRelationshipCode:
-          type: string
-        entitySubIdentifierCode:
-          type: string
-        additionalNames:
-          type: array
-          items:
-            type: string
-        address:
-          type: array
-          items:
-            type: string
-        cityName:
-          type: string
-        stateOrProvince:
-          type: string
-        postalCode:
-          type: string
-        countryCode:
-          type: string
-        locationQualifier:
-          type: string
-        locationIdentifier:
-          type: string
-        countrySubdivisionCode:
-          type: string
-        administrativeContacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdministrativeContact'
-        billingInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingInformation'
-        referenceInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReferenceInfo'
-    BillingInformation:
-      type: object
-      properties:
-        rebillReasonCode:
-          type: string
-          enum:
-          - RC
-          - RD
-        origin:
-          $ref: '#/components/schemas/Station'
-        destination:
-          $ref: '#/components/schemas/Station'
-        carrierCodes:
-          type: array
-          items:
-            type: string
-    HazmatShippingNameInformation:
-      type: object
-      properties:
-        hazmatShippingName:
-          type: string
-        hazmatShippingNameQualifier:
-          type: string
-          enum:
-          - C
-          - D
-          - I
-        nosIndicatorCode:
-          type: string
-        railSafetySensitiveMaterial:
-          type: boolean
-    TransborderHazardousRequirements:
-      type: object
-      properties:
-        hazardousClassification:
-          type: string
-        hazardousPlacardNotation:
-          type: string
-        hazardousEndorsement:
-          type: string
     Terminal:
       type: object
       description: Port or terminal location on equipment (X12 R4).
@@ -1404,6 +542,294 @@ components:
           type: string
         portName:
           type: string
+    HistoryMoveType:
+      type: string
+      enum:
+      - ABNO
+      - AEIE
+      - AEIN
+      - AEIS
+      - AEIW
+      - AETA
+      - AETI
+      - AINV
+      - ARIL
+      - ARRI
+      - BADO
+      - BFRM
+      - BHVY
+      - BLGT
+      - BOHR
+      - BXNG
+      - CGIP
+      - CGRD
+      - CH80
+      - CH81
+      - CH82
+      - CH83
+      - CH84
+      - CH85
+      - CH86
+      - CH89
+      - CHARGED
+      - CHERRYPICK
+      - CPRL
+      - DELIVERED
+      - DFLC
+      - DIGOUTS
+      - DIVERT
+      - DRMP
+      - ECYC
+      - EMPTIED
+      - EQOR
+      - FFBO
+      - FLIP
+      - FTBO
+      - HADR
+      - HAND
+      - HANR
+      - HEMB
+      - HEATSTRT
+      - HEATSTP
+      - HHAR
+      - HIGT
+      - HMIS
+      - HOGT
+      - HUMP
+      - ICHD
+      - ICHR
+      - IGTI
+      - IGTR
+      - INTERPLANT
+      - INTRAPLANT
+      - LCOM
+      - LDCH
+      - LOADED
+      - LTFR
+      - LTTO
+      - MAWY
+      - MOTR
+      - MOVE
+      - NOBL
+      - NOTP
+      - OFFERED
+      - OGTI
+      - OGTR
+      - ORDER
+      - OSTH
+      - PACT
+      - PASL
+      - PCON
+      - PFLT
+      - PFPS
+      - PKGD
+      - PKGR
+      - PLJI
+      - PLLF
+      - PLLT
+      - PUJI
+      - RAMP
+      - RECEIVED
+      - RECONSIGN
+      - REBL
+      - REJS
+      - REMB
+      - RFLT
+      - RICD
+      - RLOD
+      - RMTY
+      - RRFS
+      - RTAA
+      - RTOI
+      - RTPO
+      - SCYC
+      - SETBACK
+      - SPARGSTRT
+      - SPARGSTP
+      - SPECIALSWITCH
+      - STEA
+      - STEX
+      - STOP
+      - STPD
+      - STPE
+      - STPL
+      - STRD
+      - STRE
+      - STRT
+      - STSE
+      - STSU
+      - STUN
+      - SWAP
+      - TRIM
+      - TSET
+      - TURN
+      - ULCH
+      - UNKN
+      - UNSC
+      - WAYB
+      - WEIGH
+      - WEIGHE
+      - WEIGHL
+    WagonDamage:
+      type: object
+      properties:
+        reportId:
+          type: string
+          description: Report identifier for the damage.
+        damageStatus:
+          type: integer
+          description: Status code for the damage.
+        damageCode:
+          type: string
+          description: Damage code.
+        damageDescription:
+          type: string
+          description: Description of the damage.
+        damageIsNew:
+          type: boolean
+          description: Whether the damage is new.
+        eventTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the damage event.
+    LineItemDescription:
+      type: object
+      properties:
+        ladingDescription:
+          type: string
+        commodityCode:
+          type: string
+        commodityCodeQualifier:
+          type: string
+          enum:
+          - '3'
+          - J
+          - L
+          - T
+        packagingCode:
+          type: string
+        marksAndNumbers:
+          type: string
+        marksAndNumbersQualifier:
+          type: string
+        hazmatRatingCommodityCodeQualifier:
+          type: string
+        hazmatRatingCommodityCode:
+          type: string
+        compartmentIdCode:
+          type: string
+    HazmatReferenceNumber:
+      type: object
+      properties:
+        referenceIdQualifier:
+          type: string
+        referenceId:
+          type: string
+        date:
+          type: string
+    BillingInformation:
+      type: object
+      properties:
+        rebillReasonCode:
+          type: string
+          enum:
+          - RC
+          - RD
+        origin:
+          $ref: '#/components/schemas/Station'
+        destination:
+          $ref: '#/components/schemas/Station'
+        carrierCodes:
+          type: array
+          items:
+            type: string
+    WaybillSearchFilterCore:
+      type: object
+      properties:
+        initialAndNumber:
+          type: string
+        billedEquipmentNumbers:
+          type: array
+          items:
+            type: string
+        shipper:
+          type: string
+        consignee:
+          type: string
+        originStation:
+          type: string
+        destinationStation:
+          type: string
+        waybillNumber:
+          type: integer
+        waybillDate:
+          type: string
+          format: date
+    ListEquipmentHistoryInput:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          title: Page Size
+        pageNextToken:
+          type: string
+          title: Page Next Token
+        pagePrevToken:
+          type: string
+          title: Page Prev Token
+        carrierId:
+          type: integer
+          title: Carrier Id
+        waybillFilter:
+          $ref: '#/components/schemas/WaybillSearchFilterCore'
+        groupingFilters:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryGroupingNameFilter'
+          title: Grouping Filters
+        initialAndNumber:
+          type: string
+          title: Initial And Number
+        exactMatchEquipmentInitialAndNumber:
+          type: boolean
+          title: Exact Match Equipment Initial And Number
+        equipmentIds:
+          type: array
+          items:
+            type: integer
+          title: Equipment Ids
+        moveTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryMoveType'
+        showDeletion:
+          type: boolean
+          title: Show Deletion
+          default: true
+        showRejection:
+          type: boolean
+          title: Show Rejection
+          default: true
+        showMuted:
+          type: boolean
+          title: Show Muted
+        showOnlyValidatedMoveTypes:
+          type: boolean
+          title: Show Only Validated Move Types
+        timestampBefore:
+          type: string
+          format: date-time
+          title: Timestamp Before
+        timestampAfter:
+          type: string
+          format: date-time
+          title: Timestamp After
+        revisionedSince:
+          type: string
+          format: date-time
+          title: Revisioned Since
+      required:
+      - carrierId
     UmlerCommon:
       type: object
       description: Shared UMLER attributes for equipment records.
@@ -1669,6 +1095,397 @@ components:
           items:
             $ref: '#/components/schemas/WagonDamage'
           description: List of damage objects associated with the equipment.
+    HazardousCertification:
+      type: object
+      properties:
+        name:
+          type: string
+    HazmatShippingNameInformation:
+      type: object
+      properties:
+        hazmatShippingName:
+          type: string
+        hazmatShippingNameQualifier:
+          type: string
+          enum:
+          - C
+          - D
+          - I
+        nosIndicatorCode:
+          type: string
+        railSafetySensitiveMaterial:
+          type: boolean
+    IntermodalUnitResource:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - IntermodalUnit
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+    Equipment:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Equipment
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          type: integer
+        aarCarType:
+          type: string
+        equipmentType:
+          type: string
+          enum:
+          - CAR
+          - LOCOMOTIVE
+          - CABOOSE
+          - TRAIN_DEVICE
+        descriptionCode:
+          type: string
+        arrivalState:
+          type: string
+          enum:
+          - INBOUND
+          - ONLINE
+          - OUTBOUND
+        parentGroupings:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentParentGrouping'
+        waybill:
+          $ref: '#/components/schemas/Waybill'
+        umler:
+          $ref: '#/components/schemas/UmlerCommon'
+        notes:
+          type: string
+        intermodalUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntermodalUnitResource'
+        loadStatus:
+          type: string
+          enum:
+          - LOAD
+          - EMPTY
+          - UNKNOWN
+        ichrTime:
+          type: string
+          format: date-time
+        workOrder:
+          $ref: '#/components/schemas/WorkOrderResource'
+        workOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkOrderResource'
+    ExtendedReferenceInformation:
+      type: object
+      description: Extended reference information from the waybill. Production notes are entries where referenceIdQualifier is "ZZ" and description is "TrpNotes"; the note text is in referenceId.
+      properties:
+        referenceIdQualifier:
+          type: string
+          description: Reference identification qualifier (e.g. "ZZ" for mutually defined references).
+        referenceId:
+          type: string
+          description: Reference value. For production notes (ZZ/TrpNotes), this contains the note text.
+        description:
+          type: string
+          description: Description of the reference (e.g. "TrpNotes" for production notes).
+        date:
+          type: string
+        timestamp:
+          type: string
+    ListEquipmentHistoryOutput:
+      type: object
+      properties:
+        nextToken:
+          type: string
+          title: Next Token
+        prevToken:
+          type: string
+          title: Prev Token
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentHistoryItem'
+          title: Items
+      required:
+      - items
+    InterchangeMoveAuthority:
+      type: object
+      description: Interchange move authority on equipment (X12 IMA).
+      properties:
+        movementAuthorityCode:
+          type: string
+          enum:
+          - A
+          - B
+          - C
+          - D
+          - DS
+          - E
+          - G
+          - HM
+          - I
+          - L
+          - N
+          - NC
+          - NU
+          - O
+          - OA
+          - OS
+          - P
+          - R
+          - RB
+          - S
+          - W
+          - X
+        carrierCode:
+          type: string
+        terminalTariffApplicationCode:
+          type: string
+          enum:
+          - D
+          - E
+          - F
+        stateTariffApplicationCode:
+          type: string
+          enum:
+          - N
+          - S
+        rejectReasonCode:
+          type: string
+          enum:
+          - AD
+          - BA
+          - BC
+          - BD
+          - BG
+          - BL
+          - BO
+          - BV
+          - BW
+          - CN
+          - CR
+          - CW
+          - DD
+          - DR
+          - DS
+          - DV
+          - ER
+          - FD
+          - FR
+          - HB
+          - HH
+          - HX
+          - LK
+          - OG
+          - OV
+          - RF
+          - RH
+          - SU
+          - ZZ
+    Party:
+      type: object
+      properties:
+        partyType:
+          type: string
+          enum:
+          - '11'
+          - AO
+          - AP
+          - AQ
+          - BN
+          - BT
+          - C1
+          - CB
+          - CD
+          - CE
+          - CH
+          - CN
+          - CV
+          - DH
+          - DM
+          - FW
+          - HW
+          - HX
+          - HZ
+          - IM
+          - MC
+          - N1
+          - OH
+          - OM
+          - PF
+          - PU
+          - PV
+          - RP
+          - SF
+          - SH
+          - SS
+          - ST
+          - SU
+          - TR
+          - UC
+          - XB
+          - XQ
+          - XR
+          - XU
+          - ZS
+        name:
+          type: string
+        idCodeQualifier:
+          type: string
+          enum:
+          - '1'
+          - '2'
+          - '9'
+          - '12'
+          - '17'
+          - '20'
+          - AB
+          - AI
+          - BF
+          - BN
+          - C5
+          - FI
+          - IN
+          - M5
+          - '93'
+        idCode:
+          type: string
+        entitySubIdentifierRelationshipCode:
+          type: string
+        entitySubIdentifierCode:
+          type: string
+        additionalNames:
+          type: array
+          items:
+            type: string
+        address:
+          type: array
+          items:
+            type: string
+        cityName:
+          type: string
+        stateOrProvince:
+          type: string
+        postalCode:
+          type: string
+        countryCode:
+          type: string
+        locationQualifier:
+          type: string
+        locationIdentifier:
+          type: string
+        countrySubdivisionCode:
+          type: string
+        administrativeContacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdministrativeContact'
+        billingInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingInformation'
+        referenceInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferenceInfo'
+    EquipmentHistoryItem:
+      type: object
+      properties:
+        resourceId:
+          type: integer
+        uuid:
+          type: string
+          description: UUID that complements the legacy numeric resourceId.
+        equipment:
+          $ref: '#/components/schemas/RelaxedEquipment'
+        moveType:
+          $ref: '#/components/schemas/HistoryMoveType'
+        timestamp:
+          type: string
+          format: date-time
+        waybill:
+          $ref: '#/components/schemas/Waybill'
+        previousTrack:
+          $ref: '#/components/schemas/Grouping'
+        previousStation:
+          $ref: '#/components/schemas/Grouping'
+        currentTrack:
+          $ref: '#/components/schemas/Grouping'
+        currentStation:
+          $ref: '#/components/schemas/Grouping'
+        reportingFlag:
+          type: string
+          enum:
+          - ACCEPTED
+          - REJECTED
+          - IMPUTED
+        jobName:
+          type: string
+        receiveFromCarrierCode:
+          type: string
+        deliverToCarrierCode:
+          type: string
+        umlerSnapshot:
+          $ref: '#/components/schemas/Umler'
+        carrierId:
+          type: integer
+        numCharges:
+          type: integer
+        revisionNumber:
+          type: integer
+        revisionTime:
+          type: string
+        deletedAt:
+          type: string
+        mutedAt:
+          type: string
+    GroupingRule:
+      type: object
+      description: Optional grouping rule configuration.
+      additionalProperties: true
+    PriceAuthority:
+      type: object
+      properties:
+        referenceIdQualifier:
+          type: string
+        referenceId:
+          type: string
+        primaryPublicationAuthority:
+          type: string
+        regulatoryAgencyCode:
+          type: string
+        tariffAgencyCode:
+          type: string
+        issuingCarrierIdentifier:
+          type: string
+        suffix:
+          type: string
+        itemNumber:
+          type: string
+        supplementIdentifier:
+          type: string
+        sectionNumber:
+          type: string
+        itemNumberSuffix:
+          type: string
+        effectiveDate:
+          type: string
+        expirationDate:
+          type: string
     Measurement:
       type: object
       properties:
@@ -1818,114 +1635,277 @@ components:
           type: string
         industryCode:
           type: string
-    ListEquipmentHistoryInput:
+    Release:
       type: object
       properties:
-        pageSize:
-          type: integer
-          title: Page Size
-        pageNextToken:
-          type: string
-          title: Page Next Token
-        pagePrevToken:
-          type: string
-          title: Page Prev Token
-        carrierId:
-          type: integer
-          title: Carrier Id
-        waybillFilter:
-          $ref: '#/components/schemas/WaybillSearchFilterCore'
-        groupingFilters:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryGroupingNameFilter'
-          title: Grouping Filters
-        initialAndNumber:
-          type: string
-          title: Initial And Number
-        exactMatchEquipmentInitialAndNumber:
-          type: boolean
-          title: Exact Match Equipment Initial And Number
-        equipmentIds:
-          type: array
-          items:
-            type: integer
-          title: Equipment Ids
-        moveTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryMoveType'
-        showDeletion:
-          type: boolean
-          title: Show Deletion
-          default: true
-        showRejection:
-          type: boolean
-          title: Show Rejection
-          default: true
-        showMuted:
-          type: boolean
-          title: Show Muted
-        showOnlyValidatedMoveTypes:
-          type: boolean
-          title: Show Only Validated Move Types
-        timestampBefore:
-          type: string
-          format: date-time
-          title: Timestamp Before
-        timestampAfter:
-          type: string
-          format: date-time
-          title: Timestamp After
-        revisionedSince:
-          type: string
-          format: date-time
-          title: Revisioned Since
-      required:
-      - carrierId
-    Grouping:
-      type: object
-      properties:
-        resourceType:
+        releaseCode:
           type: string
           enum:
-          - Grouping
-        resourceId:
-          type: integer
-        uuid:
+          - B
+          - R
+        releaseDate:
           type: string
-          description: UUID that complements the legacy numeric resourceId.
-        name:
+        releaseTime:
           type: string
+    EquipmentShipmentInformation:
+      type: object
+      description: Per-equipment customs and tariff block (Carta Porte). Required on cross-border US–Mexico waybills; attach under waybill.equipmentDetails[], not waybill.lineItems[].
+      properties:
+        referenceIdQualifier:
+          type: string
+          description: Reference identification qualifier (X12 REF01). Use "UNC" for UNSPSC-classified Carta Porte commodities.
+        referenceId:
+          type: string
+          description: Reference value (X12 REF02). For Carta Porte, the UNSPSC code when referenceIdQualifier is UNC.
+        description:
+          type: string
+        extendedReferenceInfo:
+          type: array
+          description: Extended references on this shipment-info block. Carta Porte requires MTC (Mexico tariff) entries; hazardous shipments also require MHC.
+          items:
+            $ref: '#/components/schemas/ExtendedReferenceInformation'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentLineItem'
+    EmptyCarDisposition:
+      type: object
+      properties:
+        destinationConsigneeName:
+          type: string
+        destinationConsigneeIdQualifier:
+          type: string
+        destinationConsigneeId:
+          type: string
+        destinationCityName:
+          type: string
+        destinationStateOrProvince:
+          type: string
+        destinationPostalCode:
+          type: string
+        destinationCountryCode:
+          type: string
+        destinationAddress:
+          type: string
+        destinationRoute:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteEntry'
+    HistoryGroupingNameFilter:
+      type: object
+      properties:
         groupingType:
           type: string
-        colorToken:
+          title: Grouping Type
+        name:
           type: string
-        attributes:
-          $ref: '#/components/schemas/AttributesBase'
-        rules:
-          $ref: '#/components/schemas/GroupingRule'
-        equipmentIndexEnabled:
-          type: boolean
-          enum:
-          - false
-        deletedAt:
-          type: string
-        updatedAt:
-          type: string
-        objectType:
-          type: string
-          enum:
-          - EQUIPMENT
-          - CONTAINER
+          title: Name
       required:
-      - resourceType
-      - resourceId
       - groupingType
-      - attributes
-      - rules
-      - equipmentIndexEnabled
-      - objectType
+      - name
+    ReferenceInfo:
+      type: object
+      properties:
+        referenceIdQualifier:
+          type: string
+        referenceId:
+          type: string
+        description:
+          type: string
+    HazardousClassificationInformation:
+      type: object
+      properties:
+        hazardousClass:
+          type: string
+        hazardousClassQualifier:
+          type: string
+          enum:
+          - P
+          - S
+        hazardousPlacardNotation:
+          type: string
+        hazardousEndorsement:
+          type: string
+        reportableQuantityCode:
+          type: string
+          enum:
+          - RQ
+        flashpointUnitCode: 1a248ad4-8c6e-47e2-9757-02942eb582cb
+        flashpointTemperature:
+          type: number
+        controlUnitCode: 2cf8c761-7ddb-4c62-a8a8-5775c800bb4f
+        controlTemperature:
+          type: number
+        emergencyUnitCode: e12f4109-5e55-4d76-871a-77a85ec711fd
+        emergencyTemperature:
+          type: number
+        netExplosiveWeightUnitCode:
+          type: string
+        netExplosiveWeight:
+          type: number
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+    TransborderHazardousRequirements:
+      type: object
+      properties:
+        hazardousClassification:
+          type: string
+        hazardousPlacardNotation:
+          type: string
+        hazardousEndorsement:
+          type: string
+    LineItem:
+      type: object
+      properties:
+        number:
+          type: integer
+        descriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItemDescription'
+        quantity:
+          $ref: '#/components/schemas/LineItemQuantity'
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measurement'
+        priceAuthorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceAuthority'
+    CrossReferenceEquipment:
+      type: object
+      properties:
+        referenceIdQualifier:
+          type: string
+        referenceId:
+          type: string
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          type: integer
+        crossReferenceTypeCode:
+          type: string
+          enum:
+          - A
+          - B
+          - C
+          - F
+          - G
+          - K
+          - L
+          - M
+          - T
+        equipmentOwnerScac:
+          type: string
+        equipmentLength:
+          type: string
+        equipmentOperatorScac:
+          type: string
+        equipmentIsDamaged:
+          type: boolean
+        checkDigit:
+          type: integer
+    IntermodalStatusDetails:
+      type: object
+      properties:
+        shipmentStatusCode:
+          type: string
+          enum:
+          - A
+          - AE
+          - AI
+          - AL
+          - AO
+          - AR
+          - B
+          - BO
+          - CA
+          - CB
+          - CC
+          - CS
+          - CT
+          - D
+          - DA
+          - DC
+          - DP
+          - DR
+          - DS
+          - DT
+          - EA
+          - ER
+          - G
+          - GI
+          - I
+          - J
+          - K
+          - L
+          - LE
+          - MA
+          - MD
+          - ME
+          - MI
+          - MO
+          - MR
+          - MT
+          - N
+          - NC
+          - ND
+          - NF
+          - NG
+          - NH
+          - 'NO'
+          - NP
+          - NS
+          - NT
+          - O
+          - OA
+          - OH
+          - P
+          - PA
+          - PB
+          - PC
+          - PD
+          - PE
+          - PF
+          - PG
+          - PH
+          - PI
+          - PJ
+          - PK
+          - PL
+          - PM
+          - PN
+          - PO
+          - PP
+          - R
+          - RF
+          - RL
+          - RN
+          - RY
+          - SA
+          - SC
+          - SF
+          - SO
+          - T
+          - TE
+          - UR
+          - UV
+          - WH
+          - WR
+          - YR
+        shipmentStatusTime:
+          type: string
+    CommunicationNumber:
+      type: object
+      properties:
+        qualifier:
+          type: string
+        number:
+          type: string
     HazmatFreeFormInformation:
       type: object
       properties:
@@ -1972,245 +1952,244 @@ components:
           type: number
         fumigationDate:
           type: string
-    EquipmentDetails:
+    RouteEntry:
       type: object
       properties:
-        equipmentInitial:
-          type: string
-        equipmentNumber:
-          type: integer
-        netWeightLbs:
-          type: number
-        grossWeightLbs:
-          type: number
-        weightType:
-          type: string
-          enum:
-          - ESTIMATED
-          - ACTUAL
-        tareWeightLbs:
-          type: number
-        weightAllowance:
-          type: number
-        dunnage:
-          type: number
-        ownershipCode:
-          type: string
-          enum:
-          - L
-          - R
-          - T
-        descriptionCode:
-          type: string
-        owningCarrierCode:
-          type: string
-        position:
-          type: string
-        lengthIn:
-          type: number
-        tareQualifierCode:
-          type: string
-          enum:
-          - A
-          - M
-        checkDigit:
-          type: integer
-        heightIn:
-          type: number
-        widthIn:
-          type: number
-        isoContainerCode:
-          type: string
         carrierCode:
           type: string
-        aarCarType:
+        junctionCode:
           type: string
-        sealNumbers:
+        routingSequenceCode:
+          type: string
+          enum:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+          - '8'
+          - '9'
+          - '10'
+          - '11'
+          - '12'
+          - '13'
+          - '14'
+          - '15'
+          - '16'
+          - '17'
+          - '18'
+          - '19'
+          - '20'
+          - A
+          - D
+          - H
+          - I
+          - JD
+          - JI
+          - JO
+          - M
+          - R
+          - S
+          - V
+        splc:
+          type: string
+        intermodalServiceCode:
+          type: string
+        additionalSwitchCarrierCodes:
           type: array
-          description: Seal numbers on equipment (X12 M7).
           items:
             type: string
-        chassisInitial:
-          type: string
-        chassisNumber:
-          type: integer
-        terminals:
-          type: array
-          items:
-            $ref: '#/components/schemas/Terminal'
-        interchangeMoveAuthorities:
-          type: array
-          items:
-            $ref: '#/components/schemas/InterchangeMoveAuthority'
-        shipmentInfo:
-          type: array
-          description: Per-equipment Carta Porte data for cross-border waybills. See Cross-border (Mexico) waybills in the API docs.
-          items:
-            $ref: '#/components/schemas/EquipmentShipmentInformation'
-    HistoryMoveType:
-      type: string
-      enum:
-      - ABNO
-      - AEIE
-      - AEIN
-      - AEIS
-      - AEIW
-      - AETA
-      - AETI
-      - AINV
-      - ARIL
-      - ARRI
-      - BADO
-      - BFRM
-      - BHVY
-      - BLGT
-      - BOHR
-      - BXNG
-      - CGIP
-      - CGRD
-      - CH80
-      - CH81
-      - CH82
-      - CH83
-      - CH84
-      - CH85
-      - CH86
-      - CH89
-      - CHARGED
-      - CHERRYPICK
-      - CPRL
-      - DELIVERED
-      - DFLC
-      - DIGOUTS
-      - DIVERT
-      - DRMP
-      - ECYC
-      - EMPTIED
-      - EQOR
-      - FFBO
-      - FLIP
-      - FTBO
-      - HADR
-      - HAND
-      - HANR
-      - HEMB
-      - HEATSTRT
-      - HEATSTP
-      - HHAR
-      - HIGT
-      - HMIS
-      - HOGT
-      - HUMP
-      - ICHD
-      - ICHR
-      - IGTI
-      - IGTR
-      - INTERPLANT
-      - INTRAPLANT
-      - LCOM
-      - LDCH
-      - LOADED
-      - LTFR
-      - LTTO
-      - MAWY
-      - MOTR
-      - MOVE
-      - NOBL
-      - NOTP
-      - OFFERED
-      - OGTI
-      - OGTR
-      - ORDER
-      - OSTH
-      - PACT
-      - PASL
-      - PCON
-      - PFLT
-      - PFPS
-      - PKGD
-      - PKGR
-      - PLJI
-      - PLLF
-      - PLLT
-      - PUJI
-      - RAMP
-      - RECEIVED
-      - RECONSIGN
-      - REBL
-      - REJS
-      - REMB
-      - RFLT
-      - RICD
-      - RLOD
-      - RMTY
-      - RRFS
-      - RTAA
-      - RTOI
-      - RTPO
-      - SCYC
-      - SETBACK
-      - SPARGSTRT
-      - SPARGSTP
-      - SPECIALSWITCH
-      - STEA
-      - STEX
-      - STOP
-      - STPD
-      - STPE
-      - STPL
-      - STRD
-      - STRE
-      - STRT
-      - STSE
-      - STSU
-      - STUN
-      - SWAP
-      - TRIM
-      - TSET
-      - TURN
-      - ULCH
-      - UNKN
-      - UNSC
-      - WAYB
-      - WEIGH
-      - WEIGHE
-      - WEIGHL
-    ReferenceInfo:
+    EquipmentLineItem:
       type: object
+      description: Per-commodity line on equipment shipment information (X12 417 N1 loop). Used for Carta Porte on cross-border waybills; quantity is a flat number, not the nested LineItemQuantity on waybill.lineItems[].
       properties:
-        referenceIdQualifier:
+        quantity:
+          type: number
+          description: Commodity quantity (X12 N1001).
+        commodityDescription:
           type: string
-        referenceId:
+        marksAndNumbers:
           type: string
-        description:
+        commodityCodeQualifier:
+          type: string
+          enum:
+          - '3'
+          - J
+          - L
+          - T
+        commodityCode:
+          type: string
+        customsShipmentValue:
+          type: integer
+        weightUnitCode:
+          type: string
+          enum:
+          - E
+          - K
+          - L
+          - S
+          - T
+        weight:
+          type: number
+          description: Commodity weight (X12 N1008).
+        cbpBarcodeNumber:
+          type: string
+        smallestExteriorPackageType:
+          type: string
+          description: Required for Carta Porte shipmentInfo line items (X12 N1010).
+        originCountryCode:
+          type: string
+        destinationCountryCode:
+          type: string
+        currencyCode:
           type: string
     AttributesBase:
       type: object
       description: Base attribute payload for grouping resources.
       additionalProperties: true
-    WaybillSearchFilterCore:
+    AdministrativeContact:
       type: object
       properties:
-        initialAndNumber:
+        contactFunctionCode:
           type: string
-        billedEquipmentNumbers:
+        name:
+          type: string
+        communicationNumbers:
           type: array
           items:
-            type: string
-        shipper:
+            $ref: '#/components/schemas/CommunicationNumber'
+        contactInquiryReference:
           type: string
-        consignee:
+    LineItemQuantity:
+      type: object
+      properties:
+        billedAsQuantity:
+          type: number
+        billedAsQualifier:
           type: string
-        originStation:
+          enum:
+          - DM
+          - GL
+          - NC
+          - ND
+          - NP
+          - NU
+          - NV
+        weight:
+          type: number
+        weightQualifier:
           type: string
-        destinationStation:
+          enum:
+          - A3
+          - B
+          - C
+          - E
+          - G
+          - J
+          - K
+          - M
+          - N
+          - O
+          - S
+          - X
+        volume:
+          type: number
+        volumeUnitQualifier:
           type: string
-        waybillNumber:
+          enum:
+          - B
+          - C
+          - D
+          - E
+          - F
+          - G
+          - H
+          - L
+          - M
+          - N
+          - R
+          - S
+          - T
+          - U
+          - V
+          - X
+        ladingQuantity:
+          type: number
+        packagingFormCode:
+          type: string
+        dunnageDescription:
+          type: string
+        weightUnitCode:
+          type: string
+        typeOfServiceCode:
+          type: string
+    EquipmentParentGrouping:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - Grouping
+        resourceId:
           type: integer
-        waybillDate:
+        uuid:
           type: string
-          format: date
-    EquipmentHistoryItem:
+          description: UUID that complements the legacy numeric resourceId.
+        name:
+          type: string
+        groupingType:
+          type: string
+        sortOrder:
+          type: integer
+        colorToken:
+          type: string
+        groupingIndex:
+          type: integer
+    CanadianDangerousRequirements:
+      type: object
+      properties:
+        emergencyResponsePlanNumber:
+          type: string
+        communicationNumber:
+          type: string
+        packagingGroupCode:
+          type: string
+        firstSubsidiaryClassification:
+          type: string
+        secondSubsidiaryClassification:
+          type: string
+        thirdSubsidiaryClassification:
+          type: string
+        subsidiaryRiskIndicator:
+          type: string
+        netExplosiveQuantity:
+          type: number
+        canadianHazardousNotation:
+          type: string
+        specialCommodityIndicatorCode:
+          type: string
+        additionalCommunicationNumber:
+          type: string
+        netExplosiveQuantityUnitCode: cc0c4147-6a4a-4816-bee4-7ffe00fb1d06
+        hazmatShipmentInfoQualifier:
+          type: string
+        hazmatQuantity:
+          type: number
+        hazmatQuantityUnitCode: ba996b62-4cc6-44f9-bd5f-8e435efc6e36
+    EPARequiredData:
+      type: object
+      properties:
+        epaWasteStreamNumberCode:
+          type: string
+        wasteCharacteristicsCode:
+          type: string
+        hazardousWasteNumberStateOrProvince:
+          type: string
+        hazardousWasteNumber:
+          type: string
+    WorkOrderResource:
       type: object
       properties:
         resourceId:
@@ -2218,57 +2197,75 @@ components:
         uuid:
           type: string
           description: UUID that complements the legacy numeric resourceId.
-        equipment:
-          $ref: '#/components/schemas/RelaxedEquipment'
-        moveType:
-          $ref: '#/components/schemas/HistoryMoveType'
-        timestamp:
+        workOrderId:
           type: string
-          format: date-time
-        waybill:
-          $ref: '#/components/schemas/Waybill'
-        previousTrack:
-          $ref: '#/components/schemas/Grouping'
-        previousStation:
-          $ref: '#/components/schemas/Grouping'
-        currentTrack:
-          $ref: '#/components/schemas/Grouping'
-        currentStation:
-          $ref: '#/components/schemas/Grouping'
-        reportingFlag:
+        status:
           type: string
           enum:
-          - ACCEPTED
-          - REJECTED
-          - IMPUTED
-        jobName:
+          - PENDING
+          - ACTIVE
+          - CLOSED
+        trainId:
           type: string
-        receiveFromCarrierCode:
-          type: string
-        deliverToCarrierCode:
-          type: string
-        umlerSnapshot:
-          $ref: '#/components/schemas/Umler'
-        carrierId:
+        inTransit:
+          type: boolean
+        lastEventId:
           type: integer
-        numCharges:
-          type: integer
-        revisionNumber:
-          type: integer
-        revisionTime:
+        hasBeenDeparted:
+          type: boolean
+    ProtectiveService:
+      type: object
+      properties:
+        ruleCode:
           type: string
-        deletedAt:
+        serviceCode:
           type: string
-        mutedAt:
+          enum:
+          - D
+          - HDN
+          - HDNC
+          - HSC
+          - M
+          - MN
+          - MNU
+        temperatureUnit:
           type: string
+          enum:
+          - CE
+          - FA
+        optimalTemperature:
+          type: number
+        scac:
+          type: string
+        fsac:
+          type: string
+        cityName:
+          type: string
+        stateOrProvince:
+          type: string
+        precooled:
+          type: boolean
+        heaterLocation:
+          type: string
+          enum:
+          - Y
+          - N
+        commodityType:
+          type: string
+          enum:
+          - Y
+          - N
+        doorwaySpace:
+          type: string
+          enum:
+          - Y
+          - N
+        originTemperature:
+          type: number
+    RelaxedEquipment:
+      allOf:
+      - $ref: '#/components/schemas/Equipment'
   parameters:
-    ViewAsUserGroup:
-      name: viewAsUserGroup
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Optional user group context
     CarrierId:
       name: carrierId
       in: query
@@ -2276,12 +2273,21 @@ components:
       schema:
         type: integer
       description: Carrier identifier; required for all endpoints
+    ViewAsUserGroup:
+      name: viewAsUserGroup
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Optional user group context
   securitySchemes:
     ApiKeyAuth:
+      type: apiKey
       in: header
       name: x-arms-api-key
+      description: Your ARMS API key
+    AssumeUser:
       type: apiKey
-    AssumeUserAuth:
       in: header
       name: x-arms-assume-user
-      type: apiKey
+      description: Email of a user assigned to the appropriate user group

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: protobuf/arms/charge.proto ChargeService API
+  title: protobuf/arms/charge.proto Charge Service API
   version: version not set
 servers:
 - description: Production (US)
@@ -271,45 +271,6 @@ paths:
           description: An unexpected error response.
 components:
   schemas:
-    armsListChargesTableRowsRequest:
-      properties:
-        pageNextToken:
-          type: string
-        pagePreviousToken:
-          type: string
-        pageSize:
-          format: int64
-          type: integer
-        tableDataRequest:
-          $ref: '#/components/schemas/armsRequestTableData'
-      type: object
-    armsSortColumn:
-      properties:
-        column:
-          type: string
-        direction:
-          $ref: '#/components/schemas/armsSortDirection'
-      type: object
-    armsColumnSearchTerm:
-      properties:
-        columnKey:
-          type: string
-        op:
-          $ref: '#/components/schemas/armsRequestOp'
-        searchTerm:
-          type: string
-      type: object
-    armsColumnDataType:
-      default: STRING
-      enum:
-      - STRING
-      - INT
-      - REAL
-      - TIMESTAMP
-      - DECIMAL
-      - BOOLEAN
-      - TIME
-      type: string
     armsAggregateOp:
       default: AO_UNSPECIFIED
       enum:
@@ -322,57 +283,6 @@ components:
       - AO_STRING_CONCAT
       - AO_STRING_CONCAT_DISTINCT
       type: string
-    armsTableDef:
-      properties:
-        columns:
-          items:
-            $ref: '#/components/schemas/armsColumnDef'
-          type: array
-        defaultColumns:
-          items:
-            type: string
-          type: array
-      type: object
-    protobufAny:
-      additionalProperties:
-        type: object
-      properties:
-        '@type':
-          type: string
-      type: object
-    armsGetTableSummaryResponse:
-      properties:
-        aggregates:
-          items:
-            $ref: '#/components/schemas/armsAggregateData'
-          type: array
-      type: object
-    googletypeDecimal:
-      properties:
-        value:
-          type: string
-      type: object
-    armsAggregateData:
-      properties:
-        columnKey:
-          type: string
-        intVal:
-          format: int64
-          type: string
-        op:
-          $ref: '#/components/schemas/armsAggregateOp'
-        realVal:
-          format: double
-          type: number
-        stringVal:
-          type: string
-      type: object
-    armsSortDirection:
-      default: ASCENDING
-      enum:
-      - ASCENDING
-      - DESCENDING
-      type: string
     armsGetTableSummaryRequest:
       properties:
         aggregates:
@@ -383,47 +293,6 @@ components:
           items:
             $ref: '#/components/schemas/armsColumnSearchTerm'
           type: array
-      type: object
-    armsRequestOp:
-      default: RO_DEFAULT
-      enum:
-      - RO_DEFAULT
-      - RO_SUBSTRING
-      - RO_EXACT
-      - RO_STARTSWITH
-      - RO_ENDSWITH
-      - RO_EMPTY
-      - RO_LT
-      - RO_GT
-      - RO_LE
-      - RO_GE
-      - RO_NE
-      - RO_BETWEEN
-      - RO_NOT_EMPTY
-      - RO_NOT_SUBSTRING
-      - RO_NOT_STARTSWITH
-      - RO_NOT_ENDSWITH
-      type: string
-    armsColumnDef:
-      properties:
-        aliases:
-          items:
-            type: string
-          type: array
-        description:
-          type: string
-        enumValues:
-          items:
-            type: string
-          type: array
-        key:
-          type: string
-        name:
-          type: string
-        searchable:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/armsColumnDataType'
       type: object
     armsColumnData:
       properties:
@@ -448,6 +317,99 @@ components:
           format: date-time
           type: string
       type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    armsRowData:
+      properties:
+        data:
+          additionalProperties:
+            $ref: '#/components/schemas/armsColumnData'
+          type: object
+        intKey:
+          format: int64
+          type: string
+        stringKey:
+          type: string
+      type: object
+    armsGetTableSummaryResponse:
+      properties:
+        aggregates:
+          items:
+            $ref: '#/components/schemas/armsAggregateData'
+          type: array
+      type: object
+    armsColumnDef:
+      properties:
+        aliases:
+          items:
+            type: string
+          type: array
+        description:
+          type: string
+        enumValues:
+          items:
+            type: string
+          type: array
+        key:
+          type: string
+        name:
+          type: string
+        searchable:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/armsColumnDataType'
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    armsColumnSearchTerm:
+      properties:
+        columnKey:
+          type: string
+        op:
+          $ref: '#/components/schemas/armsRequestOp'
+        searchTerm:
+          type: string
+      type: object
+    armsSortColumn:
+      properties:
+        column:
+          type: string
+        direction:
+          $ref: '#/components/schemas/armsSortDirection'
+      type: object
+    armsColumnDataType:
+      default: STRING
+      enum:
+      - STRING
+      - INT
+      - REAL
+      - TIMESTAMP
+      - DECIMAL
+      - BOOLEAN
+      - TIME
+      type: string
+    armsColumnsToAggregate:
+      properties:
+        columnKey:
+          type: string
+        op:
+          $ref: '#/components/schemas/armsAggregateOp'
+      type: object
     armsRequestTableData:
       properties:
         additionalFilters:
@@ -470,25 +432,75 @@ components:
             $ref: '#/components/schemas/armsSortColumn'
           type: array
       type: object
-    armsRowData:
+    armsSortDirection:
+      default: ASCENDING
+      enum:
+      - ASCENDING
+      - DESCENDING
+      type: string
+    armsListChargesTableRowsRequest:
       properties:
-        data:
-          additionalProperties:
-            $ref: '#/components/schemas/armsColumnData'
-          type: object
-        intKey:
-          format: int64
+        pageNextToken:
           type: string
-        stringKey:
+        pagePreviousToken:
+          type: string
+        pageSize:
+          format: int64
+          type: integer
+        tableDataRequest:
+          $ref: '#/components/schemas/armsRequestTableData'
+      type: object
+    armsTableDef:
+      properties:
+        columns:
+          items:
+            $ref: '#/components/schemas/armsColumnDef'
+          type: array
+        defaultColumns:
+          items:
+            type: string
+          type: array
+      type: object
+    googletypeDecimal:
+      properties:
+        value:
           type: string
       type: object
-    armsColumnsToAggregate:
+    armsAggregateData:
       properties:
         columnKey:
           type: string
+        intVal:
+          format: int64
+          type: string
         op:
           $ref: '#/components/schemas/armsAggregateOp'
+        realVal:
+          format: double
+          type: number
+        stringVal:
+          type: string
       type: object
+    armsRequestOp:
+      default: RO_DEFAULT
+      enum:
+      - RO_DEFAULT
+      - RO_SUBSTRING
+      - RO_EXACT
+      - RO_STARTSWITH
+      - RO_ENDSWITH
+      - RO_EMPTY
+      - RO_LT
+      - RO_GT
+      - RO_LE
+      - RO_GE
+      - RO_NE
+      - RO_BETWEEN
+      - RO_NOT_EMPTY
+      - RO_NOT_SUBSTRING
+      - RO_NOT_STARTSWITH
+      - RO_NOT_ENDSWITH
+      type: string
     armsTableData:
       properties:
         nextToken:
@@ -501,18 +513,6 @@ components:
           type: array
         tableDef:
           $ref: '#/components/schemas/armsTableDef'
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
       type: object
   securitySchemes:
     ApiKeyAuth:

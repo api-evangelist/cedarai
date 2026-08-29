@@ -1,15 +1,12 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: protobuf/arms/charge.proto ChargeService LindaService API
+  title: protobuf/linda/service.proto Linda Service API
   version: version not set
 servers:
 - description: Production (US)
-  url: https://api-lg-k-h1.arms.cedarai.com
+  url: https://api.linda.cedarai.com
 - description: Production (EU)
-  url: https://api-lg-k-h1.arms.cedarai.se
-security:
-- ApiKeyAuth: []
-  AssumeUserAuth: []
+  url: https://api.linda.cedarai.se
 tags:
 - name: LindaService
 paths:
@@ -349,114 +346,6 @@ paths:
         AssumeUserAuth: []
 components:
   schemas:
-    lindaSummarizeEntityNotesReq:
-      properties:
-        entity_id:
-          description: Entity ID whose note thread to summarize.
-          type: string
-        entity_type:
-          description: Entity type whose note thread to summarize.
-          type: string
-      type: object
-    lindaReferenceSearchResultEntry:
-      description: 'One match from `SearchReferences`. The fields map directly onto a
-
-        `NoteReference`: copy `entity_type`, `entity_id`, and `display_text`
-
-        when building a request to `CreateNote`/`UpdateNote`, and embed the
-
-        inline token `<<ref:{entity_type}:{entity_id}:{display_text}>>` in
-
-        the note `content` at the cursor position.'
-      properties:
-        display_text:
-          description: 'Primary label for the chip (e.g. `BNSF 54321`, `Acme Corp`). Copy
-
-            verbatim into `NoteReference.display_text`.'
-          type: string
-        entity_id:
-          description: ID of the matched entity. Copy verbatim into `NoteReference.entity_id`.
-          type: string
-        entity_type:
-          description: 'Type of the matched entity (e.g. `equipment`, `shipment`, `customer`).
-
-            Copy verbatim into `NoteReference.entity_type`.'
-          type: string
-        score:
-          description: 'Provider-supplied relevance score (higher = better match). Results
-
-            are returned in descending score order.'
-          format: float
-          type: number
-        subtitle:
-          description: 'Secondary line shown under `display_text` in the typeahead
-
-            (e.g. equipment ICHR time, carrier code, or grouping type).'
-          type: string
-        url:
-          description: Optional pre-resolved URL for the entity's detail page.
-          type: string
-      type: object
-    lindaNoteAttachmentUpload:
-      description: 'Metadata describing a file the client intends to attach. Currently
-
-        reserved for future inline-upload support on `CreateNote`/`UpdateNote`;
-
-        for now, attach files via `UploadNoteAttachment` (or
-
-        `GetNoteAttachmentUploadUrl` for files larger than 50 MiB).'
-      properties:
-        file_name:
-          description: Filename to record on the attachment.
-          type: string
-        media_type:
-          description: MIME type of the file (e.g. `image/png`, `application/pdf`).
-          type: string
-        size_bytes:
-          description: Size of the file in bytes.
-          format: int64
-          type: string
-      type: object
-    lindaCreateNoteResp:
-      properties:
-        note:
-          $ref: '#/components/schemas/lindaNoteEntry'
-      type: object
-    lindaBatchGetNoteSummariesReq:
-      properties:
-        entities:
-          description: 'Entities to fetch summaries for. The server groups by entity type
-
-            internally and runs one SQL query per type. No hard cap on the
-
-            number of entries, but practical limits apply (page sizes of a few
-
-            hundred entities per request are typical).'
-          items:
-            $ref: '#/components/schemas/lindaEntityRef'
-          type: array
-      type: object
-    lindaListNotesResp:
-      properties:
-        next_page_token:
-          description: 'Opaque cursor for the next page. Empty when there are no more
-
-            results, or always empty in reverse-lookup mode (which caps at 100
-
-            results without paging). Pass back as `page_token` on the next
-
-            request.'
-          type: string
-        notes:
-          description: 'Notes for the requested entity in descending chronological order
-
-            (newest first). Each entry has resolved attachments and references
-
-            with `is_stale` populated.'
-          items:
-            $ref: '#/components/schemas/lindaNoteEntry'
-          type: array
-      type: object
     lindaSearchNotesReq:
       properties:
         entity_type:
@@ -483,243 +372,6 @@ components:
             an empty result set.'
           type: string
       type: object
-    lindaSearchNotesResp:
-      properties:
-        next_page_token:
-          description: 'Opaque cursor for the next page. Empty when there are no more
-
-            results. Pass back as `page_token` on the next request.'
-          type: string
-        results:
-          description: Matching notes ordered by `score` descending.
-          items:
-            $ref: '#/components/schemas/lindaSearchNoteResult'
-          type: array
-        total_count:
-          description: 'Total matching notes across all pages — useful for displaying
-
-            "showing X of Y results" labels.'
-          format: int32
-          type: integer
-      type: object
-    lindaNoteSummaryEntry:
-      description: 'One row of summary data for a single entity, returned by
-
-        `GetNoteSummary` and `BatchGetNoteSummaries`. Designed for list-page
-
-        badges and counters.'
-      properties:
-        entity_id:
-          description: The entity ID these summary numbers describe.
-          type: string
-        entity_type:
-          description: The entity these summary numbers describe.
-          type: string
-        latest_note:
-          $ref: '#/components/schemas/lindaNoteEntry'
-        total_count:
-          description: Total non-deleted notes on this entity.
-          format: int32
-          type: integer
-      type: object
-    lindaListNotesReq:
-      properties:
-        entity_id:
-          description: Host entity ID. Required in default mode; ignored in reverse-lookup mode.
-          type: string
-        entity_type:
-          description: 'Host entity to list notes for. Required in default mode; ignored in
-
-            reverse-lookup mode (see `referenced_entity_type` below).'
-          type: string
-        page_size:
-          description: Page size for cursor pagination. Unset/zero disables paging.
-          format: int32
-          type: integer
-        page_token:
-          description: Opaque cursor from a previous response's `next_page_token`.
-          type: string
-        referenced_entity_id:
-          description: Pair with `referenced_entity_type`. See above.
-          type: string
-        referenced_entity_type:
-          description: "Reverse-lookup mode: when both `referenced_entity_type` and\n`referenced_entity_id` are set, returns notes whose `references`\ninclude this `(entity_type, entity_id)` pair — i.e. notes that\nmentioned this entity via `<<ref:...>>`. Hard-capped at 100 results,\npagination is disabled in this mode.\n\nExample: to list every note that mentions equipment `54321`:\n\n    {\n      \"referenced_entity_type\": \"equipment\",\n      \"referenced_entity_id\":   \"54321\"\n    }"
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties:
-        type: object
-      description: "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(&foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := &pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := &pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": <string>,\n      \"lastName\": <string>\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
-      properties:
-        '@type':
-          description: "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
-          type: string
-      type: object
-    lindaSearchNoteResult:
-      description: One match returned from `SearchNotes`.
-      properties:
-        content_snippet:
-          description: 'Highlighted snippet from `ts_headline` containing only `<mark>`
-
-            tags around matched terms. **Sanitize before rendering as HTML**:
-
-            escape all other HTML, then re-allow `<mark>` tags only.'
-          type: string
-        created_at:
-          format: date-time
-          type: string
-        created_by_name:
-          description: Display name of the note's author at the time the note was written.
-          type: string
-        entity_id:
-          description: Host entity ID the note was attached to.
-          type: string
-        entity_type:
-          description: Host entity type the note was attached to.
-          type: string
-        note_id:
-          description: ID of the matched note.
-          type: string
-        score:
-          description: Postgres `ts_rank` relevance score (higher is more relevant).
-          format: float
-          type: number
-      type: object
-    lindaNoteReference:
-      description: "A structured reference to another Cedar entity from inside a note. References\nare how `@`-mentions persist: each chip in the editor becomes both an inline\ntoken in `NoteEntry.content` (e.g. `<<ref:equipment:54321:BNSF 54321>>`) and\na sidecar `NoteReference` row that powers reverse-lookup queries via\n`ListNotes.referenced_entity_type`/`referenced_entity_id`.\n\nExample:\n\n    {\n      \"entity_type\":  \"equipment\",\n      \"entity_id\":    \"54321\",\n      \"display_text\": \"BNSF 54321\"\n    }"
-      properties:
-        display_text:
-          description: 'Human-readable label for the chip at the time the note was authored
-
-            (e.g. `BNSF 54321`). Stored as-is so old notes keep their original
-
-            wording even if the entity is later renamed.'
-          type: string
-        entity_id:
-          description: 'The referenced entity''s ID, encoded as a string. Format depends on
-
-            entity type: int64 for equipment/waybill/customer/invoice/charge/grouping,
-
-            UUID for shipment/work_order/trip_plan/booking/commodity_unit, or a
-
-            composite string for `interchange` (`direction:trainId:timestamp`).'
-          type: string
-        entity_type:
-          description: 'The entity type being referenced. Must be one of the registered types
-
-            (e.g. `equipment`, `shipment`, `waybill`, `work_order`, `customer`,
-
-            `invoice`, `charge`, `trip_plan`, `booking`). See `SearchReferences` for
-
-            the full list of searchable types.'
-          type: string
-        is_stale:
-          description: 'Server-set on read responses: true if the referenced entity has been
-
-            deleted. Frontends render stale chips as dimmed strikethrough so users
-
-            can tell the link is broken without losing the note''s history.'
-          type: boolean
-        url:
-          description: 'Optional pre-resolved URL hint. Frontends usually ignore this and
-
-            resolve the URL from the entity type + ID via their own route registry.'
-          type: string
-      type: object
-    lindaNoteAttachment:
-      description: 'A file attached to a note. Attachments are stored in S3 and surfaced
-
-        to clients via short-lived presigned download URLs.'
-      properties:
-        attachment_id:
-          description: Server-assigned UUID for this attachment.
-          type: string
-        created_at:
-          format: date-time
-          type: string
-        file_name:
-          description: 'Original filename as supplied at upload time. Path components are
-
-            stripped server-side; only the base name is kept.'
-          type: string
-        media_type:
-          description: 'MIME type. Defaults to `application/octet-stream` if the upload did
-
-            not specify one.'
-          type: string
-        note_id:
-          description: ID of the parent note this file is attached to.
-          type: string
-        size_bytes:
-          description: Size of the file in bytes.
-          format: int64
-          type: string
-        url:
-          description: 'Presigned GET URL for downloading the file. **Expires after 1 hour.**
-
-            Re-fetch the parent note to get a fresh URL — never persist this
-
-            value past its TTL.'
-          type: string
-      type: object
-    lindaUpdateNoteReq:
-      properties:
-        content:
-          description: 'New markdown body. Replaces the prior content. May contain inline
-
-            reference tokens like `<<ref:equipment:54321:BNSF 54321>>`. Whenever
-
-            you change `<<ref:...>>` tokens in `content`, also send the new
-
-            `references` array and set `update_references=true` so the sidecar
-
-            rows stay in sync with the inline tokens.'
-          type: string
-        note_id:
-          description: ID of the note to edit (returned by `CreateNote`).
-          type: string
-        references:
-          description: 'Replacement set of references. Only honored when
-
-            `update_references=true`. Maximum 100 entries.'
-          items:
-            $ref: '#/components/schemas/lindaNoteReference'
-          type: array
-        update_references:
-          description: 'If true, the `references` array fully replaces the prior set. If
-
-            false (the default), the existing references are left untouched —
-
-            use this when only the prose changes and the `<<ref:...>>` tokens
-
-            are the same as before.'
-          type: boolean
-        uploads:
-          description: Reserved for future inline upload support; currently a no-op.
-          items:
-            $ref: '#/components/schemas/lindaNoteAttachmentUpload'
-          type: array
-      type: object
-    lindaDeleteNoteReq:
-      properties:
-        note_id:
-          description: ID of the note to soft-delete.
-          type: string
-      type: object
-    lindaBatchGetNoteSummariesResp:
-      properties:
-        summaries:
-          description: 'One summary per entity that has at least one note. **Entities with
-
-            zero notes are omitted from the response** — clients should default
-
-            missing entries to "0 notes" rather than expecting one row per
-
-            requested entity.'
-          items:
-            $ref: '#/components/schemas/lindaNoteSummaryEntry'
-          type: array
-      type: object
     lindaEntityRef:
       description: "A lightweight `(entity_type, entity_id)` pair used by\n`BatchGetNoteSummaries` to fetch summaries for many entities at once.\n\nExample:\n\n    { \"entity_type\": \"shipment\", \"entity_id\": \"5f3c...\" }"
       properties:
@@ -730,20 +382,6 @@ components:
           type: string
         entity_type:
           description: Entity type (e.g. `shipment`, `equipment`, `waybill`).
-          type: string
-      type: object
-    lindaSummarizeEntityNotesResp:
-      properties:
-        note_count:
-          description: 'Number of notes that were summarized — useful for showing "summary
-
-            of N notes" alongside the digest.'
-          format: int32
-          type: integer
-        summary_text:
-          description: 'One-paragraph plain-text digest covering key themes, latest status,
-
-            and unresolved concerns. Empty string if the thread had no notes.'
           type: string
       type: object
     lindaCreateNoteReq:
@@ -774,35 +412,33 @@ components:
             $ref: '#/components/schemas/lindaNoteAttachmentUpload'
           type: array
       type: object
-    lindaGetNoteSummaryResp:
+    lindaUpdateNoteResp:
       properties:
-        summary:
-          $ref: '#/components/schemas/lindaNoteSummaryEntry'
+        note:
+          $ref: '#/components/schemas/lindaNoteEntry'
       type: object
-    lindaSearchReferencesReq:
-      description: 'Request for the `@`-mention typeahead. Searches across configured entity
-
-        types in parallel and returns the top N matches per type. Use the result
-
-        fields to construct the inline `<<ref:...>>` token in your note''s
-
-        `content` and the matching `NoteReference` entry in `references`.'
+    lindaListNotesReq:
       properties:
-        entity_types:
-          description: 'Restrict to specific entity types. Empty array searches every
+        entity_id:
+          description: Host entity ID. Required in default mode; ignored in reverse-lookup mode.
+          type: string
+        entity_type:
+          description: 'Host entity to list notes for. Required in default mode; ignored in
 
-            searchable type. Pass e.g. `["equipment", "shipment"]` to scope.'
-          items:
-            type: string
-          type: array
-        limit:
-          description: Per-type result cap. Defaults to 5.
-          format: int64
+            reverse-lookup mode (see `referenced_entity_type` below).'
+          type: string
+        page_size:
+          description: Page size for cursor pagination. Unset/zero disables paging.
+          format: int32
           type: integer
-        query:
-          description: 'Free-text query — typically the characters typed after `@` in the
-
-            editor (e.g. `BNSF 543`, `acme`, `WB-1842`).'
+        page_token:
+          description: Opaque cursor from a previous response's `next_page_token`.
+          type: string
+        referenced_entity_id:
+          description: Pair with `referenced_entity_type`. See above.
+          type: string
+        referenced_entity_type:
+          description: "Reverse-lookup mode: when both `referenced_entity_type` and\n`referenced_entity_id` are set, returns notes whose `references`\ninclude this `(entity_type, entity_id)` pair — i.e. notes that\nmentioned this entity via `<<ref:...>>`. Hard-capped at 100 results,\npagination is disabled in this mode.\n\nExample: to list every note that mentions equipment `54321`:\n\n    {\n      \"referenced_entity_type\": \"equipment\",\n      \"referenced_entity_id\":   \"54321\"\n    }"
           type: string
       type: object
     lindaNoteEntry:
@@ -852,10 +488,191 @@ components:
           format: date-time
           type: string
       type: object
-    lindaUpdateNoteResp:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    lindaBatchGetNoteSummariesResp:
+      properties:
+        summaries:
+          description: 'One summary per entity that has at least one note. **Entities with
+
+            zero notes are omitted from the response** — clients should default
+
+            missing entries to "0 notes" rather than expecting one row per
+
+            requested entity.'
+          items:
+            $ref: '#/components/schemas/lindaNoteSummaryEntry'
+          type: array
+      type: object
+    lindaSummarizeEntityNotesReq:
+      properties:
+        entity_id:
+          description: Entity ID whose note thread to summarize.
+          type: string
+        entity_type:
+          description: Entity type whose note thread to summarize.
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      description: "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(&foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := &pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := &pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": <string>,\n      \"lastName\": <string>\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+      properties:
+        '@type':
+          description: "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+          type: string
+      type: object
+    lindaCreateNoteResp:
       properties:
         note:
           $ref: '#/components/schemas/lindaNoteEntry'
+      type: object
+    lindaDeleteNoteReq:
+      properties:
+        note_id:
+          description: ID of the note to soft-delete.
+          type: string
+      type: object
+    lindaSearchReferencesReq:
+      description: 'Request for the `@`-mention typeahead. Searches across configured entity
+
+        types in parallel and returns the top N matches per type. Use the result
+
+        fields to construct the inline `<<ref:...>>` token in your note''s
+
+        `content` and the matching `NoteReference` entry in `references`.'
+      properties:
+        entity_types:
+          description: 'Restrict to specific entity types. Empty array searches every
+
+            searchable type. Pass e.g. `["equipment", "shipment"]` to scope.'
+          items:
+            type: string
+          type: array
+        limit:
+          description: Per-type result cap. Defaults to 5.
+          format: int64
+          type: integer
+        query:
+          description: 'Free-text query — typically the characters typed after `@` in the
+
+            editor (e.g. `BNSF 543`, `acme`, `WB-1842`).'
+          type: string
+      type: object
+    lindaSummarizeEntityNotesResp:
+      properties:
+        note_count:
+          description: 'Number of notes that were summarized — useful for showing "summary
+
+            of N notes" alongside the digest.'
+          format: int32
+          type: integer
+        summary_text:
+          description: 'One-paragraph plain-text digest covering key themes, latest status,
+
+            and unresolved concerns. Empty string if the thread had no notes.'
+          type: string
+      type: object
+    lindaSearchNotesResp:
+      properties:
+        next_page_token:
+          description: 'Opaque cursor for the next page. Empty when there are no more
+
+            results. Pass back as `page_token` on the next request.'
+          type: string
+        results:
+          description: Matching notes ordered by `score` descending.
+          items:
+            $ref: '#/components/schemas/lindaSearchNoteResult'
+          type: array
+        total_count:
+          description: 'Total matching notes across all pages — useful for displaying
+
+            "showing X of Y results" labels.'
+          format: int32
+          type: integer
+      type: object
+    lindaNoteAttachmentUpload:
+      description: 'Metadata describing a file the client intends to attach. Currently
+
+        reserved for future inline-upload support on `CreateNote`/`UpdateNote`;
+
+        for now, attach files via `UploadNoteAttachment` (or
+
+        `GetNoteAttachmentUploadUrl` for files larger than 50 MiB).'
+      properties:
+        file_name:
+          description: Filename to record on the attachment.
+          type: string
+        media_type:
+          description: MIME type of the file (e.g. `image/png`, `application/pdf`).
+          type: string
+        size_bytes:
+          description: Size of the file in bytes.
+          format: int64
+          type: string
+      type: object
+    lindaGetNoteSummaryReq:
+      properties:
+        entity_id:
+          description: Entity ID to summarize.
+          type: string
+        entity_type:
+          description: Entity type to summarize.
+          type: string
+      type: object
+    lindaUpdateNoteReq:
+      properties:
+        content:
+          description: 'New markdown body. Replaces the prior content. May contain inline
+
+            reference tokens like `<<ref:equipment:54321:BNSF 54321>>`. Whenever
+
+            you change `<<ref:...>>` tokens in `content`, also send the new
+
+            `references` array and set `update_references=true` so the sidecar
+
+            rows stay in sync with the inline tokens.'
+          type: string
+        note_id:
+          description: ID of the note to edit (returned by `CreateNote`).
+          type: string
+        references:
+          description: 'Replacement set of references. Only honored when
+
+            `update_references=true`. Maximum 100 entries.'
+          items:
+            $ref: '#/components/schemas/lindaNoteReference'
+          type: array
+        update_references:
+          description: 'If true, the `references` array fully replaces the prior set. If
+
+            false (the default), the existing references are left untouched —
+
+            use this when only the prose changes and the `<<ref:...>>` tokens
+
+            are the same as before.'
+          type: boolean
+        uploads:
+          description: Reserved for future inline upload support; currently a no-op.
+          items:
+            $ref: '#/components/schemas/lindaNoteAttachmentUpload'
+          type: array
+      type: object
+    lindaGetNoteSummaryResp:
+      properties:
+        summary:
+          $ref: '#/components/schemas/lindaNoteSummaryEntry'
       type: object
     lindaSearchReferencesResp:
       properties:
@@ -869,26 +686,206 @@ components:
             $ref: '#/components/schemas/lindaReferenceSearchResultEntry'
           type: array
       type: object
-    lindaGetNoteSummaryReq:
+    lindaNoteReference:
+      description: "A structured reference to another Cedar entity from inside a note. References\nare how `@`-mentions persist: each chip in the editor becomes both an inline\ntoken in `NoteEntry.content` (e.g. `<<ref:equipment:54321:BNSF 54321>>`) and\na sidecar `NoteReference` row that powers reverse-lookup queries via\n`ListNotes.referenced_entity_type`/`referenced_entity_id`.\n\nExample:\n\n    {\n      \"entity_type\":  \"equipment\",\n      \"entity_id\":    \"54321\",\n      \"display_text\": \"BNSF 54321\"\n    }"
       properties:
+        display_text:
+          description: 'Human-readable label for the chip at the time the note was authored
+
+            (e.g. `BNSF 54321`). Stored as-is so old notes keep their original
+
+            wording even if the entity is later renamed.'
+          type: string
         entity_id:
-          description: Entity ID to summarize.
+          description: 'The referenced entity''s ID, encoded as a string. Format depends on
+
+            entity type: int64 for equipment/waybill/customer/invoice/charge/grouping,
+
+            UUID for shipment/work_order/trip_plan/booking/commodity_unit, or a
+
+            composite string for `interchange` (`direction:trainId:timestamp`).'
           type: string
         entity_type:
-          description: Entity type to summarize.
+          description: 'The entity type being referenced. Must be one of the registered types
+
+            (e.g. `equipment`, `shipment`, `waybill`, `work_order`, `customer`,
+
+            `invoice`, `charge`, `trip_plan`, `booking`). See `SearchReferences` for
+
+            the full list of searchable types.'
+          type: string
+        is_stale:
+          description: 'Server-set on read responses: true if the referenced entity has been
+
+            deleted. Frontends render stale chips as dimmed strikethrough so users
+
+            can tell the link is broken without losing the note''s history.'
+          type: boolean
+        url:
+          description: 'Optional pre-resolved URL hint. Frontends usually ignore this and
+
+            resolve the URL from the entity type + ID via their own route registry.'
           type: string
       type: object
-    rpcStatus:
+    lindaListNotesResp:
       properties:
-        code:
+        next_page_token:
+          description: 'Opaque cursor for the next page. Empty when there are no more
+
+            results, or always empty in reverse-lookup mode (which caps at 100
+
+            results without paging). Pass back as `page_token` on the next
+
+            request.'
+          type: string
+        notes:
+          description: 'Notes for the requested entity in descending chronological order
+
+            (newest first). Each entry has resolved attachments and references
+
+            with `is_stale` populated.'
+          items:
+            $ref: '#/components/schemas/lindaNoteEntry'
+          type: array
+      type: object
+    lindaBatchGetNoteSummariesReq:
+      properties:
+        entities:
+          description: 'Entities to fetch summaries for. The server groups by entity type
+
+            internally and runs one SQL query per type. No hard cap on the
+
+            number of entries, but practical limits apply (page sizes of a few
+
+            hundred entities per request are typical).'
+          items:
+            $ref: '#/components/schemas/lindaEntityRef'
+          type: array
+      type: object
+    lindaNoteSummaryEntry:
+      description: 'One row of summary data for a single entity, returned by
+
+        `GetNoteSummary` and `BatchGetNoteSummaries`. Designed for list-page
+
+        badges and counters.'
+      properties:
+        entity_id:
+          description: The entity ID these summary numbers describe.
+          type: string
+        entity_type:
+          description: The entity these summary numbers describe.
+          type: string
+        latest_note:
+          $ref: '#/components/schemas/lindaNoteEntry'
+        total_count:
+          description: Total non-deleted notes on this entity.
           format: int32
           type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+      type: object
+    lindaReferenceSearchResultEntry:
+      description: 'One match from `SearchReferences`. The fields map directly onto a
+
+        `NoteReference`: copy `entity_type`, `entity_id`, and `display_text`
+
+        when building a request to `CreateNote`/`UpdateNote`, and embed the
+
+        inline token `<<ref:{entity_type}:{entity_id}:{display_text}>>` in
+
+        the note `content` at the cursor position.'
+      properties:
+        display_text:
+          description: 'Primary label for the chip (e.g. `BNSF 54321`, `Acme Corp`). Copy
+
+            verbatim into `NoteReference.display_text`.'
           type: string
+        entity_id:
+          description: ID of the matched entity. Copy verbatim into `NoteReference.entity_id`.
+          type: string
+        entity_type:
+          description: 'Type of the matched entity (e.g. `equipment`, `shipment`, `customer`).
+
+            Copy verbatim into `NoteReference.entity_type`.'
+          type: string
+        score:
+          description: 'Provider-supplied relevance score (higher = better match). Results
+
+            are returned in descending score order.'
+          format: float
+          type: number
+        subtitle:
+          description: 'Secondary line shown under `display_text` in the typeahead
+
+            (e.g. equipment ICHR time, carrier code, or grouping type).'
+          type: string
+        url:
+          description: Optional pre-resolved URL for the entity's detail page.
+          type: string
+      type: object
+    lindaNoteAttachment:
+      description: 'A file attached to a note. Attachments are stored in S3 and surfaced
+
+        to clients via short-lived presigned download URLs.'
+      properties:
+        attachment_id:
+          description: Server-assigned UUID for this attachment.
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        file_name:
+          description: 'Original filename as supplied at upload time. Path components are
+
+            stripped server-side; only the base name is kept.'
+          type: string
+        media_type:
+          description: 'MIME type. Defaults to `application/octet-stream` if the upload did
+
+            not specify one.'
+          type: string
+        note_id:
+          description: ID of the parent note this file is attached to.
+          type: string
+        size_bytes:
+          description: Size of the file in bytes.
+          format: int64
+          type: string
+        url:
+          description: 'Presigned GET URL for downloading the file. **Expires after 1 hour.**
+
+            Re-fetch the parent note to get a fresh URL — never persist this
+
+            value past its TTL.'
+          type: string
+      type: object
+    lindaSearchNoteResult:
+      description: One match returned from `SearchNotes`.
+      properties:
+        content_snippet:
+          description: 'Highlighted snippet from `ts_headline` containing only `<mark>`
+
+            tags around matched terms. **Sanitize before rendering as HTML**:
+
+            escape all other HTML, then re-allow `<mark>` tags only.'
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        created_by_name:
+          description: Display name of the note's author at the time the note was written.
+          type: string
+        entity_id:
+          description: Host entity ID the note was attached to.
+          type: string
+        entity_type:
+          description: Host entity type the note was attached to.
+          type: string
+        note_id:
+          description: ID of the matched note.
+          type: string
+        score:
+          description: Postgres `ts_rank` relevance score (higher is more relevant).
+          format: float
+          type: number
       type: object
   securitySchemes:
     ApiKeyAuth:

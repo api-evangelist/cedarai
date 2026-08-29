@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: protobuf/arms/charge.proto ChargeService NetworkStructureService API
+  title: protobuf/arms/network_structure.proto Network Structure Service API
   version: version not set
 servers:
 - description: Production (US)
@@ -49,6 +49,13 @@ paths:
           description: An unexpected error response.
 components:
   schemas:
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
     armsGetHierarchyResponse:
       example:
         hierarchy:
@@ -92,40 +99,6 @@ components:
           $ref: '#/components/schemas/armsCarrierHierarchy'
       title: Get Hierarchy Response
       type: object
-    armsRegion:
-      properties:
-        attributes:
-          properties: {}
-          type: object
-        groupingId:
-          type: string
-        groupingType:
-          type: string
-        legacyGroupingId:
-          format: int64
-          type: string
-        name:
-          type: string
-        sortOrder:
-          format: int32
-          type: integer
-      type: object
-    protobufAny:
-      additionalProperties:
-        type: object
-      properties:
-        '@type':
-          type: string
-      type: object
-    armsCarrierHierarchy:
-      properties:
-        roots:
-          items:
-            $ref: '#/components/schemas/armsCarrierHierarchyNode'
-          type: array
-        scope:
-          type: string
-      type: object
     armsCarrierHierarchyNode:
       properties:
         children:
@@ -157,6 +130,33 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
         message:
+          type: string
+      type: object
+    armsRegion:
+      properties:
+        attributes:
+          properties: {}
+          type: object
+        groupingId:
+          type: string
+        groupingType:
+          type: string
+        legacyGroupingId:
+          format: int64
+          type: string
+        name:
+          type: string
+        sortOrder:
+          format: int32
+          type: integer
+      type: object
+    armsCarrierHierarchy:
+      properties:
+        roots:
+          items:
+            $ref: '#/components/schemas/armsCarrierHierarchyNode'
+          type: array
+        scope:
           type: string
       type: object
   securitySchemes:

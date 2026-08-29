@@ -1,12 +1,12 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: protobuf/arms/charge.proto ChargeService QuotesService API
+  title: protobuf/shipping/v1/quotes.proto Quotes Service API
   version: version not set
 servers:
 - description: Production (US)
-  url: https://api-lg-k-h1.arms.cedarai.com
+  url: https://api-lg-k.arms.cedarai.com
 - description: Production (EU)
-  url: https://api-lg-k-h1.arms.cedarai.se
+  url: https://api-lg-k.arms.cedarai.se
 security:
 - ApiKeyAuth: []
   AssumeUserAuth: []
@@ -110,35 +110,6 @@ paths:
           description: An unexpected error response.
 components:
   schemas:
-    v1ListQuotesResponse:
-      properties:
-        quotes:
-          description: Candidate quotes returned for the request.
-          items:
-            $ref: '#/components/schemas/v1Quote'
-          type: array
-      type: object
-    v1Units:
-      enum:
-      - BOARD_FEET
-      - CARLOAD
-      - CONTAINER
-      - CORD_VOLUME
-      - CUBIC_FEET
-      - GALLONS
-      - INTERMODAL_UNITS
-      - KILOGRAMS
-      - LITER
-      - MILES
-      - ONE_HUNDRED_BOARD_FEET
-      - POUNDS
-      - THOUSAND_BOARD_FEET
-      - TRAILER
-      - TRAIN
-      - UNITS
-      - VEHICLE
-      - VOLUMETRIC_UNIT
-      type: string
     v1QuoteStation:
       properties:
         carrier:
@@ -163,67 +134,43 @@ components:
         state:
           type: string
       type: object
-    v1EquipmentProfile:
+    v1Junction:
       properties:
-        car_type:
-          $ref: '#/components/schemas/v1CarType'
-        measurements:
-          description: 'Dimension filters applied to the profile. At most one entry per
-
-            MeasurementDimension.'
-          items:
-            $ref: '#/components/schemas/v1MeasurementFilter'
-          type: array
-        name:
-          description: Optional friendly label such as "60BC". Carrier-specific abbreviations.
+        junction_code:
+          description: Industry junction code used when identifying a location by interchange.
           type: string
-        special_car_type:
-          $ref: '#/components/schemas/v1QuoteSpecialCarType'
       type: object
-    v1Range:
-      description: Inclusive integer range. Units are determined by the consuming field.
+    v1Units:
+      enum:
+      - BOARD_FEET
+      - CARLOAD
+      - CONTAINER
+      - CORD_VOLUME
+      - CUBIC_FEET
+      - GALLONS
+      - INTERMODAL_UNITS
+      - KILOGRAMS
+      - LITER
+      - MILES
+      - ONE_HUNDRED_BOARD_FEET
+      - POUNDS
+      - THOUSAND_BOARD_FEET
+      - TRAILER
+      - TRAIN
+      - UNITS
+      - VEHICLE
+      - VOLUMETRIC_UNIT
+      type: string
+    v1MeasurementFilter:
+      description: 'A single dimension constraint on an EquipmentProfile.
+
+        A profile may carry at most one filter per dimension.'
       properties:
-        from:
-          format: int32
-          type: integer
-        to:
-          format: int32
-          type: integer
+        dimension:
+          $ref: '#/components/schemas/v1MeasurementDimension'
+        range:
+          $ref: '#/components/schemas/v1Range'
       type: object
-    v1EquipmentOwnershipStatus:
-      description: "Equipment ownership status categories used in EQOS shipment conditions.\n\n - HIGHWAY_CARRIER: H - Highway carrier\n - SHIPPER_OWNED_OR_LEASED: S - Shipper owned or leased\n - STEAMSHIP_LINES: O - Steamship lines\n - RAILROAD_OWNED_OR_LEASED: R - Railroad owned or leased"
-      enum:
-      - HIGHWAY_CARRIER
-      - SHIPPER_OWNED_OR_LEASED
-      - STEAMSHIP_LINES
-      - RAILROAD_OWNED_OR_LEASED
-      type: string
-    v1CarType:
-      enum:
-      - ALL_CAR_TYPES
-      - BI_LEVEL
-      - BOX_CAR
-      - BULKHEAD
-      - CLOSED
-      - CLOSED_BI_LEVEL
-      - CLOSED_TRI_LEVEL
-      - COIL
-      - COVERED_COIL
-      - COVERED_GONDOLA
-      - CUSHIONED_BOX_CAR
-      - FLAT_PEDESTAL
-      - GONDOLA
-      - GRAVITY_FLOW
-      - INSULATED_BOX_CAR
-      - MECHANICAL_REFRIGERATOR
-      - OPEN
-      - OPEN_COIL_CARS
-      - OPEN_GONDOLA
-      - OPEN_HOPPER
-      - PLUG_DOORS
-      - TRI_LEVEL
-      - TRIPLE_CROSS_HOPPER
-      type: string
     v1Contents:
       properties:
         quantity:
@@ -234,19 +181,157 @@ components:
             type: string
           type: array
       type: object
-    v1ChargeType:
-      enum:
-      - FREIGHT
-      - MILEAGE
-      - ACCESSORIAL
-      title: "- MILEAGE: any fuel, even if it's not mileage based\n - ACCESSORIAL: all non-fuel misc charges"
-      type: string
+    v1Geography:
+      properties:
+        carrier_fsac:
+          $ref: '#/components/schemas/v1CarrierFsac'
+        city_state:
+          $ref: '#/components/schemas/v1CityState'
+        junction:
+          $ref: '#/components/schemas/v1Junction'
+        splc:
+          $ref: '#/components/schemas/v1Splc'
+      type: object
+    v1CarTypeCondition:
+      properties:
+        car_type:
+          $ref: '#/components/schemas/v1CarType'
+        sign:
+          $ref: '#/components/schemas/v1ConditionSign'
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1RouteEntry:
+      properties:
+        carrier:
+          description: Reporting marks / railroad code (for example, BNSF, UP, CSXT).
+          type: string
+        outbound_junction:
+          description: Outbound junction for each leg except the final leg.
+          type: string
+        sequence_code:
+          title: 'Route sequence code aligned with X12 R202.
+
+            Supported values:
+
+            - "1": CARRIER_AFTER_ORIGIN_1
+
+            - "2": CARRIER_AFTER_ORIGIN_2
+
+            - "3": CARRIER_AFTER_ORIGIN_3
+
+            - "4": CARRIER_AFTER_ORIGIN_4
+
+            - "5": CARRIER_AFTER_ORIGIN_5
+
+            - "6": CARRIER_AFTER_ORIGIN_6
+
+            - "7": CARRIER_AFTER_ORIGIN_7
+
+            - "8": CARRIER_AFTER_ORIGIN_8
+
+            - "9": CARRIER_AFTER_ORIGIN_9
+
+            - "A": ORIGIN_CARRIER_AGENTS_ROUTING
+
+            - "D": DELIVERY_SWITCH_CARRIER
+
+            - "H": HAULAGE_RIGHTS_CARRIER_JUNCTION
+
+            - "I": ORIGIN_SWITCH_CARRIER
+
+            - "JD": JUNCTION_SETTLEMENT_CARRIER_FOLLOWING
+
+            - "JI": JUNCTION_SETTLEMENT_CARRIER_INTERMEDIATE
+
+            - "JO": JUNCTION_SETTLEMENT_CARRIER_PREDECESSOR
+
+            - "M": HAULAGE_MOVEMENT_CARRIER_AND_JUNCTION
+
+            - "O": ORIGIN_CARRIER_AIR_MOTOR_OCEAN
+
+            - "R": ORIGIN_CARRIER_RULE_11
+
+            - "S": ORIGIN_CARRIER_SHIPPERS_ROUTING
+
+            - "V": INTERMEDIATE_SWITCH_CARRIER'
+          type: string
+      type: object
+    v1Route:
+      properties:
+        entries:
+          description: Structured route entries in movement order.
+          items:
+            $ref: '#/components/schemas/v1RouteEntry'
+          type: array
+        val:
+          description: 'Canonical route string representation (for example: "AA-DIANN-GTW-CHGO-BNSF").'
+          type: string
+      type: object
+    v1GeographySet:
+      properties:
+        name:
+          type: string
+        values:
+          items:
+            type: string
+          title: city, st
+          type: array
+      type: object
+    v1ListQuotesResponse:
+      properties:
+        quotes:
+          description: Candidate quotes returned for the request.
+          items:
+            $ref: '#/components/schemas/v1Quote'
+          type: array
+      type: object
     protobufAny:
       additionalProperties:
         type: object
       properties:
         '@type':
           type: string
+      type: object
+    v1EquipmentProfileSet:
+      properties:
+        name:
+          type: string
+        profiles:
+          items:
+            $ref: '#/components/schemas/v1EquipmentProfile'
+          type: array
+      type: object
+    v1Charge:
+      properties:
+        amount:
+          $ref: '#/components/schemas/v1Money'
+        method_of_payment:
+          $ref: '#/components/schemas/v1ShipmentMethodOfPayment'
+        per_car_amount:
+          $ref: '#/components/schemas/v1Money'
+        rate:
+          $ref: '#/components/schemas/v1Rate'
+        rated_quantity:
+          $ref: '#/components/schemas/v1Quantity'
+        special_charge_description:
+          description: Raw X12/Rail 426 special charge description/L112 when present.
+          type: string
+        special_charge_or_allowance_code:
+          description: Raw X12/Rail 426 special charge or allowance code (for example, ENS, HAZ, SUR).
+          type: string
+        type:
+          $ref: '#/components/schemas/v1ChargeType'
       type: object
     v1Pndr:
       properties:
@@ -315,6 +400,52 @@ components:
         qualifier:
           $ref: '#/components/schemas/v1RateQualifier'
       type: object
+    v1Splc:
+      properties:
+        splc:
+          description: SPLC identifier for the location.
+          type: string
+      type: object
+    v1CarType:
+      enum:
+      - ALL_CAR_TYPES
+      - BI_LEVEL
+      - BOX_CAR
+      - BULKHEAD
+      - CLOSED
+      - CLOSED_BI_LEVEL
+      - CLOSED_TRI_LEVEL
+      - COIL
+      - COVERED_COIL
+      - COVERED_GONDOLA
+      - CUSHIONED_BOX_CAR
+      - FLAT_PEDESTAL
+      - GONDOLA
+      - GRAVITY_FLOW
+      - INSULATED_BOX_CAR
+      - MECHANICAL_REFRIGERATOR
+      - OPEN
+      - OPEN_COIL_CARS
+      - OPEN_GONDOLA
+      - OPEN_HOPPER
+      - PLUG_DOORS
+      - TRI_LEVEL
+      - TRIPLE_CROSS_HOPPER
+      type: string
+    v1Quantity:
+      properties:
+        amount:
+          $ref: '#/components/schemas/typeDecimal'
+        units:
+          $ref: '#/components/schemas/v1Units'
+      type: object
+    v1QuoteDistance:
+      properties:
+        source:
+          $ref: '#/components/schemas/v1QuoteDistanceSource'
+        value:
+          $ref: '#/components/schemas/typeDecimal'
+      type: object
     v1Quote:
       properties:
         created_at:
@@ -356,28 +487,6 @@ components:
         total:
           $ref: '#/components/schemas/v1Money'
       type: object
-    v1Publication:
-      properties:
-        effective_date:
-          description: Effective date of this rate in ISO8601 format (YYYY-MM-DD).
-          type: string
-        expiration_date:
-          description: 'Expiration date of this rate in ISO8601 format (YYYY-MM-DD).
-
-            Omitted when there is no end date.'
-          type: string
-        issuer:
-          description: Issuing carrier or publishing authority.
-          type: string
-        number:
-          description: Publication identifier/number.
-          type: string
-        suffix:
-          description: Optional publication suffix.
-          type: string
-        type:
-          $ref: '#/components/schemas/v1PublicationType'
-      type: object
     v1MeasurementDimension:
       description: "Equipment measurement dimensions used to filter quote searches.\nUnits are baked into each value so a single Range can describe any dimension.\n\n - CUBIC_FEET_CAPACITY: Cubic-feet capacity, evaluated against EQCM \"PF\" conditions.\n - GALLONS_CAPACITY: Gallon capacity, evaluated against EQCM \"PG\" conditions.\n - LOAD_LIMIT_POUNDS: Load limit in pounds, evaluated against EQCM \"LB\" conditions.\n - NET_WEIGHT_POUNDS: Net weight in pounds, evaluated against EQCW (equipment gross weight) conditions."
       enum:
@@ -389,154 +498,11 @@ components:
       - LOAD_LIMIT_POUNDS
       - NET_WEIGHT_POUNDS
       type: string
-    v1ConditionSign:
+    v1QuoteSpecialCarType:
       enum:
-      - PLUS
-      - MINUS
+      - FLAT
+      - CENTER_BEAM
       type: string
-    v1PublicationType:
-      enum:
-      - CONTRACT
-      - TARIFF
-      - QUOTE
-      type: string
-    v1RateQualifier:
-      enum:
-      - PER_BOARD_FOOT
-      - PER_100_BOARD_FOOT
-      - PER_1000_BOARD_FOOT
-      - PER_GROSS_TON
-      - PER_KILOGRAM
-      - PER_KILOLITER
-      - PER_KILOMETER
-      - PER_POUND
-      - PER_LITER
-      - PER_METRIC_TON
-      - PER_CONTAINER
-      - PER_CAR
-      - PER_CUBIC_FOOT
-      - PER_GALLON
-      - PER_HUNDRED_POUNDS
-      - PER_INTERMODAL_UNIT
-      - PER_CORD
-      - PER_MILE
-      - PER_NET_TON
-      - PER_UNIT
-      - PER_VEHICLE
-      - PERCENTAGE_OF_CHARGES
-      - PER_TRAIN_RATE
-      - PER_TRAILER
-      type: string
-    v1CarrierFsac:
-      properties:
-        carrier:
-          description: Reporting marks / railroad code (for example, BNSF, UP, CSXT).
-          type: string
-        fsac:
-          description: FSAC (Freight Station Accounting Code) for the location on the carrier.
-          type: string
-      type: object
-    v1Geography:
-      properties:
-        carrier_fsac:
-          $ref: '#/components/schemas/v1CarrierFsac'
-        city_state:
-          $ref: '#/components/schemas/v1CityState'
-        junction:
-          $ref: '#/components/schemas/v1Junction'
-        splc:
-          $ref: '#/components/schemas/v1Splc'
-      type: object
-    typeDecimal:
-      properties:
-        value:
-          type: string
-      type: object
-    v1CarTypeCondition:
-      properties:
-        car_type:
-          $ref: '#/components/schemas/v1CarType'
-        sign:
-          $ref: '#/components/schemas/v1ConditionSign'
-      type: object
-    v1Quantity:
-      properties:
-        amount:
-          $ref: '#/components/schemas/typeDecimal'
-        units:
-          $ref: '#/components/schemas/v1Units'
-      type: object
-    v1Route:
-      properties:
-        entries:
-          description: Structured route entries in movement order.
-          items:
-            $ref: '#/components/schemas/v1RouteEntry'
-          type: array
-        val:
-          description: 'Canonical route string representation (for example: "AA-DIANN-GTW-CHGO-BNSF").'
-          type: string
-      type: object
-    v1ShipmentMethodOfPayment:
-      enum:
-      - PREPAID
-      - COLLECT
-      - RULE_11
-      type: string
-    v1Charge:
-      properties:
-        amount:
-          $ref: '#/components/schemas/v1Money'
-        method_of_payment:
-          $ref: '#/components/schemas/v1ShipmentMethodOfPayment'
-        per_car_amount:
-          $ref: '#/components/schemas/v1Money'
-        rate:
-          $ref: '#/components/schemas/v1Rate'
-        rated_quantity:
-          $ref: '#/components/schemas/v1Quantity'
-        special_charge_description:
-          description: Raw X12/Rail 426 special charge description/L112 when present.
-          type: string
-        special_charge_or_allowance_code:
-          description: Raw X12/Rail 426 special charge or allowance code (for example, ENS, HAZ, SUR).
-          type: string
-        type:
-          $ref: '#/components/schemas/v1ChargeType'
-      type: object
-    v1QuoteDistanceSource:
-      enum:
-      - PC_MILER
-      - ESTIMATED
-      type: string
-    v1QuoteLeg:
-      properties:
-        billing_carrier:
-          description: Billing carrier for this leg.
-          type: string
-        charges:
-          description: Itemized charges for this leg.
-          items:
-            $ref: '#/components/schemas/v1Charge'
-          type: array
-        destination:
-          $ref: '#/components/schemas/v1QuoteStation'
-        distance:
-          $ref: '#/components/schemas/v1QuoteDistance'
-        origin:
-          $ref: '#/components/schemas/v1QuoteStation'
-        route:
-          $ref: '#/components/schemas/v1Route'
-        total:
-          $ref: '#/components/schemas/v1Money'
-      type: object
-    v1QuoteDistance:
-      properties:
-        source:
-          $ref: '#/components/schemas/v1QuoteDistanceSource'
-        value:
-          $ref: '#/components/schemas/typeDecimal'
-      type: object
     v1CityState:
       properties:
         city:
@@ -546,138 +512,10 @@ components:
           description: State or province code (for example, TX, ON).
           type: string
       type: object
-    v1Money:
-      properties:
-        cents:
-          format: int32
-          type: integer
-        currency:
-          type: string
-        dollars:
-          format: int64
-          type: string
-      type: object
-    v1SavedFacility:
-      description: 'A carrier''s saved facility (identified by CIF, e.g. one of their mills): the
-
-        commodities and saved equipment profiles that facility ships/receives. When
-
-        the facility is selected as a quote origin/destination, the form narrows the
-
-        commodity and equipment choices to what it handles. A facility with no
-
-        declarations imposes no restriction.'
-      properties:
-        cif:
-          description: '9-digit CIF, optionally followed by a 4-digit sub-location suffix (13 digits
-
-            total), same convention as favorite_origin_cif_sets values.'
-          type: string
-        city_state:
-          $ref: '#/components/schemas/v1CityState'
-        equipment_profile_names:
-          description: 'Names of the carrier''s saved equipment profiles this facility uses, e.g.
-
-            "60HCBC" (matching EquipmentProfile.name in favorite_equipment_profile_sets).'
-          items:
-            type: string
-          type: array
-        name:
-          description: 'Optional carrier-chosen label for the facility, e.g. "Walla Walla, WA".
-
-            Display-only; does not affect how the facility is matched on the quote form.'
-          type: string
-        stccs:
-          description: Commodities this facility ships/receives (STCC codes or prefixes).
-          items:
-            type: string
-          type: array
-      type: object
-    v1RouteEntry:
-      properties:
-        carrier:
-          description: Reporting marks / railroad code (for example, BNSF, UP, CSXT).
-          type: string
-        outbound_junction:
-          description: Outbound junction for each leg except the final leg.
-          type: string
-        sequence_code:
-          title: 'Route sequence code aligned with X12 R202.
-
-            Supported values:
-
-            - "1": CARRIER_AFTER_ORIGIN_1
-
-            - "2": CARRIER_AFTER_ORIGIN_2
-
-            - "3": CARRIER_AFTER_ORIGIN_3
-
-            - "4": CARRIER_AFTER_ORIGIN_4
-
-            - "5": CARRIER_AFTER_ORIGIN_5
-
-            - "6": CARRIER_AFTER_ORIGIN_6
-
-            - "7": CARRIER_AFTER_ORIGIN_7
-
-            - "8": CARRIER_AFTER_ORIGIN_8
-
-            - "9": CARRIER_AFTER_ORIGIN_9
-
-            - "A": ORIGIN_CARRIER_AGENTS_ROUTING
-
-            - "D": DELIVERY_SWITCH_CARRIER
-
-            - "H": HAULAGE_RIGHTS_CARRIER_JUNCTION
-
-            - "I": ORIGIN_SWITCH_CARRIER
-
-            - "JD": JUNCTION_SETTLEMENT_CARRIER_FOLLOWING
-
-            - "JI": JUNCTION_SETTLEMENT_CARRIER_INTERMEDIATE
-
-            - "JO": JUNCTION_SETTLEMENT_CARRIER_PREDECESSOR
-
-            - "M": HAULAGE_MOVEMENT_CARRIER_AND_JUNCTION
-
-            - "O": ORIGIN_CARRIER_AIR_MOTOR_OCEAN
-
-            - "R": ORIGIN_CARRIER_RULE_11
-
-            - "S": ORIGIN_CARRIER_SHIPPERS_ROUTING
-
-            - "V": INTERMEDIATE_SWITCH_CARRIER'
-          type: string
-      type: object
-    v1EquipmentProfileSet:
-      properties:
-        name:
-          type: string
-        profiles:
-          items:
-            $ref: '#/components/schemas/v1EquipmentProfile'
-          type: array
-      type: object
-    v1GeographySet:
-      properties:
-        name:
-          type: string
-        values:
-          items:
-            type: string
-          title: city, st
-          type: array
-      type: object
-    v1Splc:
-      properties:
-        splc:
-          description: SPLC identifier for the location.
-          type: string
-      type: object
-    v1QuoteSpecialCarType:
+    v1ConditionSign:
       enum:
-      - FLAT
-      - CENTER_BEAM
+      - PLUS
+      - MINUS
       type: string
     v1QuotePreferences:
       properties:
@@ -743,10 +581,13 @@ components:
             $ref: '#/components/schemas/v1SavedFacility'
           type: array
       type: object
-    v1Junction:
+    v1CarrierFsac:
       properties:
-        junction_code:
-          description: Industry junction code used when identifying a location by interchange.
+        carrier:
+          description: Reporting marks / railroad code (for example, BNSF, UP, CSXT).
+          type: string
+        fsac:
+          description: FSAC (Freight Station Accounting Code) for the location on the carrier.
           type: string
       type: object
     v1ListQuotesRequest:
@@ -876,18 +717,6 @@ components:
             Use YYYY-MM-DD (for example: "2026-03-03").'
           type: string
       type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
     v1CommoditySet:
       properties:
         name:
@@ -898,15 +727,186 @@ components:
           title: stcc
           type: array
       type: object
-    v1MeasurementFilter:
-      description: 'A single dimension constraint on an EquipmentProfile.
-
-        A profile may carry at most one filter per dimension.'
+    v1QuoteLeg:
       properties:
-        dimension:
-          $ref: '#/components/schemas/v1MeasurementDimension'
-        range:
-          $ref: '#/components/schemas/v1Range'
+        billing_carrier:
+          description: Billing carrier for this leg.
+          type: string
+        charges:
+          description: Itemized charges for this leg.
+          items:
+            $ref: '#/components/schemas/v1Charge'
+          type: array
+        destination:
+          $ref: '#/components/schemas/v1QuoteStation'
+        distance:
+          $ref: '#/components/schemas/v1QuoteDistance'
+        origin:
+          $ref: '#/components/schemas/v1QuoteStation'
+        route:
+          $ref: '#/components/schemas/v1Route'
+        total:
+          $ref: '#/components/schemas/v1Money'
+      type: object
+    v1Publication:
+      properties:
+        effective_date:
+          description: Effective date of this rate in ISO8601 format (YYYY-MM-DD).
+          type: string
+        expiration_date:
+          description: 'Expiration date of this rate in ISO8601 format (YYYY-MM-DD).
+
+            Omitted when there is no end date.'
+          type: string
+        issuer:
+          description: Issuing carrier or publishing authority.
+          type: string
+        number:
+          description: Publication identifier/number.
+          type: string
+        suffix:
+          description: Optional publication suffix.
+          type: string
+        type:
+          $ref: '#/components/schemas/v1PublicationType'
+      type: object
+    typeDecimal:
+      properties:
+        value:
+          type: string
+      type: object
+    v1QuoteDistanceSource:
+      enum:
+      - PC_MILER
+      - ESTIMATED
+      type: string
+    v1PublicationType:
+      enum:
+      - CONTRACT
+      - TARIFF
+      - QUOTE
+      type: string
+    v1RateQualifier:
+      enum:
+      - PER_BOARD_FOOT
+      - PER_100_BOARD_FOOT
+      - PER_1000_BOARD_FOOT
+      - PER_GROSS_TON
+      - PER_KILOGRAM
+      - PER_KILOLITER
+      - PER_KILOMETER
+      - PER_POUND
+      - PER_LITER
+      - PER_METRIC_TON
+      - PER_CONTAINER
+      - PER_CAR
+      - PER_CUBIC_FOOT
+      - PER_GALLON
+      - PER_HUNDRED_POUNDS
+      - PER_INTERMODAL_UNIT
+      - PER_CORD
+      - PER_MILE
+      - PER_NET_TON
+      - PER_UNIT
+      - PER_VEHICLE
+      - PERCENTAGE_OF_CHARGES
+      - PER_TRAIN_RATE
+      - PER_TRAILER
+      type: string
+    v1ShipmentMethodOfPayment:
+      enum:
+      - PREPAID
+      - COLLECT
+      - RULE_11
+      type: string
+    v1SavedFacility:
+      description: 'A carrier''s saved facility (identified by CIF, e.g. one of their mills): the
+
+        commodities and saved equipment profiles that facility ships/receives. When
+
+        the facility is selected as a quote origin/destination, the form narrows the
+
+        commodity and equipment choices to what it handles. A facility with no
+
+        declarations imposes no restriction.'
+      properties:
+        cif:
+          description: '9-digit CIF, optionally followed by a 4-digit sub-location suffix (13 digits
+
+            total), same convention as favorite_origin_cif_sets values.'
+          type: string
+        city_state:
+          $ref: '#/components/schemas/v1CityState'
+        equipment_profile_names:
+          description: 'Names of the carrier''s saved equipment profiles this facility uses, e.g.
+
+            "60HCBC" (matching EquipmentProfile.name in favorite_equipment_profile_sets).'
+          items:
+            type: string
+          type: array
+        name:
+          description: 'Optional carrier-chosen label for the facility, e.g. "Walla Walla, WA".
+
+            Display-only; does not affect how the facility is matched on the quote form.'
+          type: string
+        stccs:
+          description: Commodities this facility ships/receives (STCC codes or prefixes).
+          items:
+            type: string
+          type: array
+      type: object
+    v1EquipmentOwnershipStatus:
+      description: "Equipment ownership status categories used in EQOS shipment conditions.\n\n - HIGHWAY_CARRIER: H - Highway carrier\n - SHIPPER_OWNED_OR_LEASED: S - Shipper owned or leased\n - STEAMSHIP_LINES: O - Steamship lines\n - RAILROAD_OWNED_OR_LEASED: R - Railroad owned or leased"
+      enum:
+      - HIGHWAY_CARRIER
+      - SHIPPER_OWNED_OR_LEASED
+      - STEAMSHIP_LINES
+      - RAILROAD_OWNED_OR_LEASED
+      type: string
+    v1ChargeType:
+      enum:
+      - FREIGHT
+      - MILEAGE
+      - ACCESSORIAL
+      title: "- MILEAGE: any fuel, even if it's not mileage based\n - ACCESSORIAL: all non-fuel misc charges"
+      type: string
+    v1EquipmentProfile:
+      properties:
+        car_type:
+          $ref: '#/components/schemas/v1CarType'
+        measurements:
+          description: 'Dimension filters applied to the profile. At most one entry per
+
+            MeasurementDimension.'
+          items:
+            $ref: '#/components/schemas/v1MeasurementFilter'
+          type: array
+        name:
+          description: Optional friendly label such as "60BC". Carrier-specific abbreviations.
+          type: string
+        special_car_type:
+          $ref: '#/components/schemas/v1QuoteSpecialCarType'
+      type: object
+    v1Range:
+      description: Inclusive integer range. Units are determined by the consuming field.
+      properties:
+        from:
+          format: int32
+          type: integer
+        to:
+          format: int32
+          type: integer
+      type: object
+    v1Money:
+      properties:
+        cents:
+          format: int32
+          type: integer
+        currency:
+          type: string
+        dollars:
+          format: int64
+          type: string
       type: object
   securitySchemes:
     ApiKeyAuth:
