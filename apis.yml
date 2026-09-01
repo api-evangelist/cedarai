@@ -82,7 +82,7 @@ apis:
   humanURL: https://docs.cedarai.com/user-docs/api-reference/introduction
   baseURL: https://api-lg.arms.cedarai.com
   tags:
-  - Ims
+  - IMS
   tags_raw:
   - Ims
   properties:
