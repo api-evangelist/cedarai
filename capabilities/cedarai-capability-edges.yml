@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 2
+edge_count: 4
 edges:
 - tag: InvoicesService
   spec_file: cedarai-invoicesservice-api-openapi.yml
@@ -24,6 +24,29 @@ edges:
   reason: Shipper-side handling of carrier freight invoices with explicit audit statuses, AP document
     types and voucher attachment — freight audit and payment of carrier invoices rather than customer
     invoicing.
+- tag: Ims
+  spec_file: cedarai-ims-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.7
+  evidence: '"Create bill of lading", "Update railcar inventory (move equipment)", "Classify a class list",
+    "List class list tasks"'
+  reason: 'Operations execute rail freight transport work: bills of lading, equipment moves, station tracks
+    and switching class lists. This is transport/logistics execution within the supply chain, not a vehicle-lifecycle
+    or mobility-services capability.'
+  recovered_from: vertical-automotive-mobility-edges.json
+- tag: TruckLoadTenderService
+  spec_file: cedarai-truckloadtenderservice-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.7
+  evidence: '"Create Truck Load Tender", "Update Truck Load Tender", "List Truck Load Tenders" with schemas
+    TruckLoadTenderShipmentMethodOfPayment, armsEquipmentOrdered, armsBillingInformation'
+  reason: Load tendering is the core act of offering shipments to truck carriers for execution — transport
+    operations within logistics, not a vehicle-programme or mobility-service capability.
+  recovered_from: vertical-automotive-mobility-edges.json
 - tag: WorkOrderService
   spec_file: cedarai-workorderservice-api-openapi.yml
   capability_id: BC-2420
