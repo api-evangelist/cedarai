@@ -53,7 +53,8 @@
     "cedarai-load-tender-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
     "cedarai-network-structure-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
     "cedarai-quotes-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "cedarai-work-order-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0"
+    "cedarai-work-order-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "cedarai-chargeservice-api-openapi.yml: previously refined output, superseded by openapi/_original/",

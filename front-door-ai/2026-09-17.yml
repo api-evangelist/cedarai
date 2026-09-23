@@ -1,0 +1,27 @@
+# Front Door AI Index — cedarai — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: cedarai
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: cedarai.com
+  final_host: www.cedarai.com
+  ownership: own
+  owner: cedarai
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 8
+  host_score: 8
+  density: 11.68
+  words: 685
+  tiers:
+    agentic: 0
+    core: 8
+    model: 0
+  ambiguous: 3
+  top_terms:
+    AI: 8
+    automation: 2
+    intelligence: 1

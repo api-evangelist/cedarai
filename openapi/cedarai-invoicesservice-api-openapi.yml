@@ -158,21 +158,12 @@ components:
         type:
           type: string
       type: object
-    InvoicePostAuditDispatchStatus:
-      description: " - PENDING_SEND: Queued and not yet sent (immediate, or waiting for a scheduled batch).\n - SENT: Everything sent; nothing left to dispatch.\n - ERROR: At least one action failed (terminally or pending retry)."
-      enum:
-      - PENDING_SEND
-      - SENT
-      - ERROR
-      type: string
-    v1InvoiceDocument:
+    v1EdiInvoice:
       properties:
-        created_at:
+        invoice_x12:
           type: string
-        edi_invoice:
-          $ref: '#/components/schemas/v1EdiInvoice'
-        parsed_invoice:
-          $ref: '#/components/schemas/v1ParsedInvoice'
+        send_date:
+          type: string
       type: object
     rpcStatus:
       properties:
@@ -186,17 +177,12 @@ components:
         message:
           type: string
       type: object
-    cedaraiDate:
+    protobufAny:
+      additionalProperties:
+        type: object
       properties:
-        day:
-          format: int32
-          type: integer
-        month:
-          format: int32
-          type: integer
-        year:
-          format: int32
-          type: integer
+        '@type':
+          type: string
       type: object
     v1ListInvoicesResponse:
       properties:
@@ -211,45 +197,26 @@ components:
           title: Use the previous_token as the page_previous_token parameter on a ListInvoicesRequest to get the previous page of results
           type: string
       type: object
-    protobufAny:
-      additionalProperties:
-        type: object
+    v1Station:
       properties:
-        '@type':
+        city:
+          type: string
+        state:
           type: string
       type: object
-    v1AttachVoucherResponse:
-      type: object
-    v1GetInvoiceResponse:
+    v1InvoiceParty:
       properties:
-        invoice:
-          $ref: '#/components/schemas/v1Invoice'
-      type: object
-    InvoiceAuditStatus:
-      enum:
-      - PENDING_APPROVAL
-      - APPROVED
-      - REJECTED
-      type: string
-    shippingv1Money:
-      properties:
-        cents:
-          format: int32
-          type: integer
-        currency:
-          type: string
-        dollars:
-          format: int64
-          type: string
-      type: object
-    v1EquipmentId:
-      properties:
-        initial:
+        name:
           type: string
         number:
-          format: int64
           type: string
+      title: the string on the invoice identifying the party
       type: object
+    v1ApDocumentType:
+      enum:
+      - PDF_INVOICE
+      - EXCEL_INVOICE
+      type: string
     v1ParsedInvoice:
       properties:
         bill_of_lading_id:
@@ -303,16 +270,12 @@ components:
         waybill_id:
           $ref: '#/components/schemas/v1WaybillId'
       type: object
-    v1ApDocumentType:
-      enum:
-      - PDF_INVOICE
-      - EXCEL_INVOICE
-      type: string
-    v1Station:
+    v1EquipmentId:
       properties:
-        city:
+        initial:
           type: string
-        state:
+        number:
+          format: int64
           type: string
       type: object
     InvoicesServiceAttachVoucherBody:
@@ -320,21 +283,6 @@ components:
         voucher_id:
           title: a voucher id in a system external to Cedar
           type: string
-      type: object
-    v1EdiInvoice:
-      properties:
-        invoice_x12:
-          type: string
-        send_date:
-          type: string
-      type: object
-    v1WaybillId:
-      properties:
-        date:
-          type: string
-        number:
-          format: int32
-          type: integer
       type: object
     v1Invoice:
       properties:
@@ -436,20 +384,72 @@ components:
         state_or_province:
           type: string
       type: object
-    v1InvoiceParty:
+    v1GetInvoiceResponse:
       properties:
-        name:
+        invoice:
+          $ref: '#/components/schemas/v1Invoice'
+      type: object
+    InvoicePostAuditDispatchStatus:
+      description: " - PENDING_SEND: Queued and not yet sent (immediate, or waiting for a scheduled batch).\n - SENT: Everything sent; nothing left to dispatch.\n - ERROR: At least one action failed (terminally or pending retry)."
+      enum:
+      - PENDING_SEND
+      - SENT
+      - ERROR
+      type: string
+    v1WaybillId:
+      properties:
+        date:
           type: string
         number:
-          type: string
-      title: the string on the invoice identifying the party
+          format: int32
+          type: integer
       type: object
+    InvoiceAuditStatus:
+      enum:
+      - PENDING_APPROVAL
+      - APPROVED
+      - REJECTED
+      type: string
     v1ExtendedReferenceValue:
       properties:
         qualifier:
           type: string
         value:
           type: string
+      type: object
+    v1AttachVoucherResponse:
+      type: object
+    shippingv1Money:
+      properties:
+        cents:
+          format: int32
+          type: integer
+        currency:
+          type: string
+        dollars:
+          format: int64
+          type: string
+      type: object
+    cedaraiDate:
+      properties:
+        day:
+          format: int32
+          type: integer
+        month:
+          format: int32
+          type: integer
+        year:
+          format: int32
+          type: integer
+      type: object
+    v1InvoiceDocument:
+      properties:
+        created_at:
+          type: string
+        edi_invoice:
+          $ref: '#/components/schemas/v1EdiInvoice'
+        parsed_invoice:
+          $ref: '#/components/schemas/v1ParsedInvoice'
       type: object
   securitySchemes:
     ApiKeyAuth:
