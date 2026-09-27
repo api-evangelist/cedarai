@@ -49,73 +49,6 @@ paths:
           description: An unexpected error response.
 components:
   schemas:
-    armsRegion:
-      properties:
-        attributes:
-          properties: {}
-          type: object
-        groupingId:
-          type: string
-        groupingType:
-          type: string
-        legacyGroupingId:
-          format: int64
-          type: string
-        name:
-          type: string
-        sortOrder:
-          format: int32
-          type: integer
-      type: object
-    armsCarrierHierarchy:
-      properties:
-        roots:
-          items:
-            $ref: '#/components/schemas/armsCarrierHierarchyNode'
-          type: array
-        scope:
-          type: string
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    armsGetHierarchyRequest:
-      description: Request message for retrieving the carrier network hierarchy.
-      example:
-        scope: main
-        sort_by_association: true
-      properties:
-        scope:
-          type: string
-        sortByAssociation:
-          type: boolean
-      title: Get Hierarchy Request
-      type: object
-    armsCarrierHierarchyNode:
-      properties:
-        children:
-          items:
-            $ref: '#/components/schemas/armsCarrierHierarchyNode'
-          type: array
-        region:
-          $ref: '#/components/schemas/armsRegion'
-      type: object
-    protobufAny:
-      additionalProperties:
-        type: object
-      properties:
-        '@type':
-          type: string
-      type: object
     armsGetHierarchyResponse:
       example:
         hierarchy:
@@ -158,6 +91,73 @@ components:
         hierarchy:
           $ref: '#/components/schemas/armsCarrierHierarchy'
       title: Get Hierarchy Response
+      type: object
+    armsRegion:
+      properties:
+        attributes:
+          properties: {}
+          type: object
+        groupingId:
+          type: string
+        groupingType:
+          type: string
+        legacyGroupingId:
+          format: int64
+          type: string
+        name:
+          type: string
+        sortOrder:
+          format: int32
+          type: integer
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    armsCarrierHierarchyNode:
+      properties:
+        children:
+          items:
+            $ref: '#/components/schemas/armsCarrierHierarchyNode'
+          type: array
+        region:
+          $ref: '#/components/schemas/armsRegion'
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    armsCarrierHierarchy:
+      properties:
+        roots:
+          items:
+            $ref: '#/components/schemas/armsCarrierHierarchyNode'
+          type: array
+        scope:
+          type: string
+      type: object
+    armsGetHierarchyRequest:
+      description: Request message for retrieving the carrier network hierarchy.
+      example:
+        scope: main
+        sort_by_association: true
+      properties:
+        scope:
+          type: string
+        sortByAssociation:
+          type: boolean
+      title: Get Hierarchy Request
       type: object
   securitySchemes:
     ApiKeyAuth:
