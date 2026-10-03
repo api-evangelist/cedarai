@@ -352,580 +352,92 @@ paths:
           description: An unexpected error response.
 components:
   schemas:
-    cedaraiarmsEquipment:
-      properties:
-        arrivalState:
-          $ref: '#/components/schemas/armsArrivalState'
-        equipmentId:
-          format: int64
-          type: integer
-        equipmentInitial:
-          type: string
-        equipmentNumber:
-          format: uint64
-          type: string
-        equipmentUuid:
-          type: string
-        groupings:
-          items:
-            $ref: '#/components/schemas/armsGrouping'
-          type: array
-        loadStatus:
-          type: string
-        location:
-          $ref: '#/components/schemas/armsInventoryLocation'
-        parentGroupings:
-          items:
-            $ref: '#/components/schemas/armsEquipmentParentGrouping'
-          type: array
-        umler:
-          $ref: '#/components/schemas/armsUmler'
-        verificationKey:
-          type: string
-        verificationKeys:
-          items:
-            $ref: '#/components/schemas/armsVerificationKey'
-          type: array
-        waybill:
-          $ref: '#/components/schemas/armsWaybill'
-      type: object
-    UpdateWorkOrderRequestTaskUpdateLocationMask:
+    armsArriveTrainRequest:
+      description: Request message for recording a train arrival at a specific track. Used when a train arrives at a station or location to begin operations.
+      example:
+        exception: Delayed arrival due to weather
+        is_front: true
+        serving_location_id: 11111
+        timestamp: '2024-01-15T10:30:00Z'
+        track_id: 67890
+        work_order_id: '12345'
       properties:
         customerLocationId:
           format: int64
           type: string
+        exception:
+          type: string
+        isFront:
+          type: boolean
         servingLocationId:
           format: int64
           type: string
-        taskType:
-          $ref: '#/components/schemas/armsWorkOrderTaskType'
-      type: object
-    armsUser:
-      properties:
-        displayName:
-          type: string
-        email:
-          type: string
-        userId:
-          format: int64
-          type: integer
-        userUuid:
-          type: string
-      type: object
-    armsWaybill:
-      properties:
-        armsTrackingId:
-          type: string
-        billOfLadingNumber:
-          type: string
-        capacityLoadCode:
-          $ref: '#/components/schemas/armsCapacityLoadCode'
-        crossReferenceEquipment:
-          items:
-            $ref: '#/components/schemas/armsCrossReferenceEquipment'
-          type: array
-        defaultReceiver:
-          type: string
-        destinationJunction:
-          $ref: '#/components/schemas/armsWaybillStation'
-        destinationStation:
-          $ref: '#/components/schemas/armsWaybillStation'
-        equipmentDetails:
-          items:
-            $ref: '#/components/schemas/armsEquipmentDetails'
-          type: array
-        extendedReferenceInfo:
-          items:
-            $ref: '#/components/schemas/armsExtendedReferenceInformation'
-          type: array
-        lineItems:
-          items:
-            $ref: '#/components/schemas/armsLineItem'
-          type: array
-        originCarrierCode:
-          type: string
-        originJunction:
-          $ref: '#/components/schemas/armsWaybillStation'
-        originStation:
-          $ref: '#/components/schemas/armsWaybillStation'
-        originSystem:
-          $ref: '#/components/schemas/armsWaybillOriginSystem'
-        parties:
-          items:
-            $ref: '#/components/schemas/cedaraiarmsParty'
-          type: array
-        revisionNumber:
-          format: int64
-          type: integer
-        revisionSourceType:
-          $ref: '#/components/schemas/armsWaybillRevisionSourceType'
-        revisionTime:
+        timestamp:
           format: date-time
-          type: string
-        route:
-          items:
-            $ref: '#/components/schemas/cedaraiarmsRouteEntry'
-          type: array
-        shipmentId:
-          type: string
-        shipmentPaymentMethod:
-          $ref: '#/components/schemas/armsShipmentPaymentMethod'
-        shipmentQualifier:
-          $ref: '#/components/schemas/armsShipmentQualifier'
-        specialHandlingCodes:
-          items:
-            type: string
-          type: array
-        transportationMethod:
-          $ref: '#/components/schemas/armsTransportationMethod'
-        waybillDate:
-          format: date-time
-          type: string
-        waybillId:
-          format: int64
-          type: integer
-        waybillNumber:
-          format: int64
-          type: integer
-        waybillStatus:
-          $ref: '#/components/schemas/armsWaybillStatus'
-        weightUnitCode:
-          $ref: '#/components/schemas/armsWeightUnitCode'
-      type: object
-    armsGroupingNameFilter:
-      properties:
-        groupingType:
-          type: string
-        leafGroupingType:
-          type: string
-        names:
-          items:
-            type: string
-          type: array
-      type: object
-    armsGroupingIdFilter:
-      properties:
-        groupingIds:
-          items:
-            format: int64
-            type: string
-          type: array
-        groupingType:
-          type: string
-        leafGroupingType:
-          type: string
-      type: object
-    armsWaybillRevisionSourceType:
-      default: WAYBILL_REVISION_SOURCE_TYPE_UNSPECIFIED
-      enum:
-      - WAYBILL_REVISION_SOURCE_TYPE_UNSPECIFIED
-      - WAYBILL
-      - CONSIST
-      - BILL_OF_LADING
-      - ADVANCE_CAR_DISPOSITION
-      - LOAD
-      - EMPTY
-      - REBILL
-      - DERAMP
-      type: string
-    armsTransportationMethod:
-      default: TRANSPORTATION_METHOD_UNSPECIFIED
-      enum:
-      - TRANSPORTATION_METHOD_UNSPECIFIED
-      - TM_RAIL
-      - TM_INTERMODAL
-      type: string
-    armsListTrainReasonCodesRequest:
-      properties:
-        category:
-          type: string
-      type: object
-    armsWorkOrderDirectionFilter:
-      default: WORK_ORDER_DIRECTION_FILTER_UNSPECIFIED
-      enum:
-      - WORK_ORDER_DIRECTION_FILTER_UNSPECIFIED
-      - WORK_ORDER_DIRECTION_FILTER_INBOUND
-      - WORK_ORDER_DIRECTION_FILTER_OUTBOUND
-      type: string
-    armsEquipmentLineItem:
-      properties:
-        cbpBarcodeNumber:
-          type: string
-        commodityCode:
-          type: string
-        commodityCodeQualifier:
-          type: string
-        commodityDescription:
-          type: string
-        currencyCode:
-          type: string
-        customsShipmentValue:
-          format: int32
-          type: integer
-        destinationCountryCode:
-          type: string
-        marksAndNumbers:
-          type: string
-        originCountryCode:
-          type: string
-        quantity:
-          format: double
-          type: number
-        smallestExteriorPackageType:
-          type: string
-        weight:
-          format: float
-          type: number
-        weightUnitCode:
-          type: string
-      type: object
-    armsWorkOrderBlueprint:
-      properties:
-        attributesDefault:
-          properties: {}
-          type: object
-        cancelled:
-          type: boolean
-        destinationCustomerLocationId:
-          format: int64
-          type: string
-        destinationServingLocationId:
-          format: int64
-          type: string
-        enableLocalTrainMode:
-          type: boolean
-        job:
-          $ref: '#/components/schemas/armsRRJob'
-        jobId:
-          type: string
-        name:
-          type: string
-        originCustomerLocationId:
-          format: int64
-          type: string
-        originServingLocationId:
-          format: int64
-          type: string
-        schedule:
-          type: string
-        useTrainFunction:
-          type: boolean
-        workDefinitionIds:
-          items:
-            type: string
-          type: array
-        workDefinitions:
-          items:
-            $ref: '#/components/schemas/armsWorkDefinition'
-          type: array
-        workOrderBlueprintId:
-          type: string
-      type: object
-    armsSetoutCarsRequestItem:
-      properties:
-        equipmentId:
-          description: Reference by equipment ID. Provide either setout_task_id or equipment_id, but not both.
-          format: uint64
-          type: string
-        position:
-          description: The spot on the track to Setout the car to.
-          format: int32
-          type: integer
-        setoutTaskId:
-          description: Reference by setout task ID. Provide either setout_task_id or equipment_id, but not both.
-          type: string
-        taskId:
-          description: Deprecated. Use setout_task_id or equipment_id instead.
           type: string
         trackId:
-          description: The ID of the track to Setout the car to.
-          format: uint64
-          type: string
-      type: object
-    armsInventoryLocation:
-      properties:
-        index:
-          format: int32
-          type: integer
-        track:
-          $ref: '#/components/schemas/armsTrack'
-      type: object
-    cedaraiarmsTimeRange:
-      properties:
-        endTime:
-          format: date-time
-          type: string
-        startTime:
-          format: date-time
-          type: string
-      type: object
-    armsListWorkOrderTasksResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/armsWorkOrderTask'
-          type: array
-      type: object
-    armsSwitchRequestType:
-      default: SWITCH_REQUEST_TYPE_UNSPECIFIED
-      enum:
-      - SWITCH_REQUEST_TYPE_UNSPECIFIED
-      - SPOT
-      - INTRA_PLANT
-      - TURN
-      - RELEASE
-      - LEAVE
-      type: string
-    cedaraiRoutingSequenceCode:
-      default: ROUTING_SEQUENCE_CODE_UNSPECIFIED
-      enum:
-      - ROUTING_SEQUENCE_CODE_UNSPECIFIED
-      - INTERMEDIATE_CARRIER_1
-      - INTERMEDIATE_CARRIER_2
-      - INTERMEDIATE_CARRIER_3
-      - INTERMEDIATE_CARRIER_4
-      - INTERMEDIATE_CARRIER_5
-      - INTERMEDIATE_CARRIER_6
-      - INTERMEDIATE_CARRIER_7
-      - INTERMEDIATE_CARRIER_8
-      - INTERMEDIATE_CARRIER_9
-      - ORIGIN_CARRIER_AGENT_ROUTING
-      - DELIVERY_SWITCH_CARRIER
-      - HAULAGE_RIGHTS_CARRIER
-      - ORIGIN_SWITCH_CARRIER
-      - JUNCTION_SETTLEMENT_CARRIER_FOLLOWING
-      - JUNCTION_SETTLEMENT_CARRIER_INTERMEDIATE
-      - JUNCTION_SETTLEMENT_CARRIER_PREDECESSOR
-      - HAULAGE_MOVEMENT_CARRIER
-      - ORIGIN_CARRIER_RULE_11
-      - ORIGIN_CARRIER_SHIPPER_ROUTING
-      - INTERMEDIATE_SWITCH_CARRIER
-      type: string
-    cedaraiIntLengthMeasurement:
-      properties:
-        unit:
-          type: string
-        value:
-          format: int32
-          type: integer
-      type: object
-    armsWorkOrderTaskStatus:
-      default: NOT_STARTED
-      enum:
-      - NOT_STARTED
-      - COMPLETED
-      - DID_NOT_COMPLETE
-      - UNBOOKED
-      type: string
-    armsWorkDefinition:
-      properties:
-        activityCode:
-          type: string
-        arrivalTime:
-          format: date-time
-          type: string
-        cancelled:
-          type: boolean
-        customerLocationId:
           format: int64
-          type: string
-        departureTime:
-          format: date-time
-          type: string
-        futureCustomerLocationId:
-          format: int64
-          type: string
-        futureServingLocationId:
-          format: int64
-          type: string
-        isPickupAndSetout:
-          type: boolean
-        name:
-          type: string
-        pickupFilter:
-          $ref: '#/components/schemas/armsEquipmentFilter'
-        servingLocationId:
-          format: int64
-          type: string
-        setoutFilter:
-          $ref: '#/components/schemas/armsEquipmentFilter'
-        workDefinitionId:
-          type: string
-      type: object
-    armsWorkOrder:
-      properties:
-        attributes:
-          properties: {}
-          type: object
-        autoCompleteTasks:
-          type: boolean
-        blueprint:
-          $ref: '#/components/schemas/armsWorkOrderBlueprint'
-        createdAt:
-          type: string
-        crews:
-          items:
-            $ref: '#/components/schemas/armsCrew'
-          type: array
-        customerLocationId:
-          format: int64
-          type: string
-        departureHeading:
-          format: double
-          type: number
-        departureLocoConsistIndex:
-          format: int32
-          type: integer
-        designatedDate:
-          format: date-time
-          type: string
-        destinationCustomerLocationId:
-          format: int64
-          type: string
-        destinationServingLocationId:
-          format: int64
-          type: string
-        inTransit:
-          type: boolean
-        initialTrainConsistId:
-          type: string
-        job:
-          $ref: '#/components/schemas/armsRRJob'
-        jobId:
-          type: string
-        lastEventId:
-          format: int64
-          type: string
-        latestTrainEventId:
-          format: int64
-          type: string
-        lostTrainConsistId:
-          type: string
-        originCustomerLocationId:
-          format: int64
-          type: string
-        originServingLocationId:
-          format: int64
-          type: string
-        readyToDepart:
-          type: boolean
-        scheduledStops:
-          items:
-            $ref: '#/components/schemas/armsWorkOrderScheduledStop'
-          type: array
-        servingLocationId:
-          format: int64
-          type: string
-        status:
-          $ref: '#/components/schemas/armsWorkOrderStatus'
-        tasks:
-          items:
-            $ref: '#/components/schemas/armsWorkOrderTask'
-          type: array
-        touchedBy:
-          properties: {}
-          type: object
-        trainConsistId:
-          type: string
-        trainId:
-          type: string
-        workOrderBlueprintId:
           type: string
         workOrderId:
           type: string
+      required:
+      - isFront
+      - trackId
+      - workOrderId
+      title: Arrive Train Request
       type: object
-    EquipmentFilterDwellFilter:
-      properties:
-        derivedTimeAttribute:
-          type: string
-        dwellTime:
-          format: int64
-          type: string
-        historyMoveType:
-          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
-        isGreaterThan:
-          type: boolean
-      type: object
-    EquipmentFilterAbsoluteTimeFilter:
-      properties:
-        cutoffTime:
-          type: string
-        derivedTimeAttribute:
-          type: string
-        historyMoveType:
-          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
-        isAfter:
-          type: boolean
-        moveType:
-          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
-      type: object
-    armsRecordTrainEventRequest:
-      description: Request message for recording a train event.
-      properties:
-        eventLocation:
-          $ref: '#/components/schemas/RecordTrainEventRequestEventLocation'
-        eventMessage:
-          description: A human-readable message for the event. This will override the default event message.
-          type: string
-        externalSystemEvent:
-          $ref: '#/components/schemas/armsExternalSystemEvent'
-        finalApprovalEventDetails:
-          $ref: '#/components/schemas/RecordTrainEventRequestFinalApprovalEventDetails'
-        notes:
-          description: Free-form notes about the event.
-          type: string
-        otherEventDetails:
-          $ref: '#/components/schemas/RecordTrainEventRequestOtherEventDetails'
-        safetyCheckEventDetails:
-          $ref: '#/components/schemas/RecordTrainEventRequestSafetyCheckEventDetails'
-        workOrderId:
-          description: The work order ID associated with this event.
-          type: string
-      title: Record Train Event Request
-      type: object
-    armsPickupCarsRequest:
-      description: Request message for completing Pickup tasks.
+    armsReSequenceTrainRequest:
+      description: Request message for resequencing a train's consist order. Used when the actual train consist order differs from the planned order, such as after an EDI scanner detects changes.
       example:
-        exceptions: []
-        items:
-        - pickup_task_id: task_003
-        - equipment_id: 66666
+        auto_setout_pickup: true
+        exception: Scanner detected different consist order
+        ignore_cars_with_completed_setout: false
         train_consist_equipment_uuids:
         - uuid_car1
         - uuid_car2
         - uuid_car3
-        - uuid_car4
         work_order_id: '12345'
       properties:
-        exceptions:
-          items:
-            $ref: '#/components/schemas/armsPickupCarsRequestException'
-          type: array
-        items:
-          description: List of the items to Pickup. The associated Pickup tasks will be closed on success.
-          items:
-            $ref: '#/components/schemas/armsPickupCarsRequestItem'
-          type: array
-        taskIds:
-          description: Deprecated. Use items instead.
-          items:
-            type: string
-          type: array
-        timestamp:
-          format: date-time
+        autoSetoutPickup:
+          description: Whether to automatically pickup new cars being added to consist and setout cars being removed from consist.
+          type: boolean
+        exception:
+          description: Optional exception message that will be set on any Pickup requests that come from the resequence.
+          type: string
+        ignoreCarsWithCompletedSetout:
+          description: Whether to ignore cars that have a completed setout task when resequencing.These cars will be removed from the consist.
+          type: boolean
+        lostTrackId:
+          description: Track ID where lost equipment should be placed if detected during resequencing.
+          format: int64
           type: string
         trainConsistEquipmentUuids:
-          description: Ordered list of equipment UUIDs representing the new consist sequence of the train after Pickup.
+          description: Ordered list of equipment UUIDs representing the new consist sequence of the train.
           items:
             type: string
           type: array
         workOrderId:
           type: string
       required:
-      - items
+      - autoSetoutPickup
       - trainConsistEquipmentUuids
       - workOrderId
-      title: Pickup Cars Request
+      title: Resequence Train Request
+      type: object
+    armsPickupCarsRequestException:
+      properties:
+        equipmentId:
+          description: Reference by equipment ID. Provide either pickup_task_id or equipment_id, but not both.
+          format: uint64
+          type: string
+        exception:
+          type: string
+        pickupTaskId:
+          description: Reference by pickup task ID. Provide either pickup_task_id or equipment_id, but not both.
+          type: string
+        taskId:
+          description: Deprecated. Use pickup_task_id or equipment_id instead.
+          type: string
       type: object
     armsWorkOrderTask:
       properties:
@@ -979,6 +491,66 @@ components:
         workOrderId:
           type: string
       type: object
+    armsAddressType:
+      default: AT_UNKNOWN
+      enum:
+      - AT_UNKNOWN
+      - AT_CARRIER
+      - AT_CUSTOMER
+      - AT_PORT
+      - AT_CONTRACTUAL_PORT
+      - AT_PARTIAL
+      type: string
+    armsListWorkOrderTasksResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/armsWorkOrderTask'
+          type: array
+      type: object
+    UpdateWorkOrderRequestWorkOrderTaskExceptionUpdateInstance:
+      properties:
+        exception:
+          type: string
+        taskId:
+          type: string
+      type: object
+    armsCustomer:
+      properties:
+        customerId:
+          format: int64
+          type: string
+        customerUuid:
+          type: string
+        locations:
+          items:
+            $ref: '#/components/schemas/armsCustomerLocation'
+          type: array
+        name:
+          type: string
+      type: object
+    EquipmentFilterRelativeTimeFilter:
+      properties:
+        derivedTimeAttribute:
+          type: string
+        historyMoveType:
+          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
+        moveType:
+          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
+        offset:
+          format: int64
+          type: string
+        timeAttribute:
+          type: string
+      type: object
+    armsWaybillOriginSystem:
+      default: WAYBILL_ORIGIN_SYSTEM_UNSPECIFIED
+      enum:
+      - WAYBILL_ORIGIN_SYSTEM_UNSPECIFIED
+      - ARMS
+      - EDI
+      - BRAVO
+      type: string
     armsCrossReferenceTypeCode:
       default: CROSS_REFERENCE_TYPE_CODE_UNSPECIFIED
       enum:
@@ -994,399 +566,6 @@ components:
       - CRTC_TRAILER
       - CRTC_TRANSFER_LOAD
       type: string
-    RecordTrainEventRequestFinalApprovalEventDetails:
-      description: Details for a final approval event.
-      properties:
-        consistEquipmentUuids:
-          description: List of equipment UUIDs in the consist for final approval.
-          items:
-            type: string
-          type: array
-      title: Final Approval Event Details
-      type: object
-    armsWeightQualifier:
-      default: WQ_UNKNOWN
-      enum:
-      - WQ_UNKNOWN
-      - WQ_MAXIMUM_WEIGHT
-      - WQ_SHIPPER_WEIGHT
-      - WQ_BILLED_WEIGHT
-      - WQ_ACTUAL_NET_WEIGHT_FOR_COMBINATION
-      - WQ_ESTIMATED_NET_WEIGHT
-      - WQ_GROSS_WEIGHT
-      - WQ_LIGHT_WEIGHT
-      - WQ_CLEAN_OUT
-      - WQ_LEGAL_WEIGHT
-      - WQ_MINIMUM_WEIGHT
-      - WQ_ACTUAL_NET_WEIGHT
-      - WQ_EXCESS_WEIGHT
-      - WQ_STATE_WEIGHT
-      type: string
-    armsPriceAuthority:
-      properties:
-        effectiveDate:
-          type: string
-        expirationDate:
-          type: string
-        issuingCarrierIdentifier:
-          type: string
-        itemNumber:
-          type: string
-        itemNumberSuffix:
-          type: string
-        primaryPublicationAuthority:
-          type: string
-        referenceId:
-          type: string
-        referenceIdQualifier:
-          type: string
-        regulatoryAgencyCode:
-          type: string
-        sectionNumber:
-          type: string
-        suffix:
-          type: string
-        supplementIdentifier:
-          type: string
-        tariffAgencyCode:
-          type: string
-      type: object
-    armsGroupFilter:
-      properties:
-        groupingIdFilter:
-          $ref: '#/components/schemas/armsGroupingIdFilter'
-        groupingNameFilter:
-          $ref: '#/components/schemas/armsGroupingNameFilter'
-      type: object
-    armsUpdateWorkOrderRequest:
-      example:
-        crew_ids:
-        - crew1
-        - crew2
-        equipment_ids:
-        - uuid_car1
-        - uuid_car2
-        status: ACTIVE
-        train_id: Train 123
-        update_mask:
-          paths:
-          - train_id
-          - crew_ids
-          - equipment_ids
-          - status
-        work_order_id: '12345'
-      properties:
-        attributes:
-          properties: {}
-          type: object
-        crewIds:
-          description: List of crew member IDs to assign to the work order.
-          items:
-            type: string
-          type: array
-        customerLocationId:
-          description: Customer location ID for the work order.
-          format: int64
-          type: string
-        designatedDate:
-          description: Designated date for the work order.
-          format: date-time
-          type: string
-        equipmentIds:
-          description: List of equipment UUIDs used to update consist.
-          items:
-            type: string
-          type: array
-        forceClose:
-          description: Whether to force close the work order.
-          type: boolean
-        initialEquipmentIds:
-          description: List of equipment UUIDs used tp update initial consist.
-          items:
-            type: string
-          type: array
-        readyToDepart:
-          description: Whether the work order is ready to depart.
-          type: boolean
-        servingLocationId:
-          description: Serving location ID for the work order.
-          format: int64
-          type: string
-        status:
-          $ref: '#/components/schemas/armsWorkOrderStatus'
-        taskExceptionUpdates:
-          description: Updates to task exceptions.
-          items:
-            $ref: '#/components/schemas/UpdateWorkOrderRequestWorkOrderTaskExceptionUpdateInstance'
-          type: array
-        taskUpdateLocationMasks:
-          description: Location masks for updating task locations.
-          items:
-            $ref: '#/components/schemas/UpdateWorkOrderRequestTaskUpdateLocationMask'
-          type: array
-        taskUpdates:
-          description: List of task updates to apply to the work order.
-          items:
-            $ref: '#/components/schemas/UpdateWorkOrderRequestWorkOrderTaskUpdateInstance'
-          type: array
-        trainId:
-          description: Train identifier to assign to the work order.
-          type: string
-        updateMask:
-          description: Field mask specifying which fields to update.
-          type: string
-        workOrderId:
-          type: string
-      title: Update Work Order Request
-      type: object
-    armsTrainReasonCode:
-      properties:
-        category:
-          type: string
-        code:
-          type: string
-      type: object
-    armsInterchangeMoveAuthority:
-      properties:
-        carrierCode:
-          type: string
-        movementAuthorityCode:
-          type: string
-        rejectReasonCode:
-          type: string
-        stateTariffApplicationCode:
-          type: string
-        terminalTariffApplicationCode:
-          type: string
-      type: object
-    armsExternalSystemEvent:
-      description: Event that originated from an external system.
-      properties:
-        eventId:
-          description: A unique id for the event in the origin system, if any.
-          type: string
-        eventTimestamp:
-          description: The timestamp of the event. If not provided, ARMS will use the API request time.
-          format: date-time
-          type: string
-        eventTypeKey:
-          description: A unique key for the event in the origin system.
-          type: string
-        systemName:
-          description: The name of the system that originated the event.
-          type: string
-        user:
-          $ref: '#/components/schemas/ExternalSystemEventExternalUser'
-      title: External System Event
-      type: object
-    armsWorkOrderScheduledStop:
-      properties:
-        activityCode:
-          type: string
-        arrivalTime:
-          format: date-time
-          type: string
-        cancelled:
-          type: boolean
-        customerLocationId:
-          format: int64
-          type: string
-        departureTime:
-          format: date-time
-          type: string
-        servingLocationId:
-          format: int64
-          type: string
-        workDefinitionId:
-          type: string
-      type: object
-    armsWaybillStatus:
-      default: WAYBILL_STATUS_UNSPECIFIED
-      enum:
-      - WAYBILL_STATUS_UNSPECIFIED
-      - PENDING
-      - ACTIVE
-      - ARCHIVED
-      type: string
-    RecordTrainEventRequestOtherEventDetails:
-      description: Empty message - just serves as a discriminator
-      title: Other Event Details
-      type: object
-    armsSetoutCarsRequestException:
-      properties:
-        equipmentId:
-          description: Reference by equipment ID. Provide either setout_task_id or equipment_id, but not both.
-          format: uint64
-          type: string
-        exception:
-          type: string
-        setoutTaskId:
-          description: Reference by setout task ID. Provide either setout_task_id or equipment_id, but not both.
-          type: string
-        taskId:
-          description: Deprecated. Use setout_task_id or equipment_id instead.
-          type: string
-      type: object
-    EquipmentFilterTimeFilter:
-      properties:
-        absoluteTimeFilter:
-          $ref: '#/components/schemas/EquipmentFilterAbsoluteTimeFilter'
-        dwellFilter:
-          $ref: '#/components/schemas/EquipmentFilterDwellFilter'
-        nestedTimeFilter:
-          $ref: '#/components/schemas/EquipmentFilterNestedTimeFilter'
-        relativeTimeFilter:
-          $ref: '#/components/schemas/EquipmentFilterRelativeTimeFilter'
-      type: object
-    armsAddressType:
-      default: AT_UNKNOWN
-      enum:
-      - AT_UNKNOWN
-      - AT_CARRIER
-      - AT_CUSTOMER
-      - AT_PORT
-      - AT_CONTRACTUAL_PORT
-      - AT_PARTIAL
-      type: string
-    armsMeasurement:
-      properties:
-        codeListQualifier:
-          type: string
-        industryCode:
-          type: string
-        measurementAttributeCode:
-          type: string
-        measurementMethodOrDevice:
-          type: string
-        measurementQualifier:
-          type: string
-        measurementSignificanceCode:
-          type: string
-        measurementValue:
-          format: double
-          type: number
-        rangeMaximum:
-          format: double
-          type: number
-        rangeMinimum:
-          format: double
-          type: number
-        referenceIdCode:
-          type: string
-        surfaceLayerPositionCode:
-          type: string
-        unitCode:
-          type: string
-      type: object
-    armsCommodityCodeQualifier:
-      default: CCQ_UNKNOWN
-      enum:
-      - CCQ_UNKNOWN
-      - CCQ_EMPTY_NON_HAZARDOUS
-      - CCQ_HARMONIZED_CODE_SYSTEM
-      - CCQ_LAST_CONTAINED
-      - CCQ_STCC
-      type: string
-    armsEquipmentParentGrouping:
-      properties:
-        attributes:
-          properties: {}
-          type: object
-        grouping:
-          $ref: '#/components/schemas/armsGrouping'
-        groupingIndex:
-          format: int64
-          type: integer
-      type: object
-    armsArrivalState:
-      default: AS_INBOUND
-      enum:
-      - AS_INBOUND
-      - AS_ONLINE
-      - AS_OUTBOUND
-      type: string
-    armsBillingInformation:
-      properties:
-        carrierCodes:
-          items:
-            type: string
-          type: array
-        destination:
-          $ref: '#/components/schemas/armsWaybillStation'
-        origin:
-          $ref: '#/components/schemas/armsWaybillStation'
-        rebillReasonCode:
-          $ref: '#/components/schemas/armsRebillReasonCode'
-      type: object
-    armsRebillReasonCode:
-      default: REBILL_REASON_CODE_UNSPECIFIED
-      enum:
-      - REBILL_REASON_CODE_UNSPECIFIED
-      - RRC_COLLECT
-      - RRC_PREPAID
-      type: string
-    UpdateWorkOrderRequestWorkOrderTaskUpdateInstance:
-      properties:
-        assignedLocation:
-          $ref: '#/components/schemas/armsAssignedLocation'
-        customerLocationId:
-          format: int64
-          type: string
-        equipmentId:
-          format: uint64
-          type: string
-        servingLocationId:
-          format: int64
-          type: string
-        taskId:
-          type: string
-        taskType:
-          $ref: '#/components/schemas/armsWorkOrderTaskType'
-        workDefinitionId:
-          type: string
-      type: object
-    armsReferenceInfo:
-      properties:
-        description:
-          type: string
-        referenceId:
-          type: string
-        referenceIdQualifier:
-          type: string
-      type: object
-    armsLineItemDescription:
-      properties:
-        commodityCode:
-          type: string
-        commodityCodeQualifier:
-          $ref: '#/components/schemas/armsCommodityCodeQualifier'
-        compartmentIdCode:
-          type: string
-        hazmatRatingCommodityCode:
-          type: string
-        hazmatRatingCommodityCodeQualifier:
-          type: string
-        ladingDescription:
-          type: string
-        marksAndNumbers:
-          type: string
-        marksAndNumbersQualifier:
-          type: string
-        packagingCode:
-          type: string
-      type: object
-    armsExtendedReferenceInformation:
-      properties:
-        description:
-          type: string
-        referenceId:
-          type: string
-        referenceIdQualifier:
-          type: string
-        referenceTimestamp:
-          format: date-time
-          type: string
-      type: object
     armsShipmentQualifier:
       default: SHIPMENT_QUALIFIER_UNSPECIFIED
       enum:
@@ -1407,153 +586,34 @@ components:
       - REVENUE_EMPTY
       - EMPTY_SWITCH_WAYBILL
       type: string
-    EquipmentFilterRelativeTimeFilter:
+    armsTrainReasonCode:
       properties:
-        derivedTimeAttribute:
+        category:
           type: string
-        historyMoveType:
-          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
-        moveType:
-          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
-        offset:
-          format: int64
-          type: string
-        timeAttribute:
+        code:
           type: string
       type: object
-    armsListWorkOrdersRequest:
-      description: Request message for listing work orders with optional filtering and pagination. Used to search and retrieve work orders based on various criteria such as status, equipment, locations, and dates.
-      example:
-        attributes:
-          priority: high
-          shift: day
-        customer_location_ids:
-        - '33333'
-        designated_date_range:
-          end: '2024-01-31T23:59:59Z'
-          start: '2024-01-01T00:00:00Z'
-        destination_location_ids:
-        - '22222'
-        equipment_name: BNSF 123456
-        include_tasks: true
-        name: Daily Switch Job
-        origin_location_ids:
-        - '11111'
-        page_next_token: eyJwYWdlIjogMiwgImxhc3RfaWQiOiAiMTIzNDUifQ==
-        page_size: 50
-        serving_location_ids:
-        - '44444'
-        statuses:
-        - ACTIVE
-        - PENDING
-        work_order_ids:
-        - '12345'
-        - '67890'
+    armsCommodityCodeQualifier:
+      default: CCQ_UNKNOWN
+      enum:
+      - CCQ_UNKNOWN
+      - CCQ_EMPTY_NON_HAZARDOUS
+      - CCQ_HARMONIZED_CODE_SYSTEM
+      - CCQ_LAST_CONTAINED
+      - CCQ_STCC
+      type: string
+    armsAdministrativeContact:
       properties:
-        attributes:
-          additionalProperties:
-            type: string
-          type: object
-        customerLocationIds:
+        communicationNumbers:
           items:
-            type: string
+            $ref: '#/components/schemas/armsCommunicationNumber'
           type: array
-        designatedDateRange:
-          $ref: '#/components/schemas/cedaraiarmsTimeRange'
-        destinationLocationIds:
-          items:
-            type: string
-          type: array
-        directionFilter:
-          $ref: '#/components/schemas/armsWorkOrderDirectionFilter'
-        equipmentName:
+        contactFunctionCode:
           type: string
-        inTransit:
-          type: boolean
-        includeScheduledStops:
-          description: Whether to include scheduled stop arrival/departure times, activity codes, and cancellation info in the response.
-          type: boolean
-        includeTasks:
-          description: Whether to include task details in the response.
-          type: boolean
-        name:
-          type: string
-        originLocationIds:
-          items:
-            type: string
-          type: array
-        pageNextToken:
-          type: string
-        pagePreviousToken:
-          type: string
-        pageSize:
-          format: int64
-          type: integer
-        servingLocationIds:
-          items:
-            type: string
-          type: array
-        statuses:
-          items:
-            $ref: '#/components/schemas/armsWorkOrderStatus'
-          type: array
-        taskLocationIds:
-          items:
-            type: string
-          type: array
-        workOrderIds:
-          description: Optional list of work order ids to fetch. When provided these are the only work orders returned.
-          items:
-            type: string
-          type: array
-      title: List Work Orders Request
-      type: object
-    armsEquipmentFilter:
-      properties:
-        departureTrainId:
-          type: string
-        intersectedGroupFilters:
-          items:
-            $ref: '#/components/schemas/armsGroupFilter'
-          type: array
-        priority:
-          format: int64
-          type: integer
-        timeFilter:
-          $ref: '#/components/schemas/EquipmentFilterNestedTimeFilter'
-        wantDateDaysFromNow:
-          format: int64
-          type: integer
-        wantDateOffsetEnd:
-          format: int64
-          type: integer
-        wantDateOffsetStart:
-          format: int64
-          type: integer
-      type: object
-    armsGrouping:
-      properties:
-        attributes:
-          properties: {}
-          type: object
-        customerLocation:
-          $ref: '#/components/schemas/armsCustomerLocation'
-        equipmentIndexEnabled:
-          type: boolean
-        frozen:
-          type: boolean
-        groupingId:
-          format: int64
-          type: string
-        groupingType:
+        contactInquiryReference:
           type: string
         name:
           type: string
-        sortOrder:
-          format: int32
-          type: integer
-        status:
-          $ref: '#/components/schemas/GroupingGroupingStatus'
       type: object
     armsCrew:
       properties:
@@ -1585,302 +645,108 @@ components:
         user:
           $ref: '#/components/schemas/armsUser'
       type: object
-    RecordTrainEventRequestSafetyCheckEventDetailsStatus:
-      default: PASSED
-      enum:
-      - PASSED
-      - FAILED
-      type: string
-    armsCustomer:
-      properties:
-        customerId:
-          format: int64
-          type: string
-        customerUuid:
-          type: string
-        locations:
-          items:
-            $ref: '#/components/schemas/armsCustomerLocation'
-          type: array
-        name:
-          type: string
+    RecordTrainEventRequestOtherEventDetails:
+      description: Empty message - just serves as a discriminator
+      title: Other Event Details
       type: object
-    armsSwitchRequest:
+    armsGroupingNameFilter:
       properties:
-        batchId:
+        groupingType:
           type: string
-        completedAt:
-          format: date-time
+        leafGroupingType:
           type: string
-        createdAt:
-          format: date-time
-          type: string
-        customerId:
-          format: uint64
-          type: string
-        deletedBy:
-          properties: {}
-          type: object
-        equipment:
-          $ref: '#/components/schemas/cedaraiarmsEquipment'
-        equipmentId:
-          format: uint64
-          type: string
-        etaTime:
-          format: date-time
-          type: string
-        externalFulfillingParty:
-          type: string
-        externalStatus:
-          type: string
-        notes:
-          type: string
-        requestType:
-          $ref: '#/components/schemas/armsSwitchRequestType'
-        requestTypeV2:
-          type: string
-        spotId:
-          format: uint64
-          type: string
-        spotName:
-          type: string
-        status:
-          type: string
-        switchRequestId:
-          type: string
-        touchedAt:
-          format: date-time
-          type: string
-        touchedBy:
-          properties: {}
-          type: object
-        track:
-          $ref: '#/components/schemas/armsGrouping'
-        trackId:
-          format: uint64
-          type: string
-        wantDate:
-          type: string
-      type: object
-    UpdateWorkOrderRequestWorkOrderTaskExceptionUpdateInstance:
-      properties:
-        exception:
-          type: string
-        taskId:
-          type: string
-      type: object
-    cedaraiarmsRouteEntry:
-      properties:
-        additionalSwitchCarrierCodes:
+        names:
           items:
             type: string
           type: array
-        carrierCode:
-          type: string
-        intermodalServiceCode:
-          type: string
-        isBreakpoint:
-          type: boolean
-        junctionCode:
-          type: string
-        rebillReasonCode:
-          type: string
-        routingSequenceCode:
-          $ref: '#/components/schemas/cedaraiRoutingSequenceCode'
-        rule11PartyId:
-          type: string
-        splc:
-          type: string
       type: object
-    armsReSequenceTrainRequest:
-      description: Request message for resequencing a train's consist order. Used when the actual train consist order differs from the planned order, such as after an EDI scanner detects changes.
+    armsBillingInformation:
+      properties:
+        carrierCodes:
+          items:
+            type: string
+          type: array
+        destination:
+          $ref: '#/components/schemas/armsWaybillStation'
+        origin:
+          $ref: '#/components/schemas/armsWaybillStation'
+        rebillReasonCode:
+          $ref: '#/components/schemas/armsRebillReasonCode'
+      type: object
+    armsPickupCarsRequest:
+      description: Request message for completing Pickup tasks.
       example:
-        auto_setout_pickup: true
-        exception: Scanner detected different consist order
-        ignore_cars_with_completed_setout: false
+        exceptions: []
+        items:
+        - pickup_task_id: task_003
+        - equipment_id: 66666
         train_consist_equipment_uuids:
         - uuid_car1
         - uuid_car2
         - uuid_car3
+        - uuid_car4
         work_order_id: '12345'
       properties:
-        autoSetoutPickup:
-          description: Whether to automatically pickup new cars being added to consist and setout cars being removed from consist.
-          type: boolean
-        exception:
-          description: Optional exception message that will be set on any Pickup requests that come from the resequence.
-          type: string
-        ignoreCarsWithCompletedSetout:
-          description: Whether to ignore cars that have a completed setout task when resequencing.These cars will be removed from the consist.
-          type: boolean
-        lostTrackId:
-          description: Track ID where lost equipment should be placed if detected during resequencing.
-          format: int64
+        exceptions:
+          items:
+            $ref: '#/components/schemas/armsPickupCarsRequestException'
+          type: array
+        items:
+          description: List of the items to Pickup. The associated Pickup tasks will be closed on success.
+          items:
+            $ref: '#/components/schemas/armsPickupCarsRequestItem'
+          type: array
+        taskIds:
+          description: Deprecated. Use items instead.
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
           type: string
         trainConsistEquipmentUuids:
-          description: Ordered list of equipment UUIDs representing the new consist sequence of the train.
+          description: Ordered list of equipment UUIDs representing the new consist sequence of the train after Pickup.
           items:
             type: string
           type: array
         workOrderId:
           type: string
       required:
-      - autoSetoutPickup
+      - items
       - trainConsistEquipmentUuids
       - workOrderId
-      title: Resequence Train Request
+      title: Pickup Cars Request
       type: object
-    armsEquipmentShipmentInformation:
+    EquipmentFilterAbsoluteTimeFilter:
       properties:
-        description:
+        cutoffTime:
           type: string
-        extendedReferenceInfo:
-          items:
-            $ref: '#/components/schemas/armsExtendedReferenceInformation'
-          type: array
-        lineItems:
-          items:
-            $ref: '#/components/schemas/armsEquipmentLineItem'
-          type: array
-        referenceId:
+        derivedTimeAttribute:
           type: string
-        referenceIdQualifier:
-          type: string
+        historyMoveType:
+          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
+        isAfter:
+          type: boolean
+        moveType:
+          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
       type: object
-    armsPartyEntityIdentifierCode:
-      default: PARTY_ENTITY_IDENTIFIER_CODE_UNSPECIFIED
+    UpdateWorkOrderRequestTaskUpdateLocationMask:
+      properties:
+        customerLocationId:
+          format: int64
+          type: string
+        servingLocationId:
+          format: int64
+          type: string
+        taskType:
+          $ref: '#/components/schemas/armsWorkOrderTaskType'
+      type: object
+    armsWorkOrderTaskType:
+      default: PICKUP
       enum:
-      - PARTY_ENTITY_IDENTIFIER_CODE_UNSPECIFIED
-      - PARTY_TO_BE_BILLED
-      - ORIGIN_PARTY
-      - DESTINATION_PARTY
-      - BENEFICIAL_OWNER
-      - BILL_TO
-      - IN_CARE_OF_1
-      - CUSTOMS_BROKER
-      - CHASSIS_PROVIDER
-      - CONSIGNEE
-      - CONVERTER
-      - DESTINATION_MAIL_FACILITY
-      - FORWARDER
-      - IMPORTER
-      - MOTOR_CARRIER
-      - NOTIFY_PARTY_1
-      - NOTIFY_PARTY_2
-      - OTHER_DEPARTMENTS
-      - ORIGIN_MAIL_FACILITY
-      - FREIGHT_BILL_PARTY
-      - PICK_UP_PARTY
-      - CERTIFICATION_PARTY
-      - SHIP_FROM
-      - SHIPPER
-      - STEAMSHIP_COMPANY
-      - SHIP_TO
-      - ULTIMATE_CONSIGNEE
-      - INLAND_MEXICAN_BROKER
-      - CANADIAN_CUSTOMS_BROKER
-      - MEXICAN_CUSTOMS_BROKER
-      - US_CUSTOMS_BROKER
-      - MONITORING_PARTY
-      - CUSTOMER
+      - PICKUP
+      - SETOUT
       type: string
-    armsLineItemQuantity:
-      properties:
-        billedAsQualifier:
-          type: string
-        billedAsQuantity:
-          format: double
-          type: number
-        dunnageDescription:
-          type: string
-        ladingQuantity:
-          format: int32
-          type: integer
-        packagingFormCode:
-          type: string
-        typeOfServiceCode:
-          type: string
-        volume:
-          format: float
-          type: number
-        volumeUnitQualifier:
-          type: string
-        weight:
-          format: float
-          type: number
-        weightQualifier:
-          $ref: '#/components/schemas/armsWeightQualifier'
-        weightUnitCode:
-          type: string
-      type: object
-    cedaraiarmsAddress:
-      properties:
-        addressId:
-          format: int64
-          type: string
-        addressType:
-          $ref: '#/components/schemas/armsAddressType'
-        city:
-          type: string
-        country:
-          type: string
-        name:
-          type: string
-        state:
-          type: string
-        streetLine1:
-          type: string
-        streetLine2:
-          type: string
-        streetLine3:
-          type: string
-        streetLine4:
-          type: string
-        zipCode:
-          type: string
-      type: object
-    armsTrack:
-      properties:
-        name:
-          type: string
-        trackId:
-          format: int64
-          type: string
-      type: object
-    armsListWorkOrdersResponse:
-      example:
-        next_token: eyJwYWdlIjogMiwgImxhc3RfaWQiOiAiMTIzNDYifQ==
-        prev_token: ''
-        results:
-        - crew_ids:
-          - crew1
-          - crew2
-          designated_date: '2024-01-15T00:00:00Z'
-          equipment_ids:
-          - uuid_car1
-          - uuid_car2
-          status: ACTIVE
-          train_id: Train 123
-          work_order_id: '12345'
-        - crew_ids:
-          - crew3
-          designated_date: '2024-01-16T00:00:00Z'
-          equipment_ids:
-          - uuid_car3
-          status: PENDING
-          train_id: Train 456
-          work_order_id: '6789'
-      properties:
-        nextToken:
-          type: string
-        prevToken:
-          type: string
-        results:
-          items:
-            $ref: '#/components/schemas/armsWorkOrder'
-          type: array
-      title: List Work Orders Response
-      type: object
     armsWorkOrderStatus:
       default: PENDING
       enum:
@@ -1889,27 +755,6 @@ components:
       - CLOSED
       - CANCELLED
       type: string
-    armsCapacityLoadCode:
-      default: CAPACITY_LOAD_CODE_UNSPECIFIED
-      enum:
-      - CAPACITY_LOAD_CODE_UNSPECIFIED
-      - CLC_FULL_CUBIC_CAPACITY
-      - CLC_FULL_CAPACITY
-      - CLC_GALLONAGE_CAPACITY
-      - CLC_MARKED_CAPACITY
-      - CLC_FULL_VISIBLE_CAPACITY
-      type: string
-    armsTerminal:
-      properties:
-        locationIdentifier:
-          type: string
-        locationQualifier:
-          type: string
-        portName:
-          type: string
-        terminalFunctionCode:
-          type: string
-      type: object
     rpcStatus:
       properties:
         code:
@@ -1922,17 +767,6 @@ components:
         message:
           type: string
       type: object
-    armsShipmentPaymentMethod:
-      default: SHIPMENT_PAYMENT_METHOD_UNSPECIFIED
-      enum:
-      - SHIPMENT_PAYMENT_METHOD_UNSPECIFIED
-      - SPM_RULE_11
-      - SPM_COLLECT
-      - SPM_MIXED
-      - SPM_NO_CHARGE
-      - SPM_NON_REVENUE
-      - SPM_PREPAID
-      type: string
     EquipmentFilterNestedTimeFilter:
       properties:
         isAnd:
@@ -1941,379 +775,6 @@ components:
           items:
             $ref: '#/components/schemas/EquipmentFilterTimeFilter'
           type: array
-      type: object
-    armsWaybillOriginSystem:
-      default: WAYBILL_ORIGIN_SYSTEM_UNSPECIFIED
-      enum:
-      - WAYBILL_ORIGIN_SYSTEM_UNSPECIFIED
-      - ARMS
-      - EDI
-      - BRAVO
-      type: string
-    armsEquipmentOrdered:
-      properties:
-        aarCarType:
-          type: string
-        cubicCapacity:
-          format: int32
-          type: integer
-        heightInches:
-          format: int32
-          type: integer
-        lengthInches:
-          format: int32
-          type: integer
-        weightCapacity:
-          format: int32
-          type: integer
-      type: object
-    armsListWorkOrderTasksRequest:
-      properties:
-        customerLocationId:
-          format: int64
-          type: string
-        equipmentIds:
-          items:
-            format: int64
-            type: string
-          type: array
-        justCreatedNow:
-          type: boolean
-        servingLocationId:
-          format: int64
-          type: string
-        status:
-          $ref: '#/components/schemas/armsWorkOrderTaskStatus'
-        taskIds:
-          items:
-            type: string
-          type: array
-        taskType:
-          $ref: '#/components/schemas/armsWorkOrderTaskType'
-        workDefinitionIds:
-          items:
-            type: string
-          type: array
-        workOrderId:
-          type: string
-      type: object
-    armsWeightType:
-      default: WT_ESTIMATED
-      enum:
-      - WT_ESTIMATED
-      - WT_ACTUAL
-      type: string
-    cedaraiIntWeightMeasurement:
-      properties:
-        unit:
-          type: string
-        value:
-          format: int32
-          type: integer
-      type: object
-    protobufAny:
-      additionalProperties:
-        type: object
-      properties:
-        '@type':
-          type: string
-      type: object
-    armsCommunicationNumber:
-      properties:
-        number:
-          type: string
-        qualifier:
-          type: string
-      type: object
-    armsAssignedLocation:
-      properties:
-        spotName:
-          type: string
-        trackId:
-          format: uint64
-          type: string
-        trackName:
-          type: string
-      type: object
-    RecordTrainEventRequestSafetyCheckEventDetails:
-      description: Details for a safety check event.
-      properties:
-        failedEquipmentUuids:
-          description: List of equipment UUIDs that failed the safety check.
-          items:
-            type: string
-          type: array
-        passedEquipmentUuids:
-          description: List of equipment UUIDs that passed the safety check.
-          items:
-            type: string
-          type: array
-        status:
-          $ref: '#/components/schemas/RecordTrainEventRequestSafetyCheckEventDetailsStatus'
-      title: Safety Check Event Details
-      type: object
-    armsUmlerUnitOfMeasurement:
-      default: UOM_UNSPECIFIED
-      enum:
-      - UOM_UNSPECIFIED
-      - IN
-      - LB
-      - CM
-      - KG
-      - FT
-      - M
-      - G
-      - T
-      - MT
-      type: string
-    armsPickupCarsRequestException:
-      properties:
-        equipmentId:
-          description: Reference by equipment ID. Provide either pickup_task_id or equipment_id, but not both.
-          format: uint64
-          type: string
-        exception:
-          type: string
-        pickupTaskId:
-          description: Reference by pickup task ID. Provide either pickup_task_id or equipment_id, but not both.
-          type: string
-        taskId:
-          description: Deprecated. Use pickup_task_id or equipment_id instead.
-          type: string
-      type: object
-    cedaraiarmsParty:
-      properties:
-        additionalNames:
-          items:
-            type: string
-          type: array
-        address:
-          items:
-            type: string
-          type: array
-        administrativeContacts:
-          items:
-            $ref: '#/components/schemas/armsAdministrativeContact'
-          type: array
-        billingInfo:
-          items:
-            $ref: '#/components/schemas/armsBillingInformation'
-          type: array
-        cityName:
-          type: string
-        countryCode:
-          type: string
-        countrySubdivisionCode:
-          type: string
-        entitySubIdentifierCode:
-          type: string
-        entitySubIdentifierRelationshipCode:
-          type: string
-        idCode:
-          type: string
-        idCodeQualifier:
-          $ref: '#/components/schemas/armsPartyIdentificationCodeQualifier'
-        locationIdentifier:
-          type: string
-        locationQualifier:
-          type: string
-        locationUuid:
-          type: string
-        name:
-          type: string
-        partyType:
-          $ref: '#/components/schemas/armsPartyEntityIdentifierCode'
-        postalCode:
-          type: string
-        referenceInfo:
-          items:
-            $ref: '#/components/schemas/armsReferenceInfo'
-          type: array
-        stateOrProvince:
-          type: string
-      type: object
-    ExternalSystemEventExternalUser:
-      description: Information about the user who originated the event in the external system.
-      properties:
-        displayName:
-          description: Display name of the user.
-          type: string
-        email:
-          description: Email address of the user.
-          type: string
-      title: External User
-      type: object
-    HistoryMoveTypeMessageHistoryMoveType:
-      default: UNSPECIFIED
-      enum:
-      - UNSPECIFIED
-      - ABNO
-      - AEIE
-      - AEIN
-      - AEIS
-      - AEIW
-      - AETA
-      - AETI
-      - AINV
-      - ARIL
-      - ARRI
-      - BADO
-      - BFRM
-      - BHVY
-      - BLGT
-      - BOHR
-      - BXNG
-      - CGIP
-      - CGRD
-      - CH80
-      - CH81
-      - CH82
-      - CH83
-      - CH84
-      - CH85
-      - CH86
-      - CH89
-      - CHARGED
-      - CHERRYPICK
-      - CLEAN
-      - CORRECTION
-      - CPRL
-      - DELIVERED
-      - DFLC
-      - DIGOUTS
-      - DIVERT
-      - DRMP
-      - ECYC
-      - EMPTIED
-      - EQOR
-      - FFBO
-      - FLIP
-      - FTBO
-      - HADR
-      - HAND
-      - HANR
-      - HEATSTP
-      - HEATSTRT
-      - HEMB
-      - HHAR
-      - HIGT
-      - HMIS
-      - HOGT
-      - HUMP
-      - ICHD
-      - ICHR
-      - IGTI
-      - IGTR
-      - INSPECTION
-      - INTERPLANT
-      - INTRAPLANT
-      - LCOM
-      - LDCH
-      - LOADED
-      - LTFR
-      - LTTO
-      - MAWY
-      - MOTR
-      - MOVE
-      - NOBL
-      - NOTP
-      - OFFERED
-      - OGTI
-      - OGTR
-      - ORDER
-      - OSTH
-      - PACT
-      - PASL
-      - PCON
-      - PFLT
-      - PFPS
-      - PICKUP
-      - PKGD
-      - PKGR
-      - PLJI
-      - PLLF
-      - PLLT
-      - PUJI
-      - RAMP
-      - REBL
-      - RECEIVED
-      - RECONSIGN
-      - REJS
-      - RELEASED
-      - REMB
-      - RFLT
-      - RICD
-      - RLOD
-      - RMTY
-      - RRFS
-      - RTAA
-      - RTOI
-      - RTPO
-      - SCYC
-      - SETBACK
-      - SETOUT
-      - SPARGSTP
-      - SPARGSTRT
-      - SPECIALSWITCH
-      - STEA
-      - STEX
-      - STOP
-      - STPD
-      - STPE
-      - STPL
-      - STRD
-      - STRE
-      - STRT
-      - STSE
-      - STSU
-      - STUN
-      - SWAP
-      - TRIM
-      - TSET
-      - TURN
-      - ULCH
-      - UNKN
-      - UNSC
-      - WASH
-      - WAYB
-      - WEIGH
-      - WEIGHE
-      - WEIGHL
-      type: string
-    armsSetoutCarsRequest:
-      description: Request message for completing setout tasks.
-      example:
-        exceptions: []
-        items:
-        - position: 1
-          setout_task_id: task_001
-          track_id: 67890
-        - equipment_id: 55555
-          position: 2
-          track_id: 67890
-        work_order_id: '12345'
-      properties:
-        exceptions:
-          items:
-            $ref: '#/components/schemas/armsSetoutCarsRequestException'
-          type: array
-        isLostConsist:
-          type: boolean
-        items:
-          description: List of items to Setout. The associated Setout tasks will be closed on success.
-          items:
-            $ref: '#/components/schemas/armsSetoutCarsRequestItem'
-          type: array
-        timestamp:
-          format: date-time
-          type: string
-        workOrderId:
-          type: string
-      required:
-      - exceptions
-      - items
-      - workOrderId
-      title: Setout Cars Request
       type: object
     armsRRJob:
       properties:
@@ -2351,35 +812,225 @@ components:
         type:
           type: string
       type: object
-    GroupingGroupingStatus:
-      default: ACTIVE
-      enum:
-      - ACTIVE
-      - ARCHIVED
-      type: string
-    armsAdministrativeContact:
+    armsTerminal:
       properties:
-        communicationNumbers:
-          items:
-            $ref: '#/components/schemas/armsCommunicationNumber'
-          type: array
-        contactFunctionCode:
+        locationIdentifier:
           type: string
-        contactInquiryReference:
+        locationQualifier:
           type: string
-        name:
+        portName:
+          type: string
+        terminalFunctionCode:
           type: string
       type: object
-    armsWeightUnitCode:
-      default: WEIGHT_UNIT_CODE_UNSPECIFIED
+    EquipmentFilterDwellFilter:
+      properties:
+        derivedTimeAttribute:
+          type: string
+        dwellTime:
+          format: int64
+          type: string
+        historyMoveType:
+          $ref: '#/components/schemas/HistoryMoveTypeMessageHistoryMoveType'
+        isGreaterThan:
+          type: boolean
+      type: object
+    cedaraiRoutingSequenceCode:
+      default: ROUTING_SEQUENCE_CODE_UNSPECIFIED
       enum:
-      - WEIGHT_UNIT_CODE_UNSPECIFIED
-      - WUC_METRIC_TON
-      - WUC_KILOGRAMS
-      - WUC_POUNDS
-      - WUC_SHORT_TON
-      - WUC_LONG_TON
+      - ROUTING_SEQUENCE_CODE_UNSPECIFIED
+      - INTERMEDIATE_CARRIER_1
+      - INTERMEDIATE_CARRIER_2
+      - INTERMEDIATE_CARRIER_3
+      - INTERMEDIATE_CARRIER_4
+      - INTERMEDIATE_CARRIER_5
+      - INTERMEDIATE_CARRIER_6
+      - INTERMEDIATE_CARRIER_7
+      - INTERMEDIATE_CARRIER_8
+      - INTERMEDIATE_CARRIER_9
+      - ORIGIN_CARRIER_AGENT_ROUTING
+      - DELIVERY_SWITCH_CARRIER
+      - HAULAGE_RIGHTS_CARRIER
+      - ORIGIN_SWITCH_CARRIER
+      - JUNCTION_SETTLEMENT_CARRIER_FOLLOWING
+      - JUNCTION_SETTLEMENT_CARRIER_INTERMEDIATE
+      - JUNCTION_SETTLEMENT_CARRIER_PREDECESSOR
+      - HAULAGE_MOVEMENT_CARRIER
+      - ORIGIN_CARRIER_RULE_11
+      - ORIGIN_CARRIER_SHIPPER_ROUTING
+      - INTERMEDIATE_SWITCH_CARRIER
       type: string
+    armsUmlerUnitOfMeasurement:
+      default: UOM_UNSPECIFIED
+      enum:
+      - UOM_UNSPECIFIED
+      - IN
+      - LB
+      - CM
+      - KG
+      - FT
+      - M
+      - G
+      - T
+      - MT
+      type: string
+    armsRecordTrainEventRequest:
+      description: Request message for recording a train event.
+      properties:
+        eventLocation:
+          $ref: '#/components/schemas/RecordTrainEventRequestEventLocation'
+        eventMessage:
+          description: A human-readable message for the event. This will override the default event message.
+          type: string
+        externalSystemEvent:
+          $ref: '#/components/schemas/armsExternalSystemEvent'
+        finalApprovalEventDetails:
+          $ref: '#/components/schemas/RecordTrainEventRequestFinalApprovalEventDetails'
+        notes:
+          description: Free-form notes about the event.
+          type: string
+        otherEventDetails:
+          $ref: '#/components/schemas/RecordTrainEventRequestOtherEventDetails'
+        safetyCheckEventDetails:
+          $ref: '#/components/schemas/RecordTrainEventRequestSafetyCheckEventDetails'
+        workOrderId:
+          description: The work order ID associated with this event.
+          type: string
+      title: Record Train Event Request
+      type: object
+    armsWorkOrderScheduledStop:
+      properties:
+        activityCode:
+          type: string
+        arrivalTime:
+          format: date-time
+          type: string
+        cancelled:
+          type: boolean
+        customerLocationId:
+          format: int64
+          type: string
+        departureTime:
+          format: date-time
+          type: string
+        servingLocationId:
+          format: int64
+          type: string
+        workDefinitionId:
+          type: string
+      type: object
+    armsEquipmentShipmentInformation:
+      properties:
+        description:
+          type: string
+        extendedReferenceInfo:
+          items:
+            $ref: '#/components/schemas/armsExtendedReferenceInformation'
+          type: array
+        lineItems:
+          items:
+            $ref: '#/components/schemas/armsEquipmentLineItem'
+          type: array
+        referenceId:
+          type: string
+        referenceIdQualifier:
+          type: string
+      type: object
+    armsArrivalState:
+      default: AS_INBOUND
+      enum:
+      - AS_INBOUND
+      - AS_ONLINE
+      - AS_OUTBOUND
+      type: string
+    armsEquipmentFilter:
+      properties:
+        departureTrainId:
+          type: string
+        intersectedGroupFilters:
+          items:
+            $ref: '#/components/schemas/armsGroupFilter'
+          type: array
+        priority:
+          format: int64
+          type: integer
+        timeFilter:
+          $ref: '#/components/schemas/EquipmentFilterNestedTimeFilter'
+        wantDateDaysFromNow:
+          format: int64
+          type: integer
+        wantDateOffsetEnd:
+          format: int64
+          type: integer
+        wantDateOffsetStart:
+          format: int64
+          type: integer
+      type: object
+    armsSetoutCarsRequest:
+      description: Request message for completing setout tasks.
+      example:
+        exceptions: []
+        items:
+        - position: 1
+          setout_task_id: task_001
+          track_id: 67890
+        - equipment_id: 55555
+          position: 2
+          track_id: 67890
+        work_order_id: '12345'
+      properties:
+        exceptions:
+          items:
+            $ref: '#/components/schemas/armsSetoutCarsRequestException'
+          type: array
+        isLostConsist:
+          type: boolean
+        items:
+          description: List of items to Setout. The associated Setout tasks will be closed on success.
+          items:
+            $ref: '#/components/schemas/armsSetoutCarsRequestItem'
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+        workOrderId:
+          type: string
+      required:
+      - exceptions
+      - items
+      - workOrderId
+      title: Setout Cars Request
+      type: object
+    armsMeasurement:
+      properties:
+        codeListQualifier:
+          type: string
+        industryCode:
+          type: string
+        measurementAttributeCode:
+          type: string
+        measurementMethodOrDevice:
+          type: string
+        measurementQualifier:
+          type: string
+        measurementSignificanceCode:
+          type: string
+        measurementValue:
+          format: double
+          type: number
+        rangeMaximum:
+          format: double
+          type: number
+        rangeMinimum:
+          format: double
+          type: number
+        referenceIdCode:
+          type: string
+        surfaceLayerPositionCode:
+          type: string
+        unitCode:
+          type: string
+      type: object
     armsUmler:
       properties:
         abt57YrDueDate:
@@ -2565,83 +1216,23 @@ components:
           format: date-time
           type: string
       type: object
-    armsArriveTrainRequest:
-      description: Request message for recording a train arrival at a specific track. Used when a train arrives at a station or location to begin operations.
-      example:
-        exception: Delayed arrival due to weather
-        is_front: true
-        serving_location_id: 11111
-        timestamp: '2024-01-15T10:30:00Z'
-        track_id: 67890
-        work_order_id: '12345'
+    cedaraiIntLengthMeasurement:
       properties:
-        customerLocationId:
-          format: int64
+        unit:
           type: string
-        exception:
-          type: string
-        isFront:
-          type: boolean
-        servingLocationId:
-          format: int64
-          type: string
-        timestamp:
-          format: date-time
+        value:
+          format: int32
+          type: integer
+      type: object
+    armsAssignedLocation:
+      properties:
+        spotName:
           type: string
         trackId:
-          format: int64
+          format: uint64
           type: string
-        workOrderId:
+        trackName:
           type: string
-      required:
-      - isFront
-      - trackId
-      - workOrderId
-      title: Arrive Train Request
-      type: object
-    armsCustomerLocation:
-      properties:
-        abbreviatedName:
-          type: string
-        address:
-          $ref: '#/components/schemas/cedaraiarmsAddress'
-        addressName:
-          type: string
-        blockCode:
-          type: string
-        currencyCode:
-          type: string
-        customer:
-          $ref: '#/components/schemas/armsCustomer'
-        customerIdentificationNumbers:
-          items:
-            type: string
-          type: array
-        customerLocationId:
-          format: int64
-          type: string
-        customerLocationUuid:
-          type: string
-        email:
-          type: string
-        freightBillEdiReceiver:
-          type: string
-        generalLedgerNumber:
-          type: string
-        isDefault:
-          type: boolean
-        isReportingLocation:
-          type: boolean
-        name:
-          type: string
-        phoneNumber:
-          type: string
-        serviceTypeIds:
-          items:
-            type: string
-          type: array
-        usedForBilling:
-          type: boolean
       type: object
     armsCrossReferenceEquipment:
       properties:
@@ -2668,11 +1259,534 @@ components:
         referenceIdQualifier:
           type: string
       type: object
-    armsWorkOrderTaskType:
-      default: PICKUP
+    armsWaybillStation:
+      properties:
+        cityName:
+          type: string
+        countryCode:
+          type: string
+        fsac:
+          type: string
+        postalCode:
+          type: string
+        splc:
+          type: string
+        stateOrProvince:
+          type: string
+      type: object
+    armsEquipmentOrdered:
+      properties:
+        aarCarType:
+          type: string
+        cubicCapacity:
+          format: int32
+          type: integer
+        heightInches:
+          format: int32
+          type: integer
+        lengthInches:
+          format: int32
+          type: integer
+        weightCapacity:
+          format: int32
+          type: integer
+      type: object
+    armsShipmentPaymentMethod:
+      default: SHIPMENT_PAYMENT_METHOD_UNSPECIFIED
       enum:
-      - PICKUP
-      - SETOUT
+      - SHIPMENT_PAYMENT_METHOD_UNSPECIFIED
+      - SPM_RULE_11
+      - SPM_COLLECT
+      - SPM_MIXED
+      - SPM_NO_CHARGE
+      - SPM_NON_REVENUE
+      - SPM_PREPAID
+      type: string
+    UpdateWorkOrderRequestWorkOrderTaskUpdateInstance:
+      properties:
+        assignedLocation:
+          $ref: '#/components/schemas/armsAssignedLocation'
+        customerLocationId:
+          format: int64
+          type: string
+        equipmentId:
+          format: uint64
+          type: string
+        servingLocationId:
+          format: int64
+          type: string
+        taskId:
+          type: string
+        taskType:
+          $ref: '#/components/schemas/armsWorkOrderTaskType'
+        workDefinitionId:
+          type: string
+      type: object
+    GroupingGroupingStatus:
+      default: ACTIVE
+      enum:
+      - ACTIVE
+      - ARCHIVED
+      type: string
+    armsUser:
+      properties:
+        displayName:
+          type: string
+        email:
+          type: string
+        userId:
+          format: int64
+          type: integer
+        userUuid:
+          type: string
+      type: object
+    armsListWorkOrdersResponse:
+      example:
+        next_token: eyJwYWdlIjogMiwgImxhc3RfaWQiOiAiMTIzNDYifQ==
+        prev_token: ''
+        results:
+        - crew_ids:
+          - crew1
+          - crew2
+          designated_date: '2024-01-15T00:00:00Z'
+          equipment_ids:
+          - uuid_car1
+          - uuid_car2
+          status: ACTIVE
+          train_id: Train 123
+          work_order_id: '12345'
+        - crew_ids:
+          - crew3
+          designated_date: '2024-01-16T00:00:00Z'
+          equipment_ids:
+          - uuid_car3
+          status: PENDING
+          train_id: Train 456
+          work_order_id: '6789'
+      properties:
+        nextToken:
+          type: string
+        prevToken:
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/armsWorkOrder'
+          type: array
+      title: List Work Orders Response
+      type: object
+    armsCommunicationNumber:
+      properties:
+        number:
+          type: string
+        qualifier:
+          type: string
+      type: object
+    armsWeightQualifier:
+      default: WQ_UNKNOWN
+      enum:
+      - WQ_UNKNOWN
+      - WQ_MAXIMUM_WEIGHT
+      - WQ_SHIPPER_WEIGHT
+      - WQ_BILLED_WEIGHT
+      - WQ_ACTUAL_NET_WEIGHT_FOR_COMBINATION
+      - WQ_ESTIMATED_NET_WEIGHT
+      - WQ_GROSS_WEIGHT
+      - WQ_LIGHT_WEIGHT
+      - WQ_CLEAN_OUT
+      - WQ_LEGAL_WEIGHT
+      - WQ_MINIMUM_WEIGHT
+      - WQ_ACTUAL_NET_WEIGHT
+      - WQ_EXCESS_WEIGHT
+      - WQ_STATE_WEIGHT
+      type: string
+    armsWorkOrderDirectionFilter:
+      default: WORK_ORDER_DIRECTION_FILTER_UNSPECIFIED
+      enum:
+      - WORK_ORDER_DIRECTION_FILTER_UNSPECIFIED
+      - WORK_ORDER_DIRECTION_FILTER_INBOUND
+      - WORK_ORDER_DIRECTION_FILTER_OUTBOUND
+      type: string
+    ExternalSystemEventExternalUser:
+      description: Information about the user who originated the event in the external system.
+      properties:
+        displayName:
+          description: Display name of the user.
+          type: string
+        email:
+          description: Email address of the user.
+          type: string
+      title: External User
+      type: object
+    cedaraiarmsParty:
+      properties:
+        additionalNames:
+          items:
+            type: string
+          type: array
+        address:
+          items:
+            type: string
+          type: array
+        administrativeContacts:
+          items:
+            $ref: '#/components/schemas/armsAdministrativeContact'
+          type: array
+        billingInfo:
+          items:
+            $ref: '#/components/schemas/armsBillingInformation'
+          type: array
+        cityName:
+          type: string
+        countryCode:
+          type: string
+        countrySubdivisionCode:
+          type: string
+        entitySubIdentifierCode:
+          type: string
+        entitySubIdentifierRelationshipCode:
+          type: string
+        idCode:
+          type: string
+        idCodeQualifier:
+          $ref: '#/components/schemas/armsPartyIdentificationCodeQualifier'
+        locationIdentifier:
+          type: string
+        locationQualifier:
+          type: string
+        locationUuid:
+          type: string
+        name:
+          type: string
+        partyType:
+          $ref: '#/components/schemas/armsPartyEntityIdentifierCode'
+        postalCode:
+          type: string
+        referenceInfo:
+          items:
+            $ref: '#/components/schemas/armsReferenceInfo'
+          type: array
+        stateOrProvince:
+          type: string
+      type: object
+    armsEquipmentParentGrouping:
+      properties:
+        attributes:
+          properties: {}
+          type: object
+        grouping:
+          $ref: '#/components/schemas/armsGrouping'
+        groupingIndex:
+          format: int64
+          type: integer
+      type: object
+    armsEquipmentLineItem:
+      properties:
+        cbpBarcodeNumber:
+          type: string
+        commodityCode:
+          type: string
+        commodityCodeQualifier:
+          type: string
+        commodityDescription:
+          type: string
+        currencyCode:
+          type: string
+        customsShipmentValue:
+          format: int32
+          type: integer
+        destinationCountryCode:
+          type: string
+        marksAndNumbers:
+          type: string
+        originCountryCode:
+          type: string
+        quantity:
+          format: double
+          type: number
+        smallestExteriorPackageType:
+          type: string
+        weight:
+          format: float
+          type: number
+        weightUnitCode:
+          type: string
+      type: object
+    armsPartyEntityIdentifierCode:
+      default: PARTY_ENTITY_IDENTIFIER_CODE_UNSPECIFIED
+      enum:
+      - PARTY_ENTITY_IDENTIFIER_CODE_UNSPECIFIED
+      - PARTY_TO_BE_BILLED
+      - ORIGIN_PARTY
+      - DESTINATION_PARTY
+      - BENEFICIAL_OWNER
+      - BILL_TO
+      - IN_CARE_OF_1
+      - CUSTOMS_BROKER
+      - CHASSIS_PROVIDER
+      - CONSIGNEE
+      - CONVERTER
+      - DESTINATION_MAIL_FACILITY
+      - FORWARDER
+      - IMPORTER
+      - MOTOR_CARRIER
+      - NOTIFY_PARTY_1
+      - NOTIFY_PARTY_2
+      - OTHER_DEPARTMENTS
+      - ORIGIN_MAIL_FACILITY
+      - FREIGHT_BILL_PARTY
+      - PICK_UP_PARTY
+      - CERTIFICATION_PARTY
+      - SHIP_FROM
+      - SHIPPER
+      - STEAMSHIP_COMPANY
+      - SHIP_TO
+      - ULTIMATE_CONSIGNEE
+      - INLAND_MEXICAN_BROKER
+      - CANADIAN_CUSTOMS_BROKER
+      - MEXICAN_CUSTOMS_BROKER
+      - US_CUSTOMS_BROKER
+      - MONITORING_PARTY
+      - CUSTOMER
+      type: string
+    armsGrouping:
+      properties:
+        attributes:
+          properties: {}
+          type: object
+        customerLocation:
+          $ref: '#/components/schemas/armsCustomerLocation'
+        equipmentIndexEnabled:
+          type: boolean
+        frozen:
+          type: boolean
+        groupingId:
+          format: int64
+          type: string
+        groupingType:
+          type: string
+        name:
+          type: string
+        sortOrder:
+          format: int32
+          type: integer
+        status:
+          $ref: '#/components/schemas/GroupingGroupingStatus'
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    armsListTrainReasonCodesResponse:
+      properties:
+        reasonCodes:
+          items:
+            $ref: '#/components/schemas/armsTrainReasonCode'
+          type: array
+      type: object
+    armsExtendedReferenceInformation:
+      properties:
+        description:
+          type: string
+        referenceId:
+          type: string
+        referenceIdQualifier:
+          type: string
+        referenceTimestamp:
+          format: date-time
+          type: string
+      type: object
+    armsGroupFilter:
+      properties:
+        groupingIdFilter:
+          $ref: '#/components/schemas/armsGroupingIdFilter'
+        groupingNameFilter:
+          $ref: '#/components/schemas/armsGroupingNameFilter'
+      type: object
+    armsGroupingIdFilter:
+      properties:
+        groupingIds:
+          items:
+            format: int64
+            type: string
+          type: array
+        groupingType:
+          type: string
+        leafGroupingType:
+          type: string
+      type: object
+    armsSetoutCarsRequestItem:
+      properties:
+        equipmentId:
+          description: Reference by equipment ID. Provide either setout_task_id or equipment_id, but not both.
+          format: uint64
+          type: string
+        position:
+          description: The spot on the track to Setout the car to.
+          format: int32
+          type: integer
+        setoutTaskId:
+          description: Reference by setout task ID. Provide either setout_task_id or equipment_id, but not both.
+          type: string
+        taskId:
+          description: Deprecated. Use setout_task_id or equipment_id instead.
+          type: string
+        trackId:
+          description: The ID of the track to Setout the car to.
+          format: uint64
+          type: string
+      type: object
+    armsWaybillStatus:
+      default: WAYBILL_STATUS_UNSPECIFIED
+      enum:
+      - WAYBILL_STATUS_UNSPECIFIED
+      - PENDING
+      - ACTIVE
+      - ARCHIVED
+      type: string
+    armsLineItemQuantity:
+      properties:
+        billedAsQualifier:
+          type: string
+        billedAsQuantity:
+          format: double
+          type: number
+        dunnageDescription:
+          type: string
+        ladingQuantity:
+          format: int32
+          type: integer
+        packagingFormCode:
+          type: string
+        typeOfServiceCode:
+          type: string
+        volume:
+          format: float
+          type: number
+        volumeUnitQualifier:
+          type: string
+        weight:
+          format: float
+          type: number
+        weightQualifier:
+          $ref: '#/components/schemas/armsWeightQualifier'
+        weightUnitCode:
+          type: string
+      type: object
+    armsTransportationMethod:
+      default: TRANSPORTATION_METHOD_UNSPECIFIED
+      enum:
+      - TRANSPORTATION_METHOD_UNSPECIFIED
+      - TM_RAIL
+      - TM_INTERMODAL
+      type: string
+    armsListTrainReasonCodesRequest:
+      properties:
+        category:
+          type: string
+      type: object
+    armsVerificationKey:
+      properties:
+        compartment:
+          format: int64
+          type: integer
+        key:
+          type: string
+      type: object
+    cedaraiarmsAddress:
+      properties:
+        addressId:
+          format: int64
+          type: string
+        addressType:
+          $ref: '#/components/schemas/armsAddressType'
+        city:
+          type: string
+        country:
+          type: string
+        name:
+          type: string
+        state:
+          type: string
+        streetLine1:
+          type: string
+        streetLine2:
+          type: string
+        streetLine3:
+          type: string
+        streetLine4:
+          type: string
+        zipCode:
+          type: string
+      type: object
+    armsExternalSystemEvent:
+      description: Event that originated from an external system.
+      properties:
+        eventId:
+          description: A unique id for the event in the origin system, if any.
+          type: string
+        eventTimestamp:
+          description: The timestamp of the event. If not provided, ARMS will use the API request time.
+          format: date-time
+          type: string
+        eventTypeKey:
+          description: A unique key for the event in the origin system.
+          type: string
+        systemName:
+          description: The name of the system that originated the event.
+          type: string
+        user:
+          $ref: '#/components/schemas/ExternalSystemEventExternalUser'
+      title: External System Event
+      type: object
+    armsWorkOrderTaskStatus:
+      default: NOT_STARTED
+      enum:
+      - NOT_STARTED
+      - COMPLETED
+      - DID_NOT_COMPLETE
+      - UNBOOKED
+      type: string
+    armsInterchangeMoveAuthority:
+      properties:
+        carrierCode:
+          type: string
+        movementAuthorityCode:
+          type: string
+        rejectReasonCode:
+          type: string
+        stateTariffApplicationCode:
+          type: string
+        terminalTariffApplicationCode:
+          type: string
+      type: object
+    armsCapacityLoadCode:
+      default: CAPACITY_LOAD_CODE_UNSPECIFIED
+      enum:
+      - CAPACITY_LOAD_CODE_UNSPECIFIED
+      - CLC_FULL_CUBIC_CAPACITY
+      - CLC_FULL_CAPACITY
+      - CLC_GALLONAGE_CAPACITY
+      - CLC_MARKED_CAPACITY
+      - CLC_FULL_VISIBLE_CAPACITY
+      type: string
+    armsPickupCarsRequestItem:
+      properties:
+        equipmentId:
+          description: Reference by equipment ID. Provide either pickup_task_id or equipment_id, but not both.
+          format: uint64
+          type: string
+        pickupTaskId:
+          description: Reference by pickup task ID. Provide either pickup_task_id or equipment_id, but not both.
+          type: string
+      type: object
+    RecordTrainEventRequestSafetyCheckEventDetailsStatus:
+      default: PASSED
+      enum:
+      - PASSED
+      - FAILED
       type: string
     armsEquipmentDetails:
       properties:
@@ -2768,95 +1882,239 @@ components:
         widthMeasure:
           $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
       type: object
-    armsPartyIdentificationCodeQualifier:
-      default: PARTY_IDENTIFICATION_CODE_QUALIFIER_UNSPECIFIED
-      enum:
-      - PARTY_IDENTIFICATION_CODE_QUALIFIER_UNSPECIFIED
-      - DUNS
-      - DUNS_PLUS_4
-      - TELEPHONE_NUMBER
-      - ABI_ROUTING_CODE
-      - SPLC
-      - CBSA_AUTOMOTIVE_ID
-      - BROKER_FILER_ID
-      - CRA_BUSINESS_NUMBER
-      - CIF_NUMBER
-      - FEDERAL_TAXPAYER_ID
-      - JURISDICTION_CODE
-      - ORIGIN_ASSIGNED_CODE
-      - MUTUALLY_DEFINED
-      type: string
-    armsPickupCarsRequestItem:
+    armsSwitchRequest:
       properties:
-        equipmentId:
-          description: Reference by equipment ID. Provide either pickup_task_id or equipment_id, but not both.
+        batchId:
+          type: string
+        completedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        customerId:
           format: uint64
           type: string
-        pickupTaskId:
-          description: Reference by pickup task ID. Provide either pickup_task_id or equipment_id, but not both.
+        deletedBy:
+          properties: {}
+          type: object
+        equipment:
+          $ref: '#/components/schemas/cedaraiarmsEquipment'
+        equipmentId:
+          format: uint64
+          type: string
+        etaTime:
+          format: date-time
+          type: string
+        externalFulfillingParty:
+          type: string
+        externalStatus:
+          type: string
+        notes:
+          type: string
+        requestType:
+          $ref: '#/components/schemas/armsSwitchRequestType'
+        requestTypeV2:
+          type: string
+        spotId:
+          format: uint64
+          type: string
+        spotName:
+          type: string
+        status:
+          type: string
+        switchRequestId:
+          type: string
+        touchedAt:
+          format: date-time
+          type: string
+        touchedBy:
+          properties: {}
+          type: object
+        track:
+          $ref: '#/components/schemas/armsGrouping'
+        trackId:
+          format: uint64
+          type: string
+        wantDate:
           type: string
       type: object
-    armsLineItem:
+    RecordTrainEventRequestSafetyCheckEventDetails:
+      description: Details for a safety check event.
       properties:
-        descriptions:
+        failedEquipmentUuids:
+          description: List of equipment UUIDs that failed the safety check.
           items:
-            $ref: '#/components/schemas/armsLineItemDescription'
+            type: string
           type: array
-        measurements:
+        passedEquipmentUuids:
+          description: List of equipment UUIDs that passed the safety check.
           items:
-            $ref: '#/components/schemas/armsMeasurement'
+            type: string
           type: array
-        number:
+        status:
+          $ref: '#/components/schemas/RecordTrainEventRequestSafetyCheckEventDetailsStatus'
+      title: Safety Check Event Details
+      type: object
+    armsUpdateWorkOrderRequest:
+      example:
+        crew_ids:
+        - crew1
+        - crew2
+        equipment_ids:
+        - uuid_car1
+        - uuid_car2
+        status: ACTIVE
+        train_id: Train 123
+        update_mask:
+          paths:
+          - train_id
+          - crew_ids
+          - equipment_ids
+          - status
+        work_order_id: '12345'
+      properties:
+        attributes:
+          properties: {}
+          type: object
+        crewIds:
+          description: List of crew member IDs to assign to the work order.
+          items:
+            type: string
+          type: array
+        customerLocationId:
+          description: Customer location ID for the work order.
           format: int64
+          type: string
+        designatedDate:
+          description: Designated date for the work order.
+          format: date-time
+          type: string
+        equipmentIds:
+          description: List of equipment UUIDs used to update consist.
+          items:
+            type: string
+          type: array
+        forceClose:
+          description: Whether to force close the work order.
+          type: boolean
+        initialEquipmentIds:
+          description: List of equipment UUIDs used tp update initial consist.
+          items:
+            type: string
+          type: array
+        readyToDepart:
+          description: Whether the work order is ready to depart.
+          type: boolean
+        servingLocationId:
+          description: Serving location ID for the work order.
+          format: int64
+          type: string
+        status:
+          $ref: '#/components/schemas/armsWorkOrderStatus'
+        taskExceptionUpdates:
+          description: Updates to task exceptions.
+          items:
+            $ref: '#/components/schemas/UpdateWorkOrderRequestWorkOrderTaskExceptionUpdateInstance'
+          type: array
+        taskUpdateLocationMasks:
+          description: Location masks for updating task locations.
+          items:
+            $ref: '#/components/schemas/UpdateWorkOrderRequestTaskUpdateLocationMask'
+          type: array
+        taskUpdates:
+          description: List of task updates to apply to the work order.
+          items:
+            $ref: '#/components/schemas/UpdateWorkOrderRequestWorkOrderTaskUpdateInstance'
+          type: array
+        trainId:
+          description: Train identifier to assign to the work order.
+          type: string
+        updateMask:
+          description: Field mask specifying which fields to update.
+          type: string
+        workOrderId:
+          type: string
+      title: Update Work Order Request
+      type: object
+    armsRebillReasonCode:
+      default: REBILL_REASON_CODE_UNSPECIFIED
+      enum:
+      - REBILL_REASON_CODE_UNSPECIFIED
+      - RRC_COLLECT
+      - RRC_PREPAID
+      type: string
+    armsInventoryLocation:
+      properties:
+        index:
+          format: int32
           type: integer
-        priceAuthorities:
-          items:
-            $ref: '#/components/schemas/armsPriceAuthority'
-          type: array
-        quantity:
-          $ref: '#/components/schemas/armsLineItemQuantity'
+        track:
+          $ref: '#/components/schemas/armsTrack'
       type: object
-    armsVerificationKey:
+    RecordTrainEventRequestFinalApprovalEventDetails:
+      description: Details for a final approval event.
       properties:
-        compartment:
-          format: int64
+        consistEquipmentUuids:
+          description: List of equipment UUIDs in the consist for final approval.
+          items:
+            type: string
+          type: array
+      title: Final Approval Event Details
+      type: object
+    cedaraiIntWeightMeasurement:
+      properties:
+        unit:
+          type: string
+        value:
+          format: int32
           type: integer
-        key:
-          type: string
       type: object
-    RecordTrainEventRequestEventLocation:
-      description: Information about where the event occurred.
+    armsWorkDefinition:
       properties:
-        fsac:
-          description: The FSAC (or "primary location code" in Europe) of the location where the event occurred. This is only used if the grouping_id is not provided.
+        activityCode:
           type: string
-        groupingId:
-          description: The ARMS network structure grouping id for the location where the event occurred.
+        arrivalTime:
+          format: date-time
+          type: string
+        cancelled:
+          type: boolean
+        customerLocationId:
           format: int64
           type: string
-      title: Event Location
+        departureTime:
+          format: date-time
+          type: string
+        futureCustomerLocationId:
+          format: int64
+          type: string
+        futureServingLocationId:
+          format: int64
+          type: string
+        isPickupAndSetout:
+          type: boolean
+        name:
+          type: string
+        pickupFilter:
+          $ref: '#/components/schemas/armsEquipmentFilter'
+        servingLocationId:
+          format: int64
+          type: string
+        setoutFilter:
+          $ref: '#/components/schemas/armsEquipmentFilter'
+        workDefinitionId:
+          type: string
       type: object
-    armsWaybillStation:
+    EquipmentFilterTimeFilter:
       properties:
-        cityName:
-          type: string
-        countryCode:
-          type: string
-        fsac:
-          type: string
-        postalCode:
-          type: string
-        splc:
-          type: string
-        stateOrProvince:
-          type: string
-      type: object
-    armsListTrainReasonCodesResponse:
-      properties:
-        reasonCodes:
-          items:
-            $ref: '#/components/schemas/armsTrainReasonCode'
-          type: array
+        absoluteTimeFilter:
+          $ref: '#/components/schemas/EquipmentFilterAbsoluteTimeFilter'
+        dwellFilter:
+          $ref: '#/components/schemas/EquipmentFilterDwellFilter'
+        nestedTimeFilter:
+          $ref: '#/components/schemas/EquipmentFilterNestedTimeFilter'
+        relativeTimeFilter:
+          $ref: '#/components/schemas/EquipmentFilterRelativeTimeFilter'
       type: object
     armsDepartTrainRequest:
       description: Request message for recording a train departure from a station or location. Used when a train leaves to begin its journey or move to the next location.
@@ -2883,6 +2141,748 @@ components:
       required:
       - workOrderId
       title: Depart Train Request
+      type: object
+    cedaraiarmsTimeRange:
+      properties:
+        endTime:
+          format: date-time
+          type: string
+        startTime:
+          format: date-time
+          type: string
+      type: object
+    armsSetoutCarsRequestException:
+      properties:
+        equipmentId:
+          description: Reference by equipment ID. Provide either setout_task_id or equipment_id, but not both.
+          format: uint64
+          type: string
+        exception:
+          type: string
+        setoutTaskId:
+          description: Reference by setout task ID. Provide either setout_task_id or equipment_id, but not both.
+          type: string
+        taskId:
+          description: Deprecated. Use setout_task_id or equipment_id instead.
+          type: string
+      type: object
+    armsPriceAuthority:
+      properties:
+        effectiveDate:
+          type: string
+        expirationDate:
+          type: string
+        issuingCarrierIdentifier:
+          type: string
+        itemNumber:
+          type: string
+        itemNumberSuffix:
+          type: string
+        primaryPublicationAuthority:
+          type: string
+        referenceId:
+          type: string
+        referenceIdQualifier:
+          type: string
+        regulatoryAgencyCode:
+          type: string
+        sectionNumber:
+          type: string
+        suffix:
+          type: string
+        supplementIdentifier:
+          type: string
+        tariffAgencyCode:
+          type: string
+      type: object
+    armsTrack:
+      properties:
+        name:
+          type: string
+        trackId:
+          format: int64
+          type: string
+      type: object
+    armsCustomerLocation:
+      properties:
+        abbreviatedName:
+          type: string
+        address:
+          $ref: '#/components/schemas/cedaraiarmsAddress'
+        addressName:
+          type: string
+        blockCode:
+          type: string
+        currencyCode:
+          type: string
+        customer:
+          $ref: '#/components/schemas/armsCustomer'
+        customerIdentificationNumbers:
+          items:
+            type: string
+          type: array
+        customerLocationId:
+          format: int64
+          type: string
+        customerLocationUuid:
+          type: string
+        email:
+          type: string
+        freightBillEdiReceiver:
+          type: string
+        generalLedgerNumber:
+          type: string
+        isDefault:
+          type: boolean
+        isReportingLocation:
+          type: boolean
+        name:
+          type: string
+        phoneNumber:
+          type: string
+        serviceTypeIds:
+          items:
+            type: string
+          type: array
+        usedForBilling:
+          type: boolean
+      type: object
+    armsLineItem:
+      properties:
+        descriptions:
+          items:
+            $ref: '#/components/schemas/armsLineItemDescription'
+          type: array
+        measurements:
+          items:
+            $ref: '#/components/schemas/armsMeasurement'
+          type: array
+        number:
+          format: int64
+          type: integer
+        priceAuthorities:
+          items:
+            $ref: '#/components/schemas/armsPriceAuthority'
+          type: array
+        quantity:
+          $ref: '#/components/schemas/armsLineItemQuantity'
+      type: object
+    armsLineItemDescription:
+      properties:
+        commodityCode:
+          type: string
+        commodityCodeQualifier:
+          $ref: '#/components/schemas/armsCommodityCodeQualifier'
+        compartmentIdCode:
+          type: string
+        hazmatRatingCommodityCode:
+          type: string
+        hazmatRatingCommodityCodeQualifier:
+          type: string
+        ladingDescription:
+          type: string
+        marksAndNumbers:
+          type: string
+        marksAndNumbersQualifier:
+          type: string
+        packagingCode:
+          type: string
+      type: object
+    armsWeightType:
+      default: WT_ESTIMATED
+      enum:
+      - WT_ESTIMATED
+      - WT_ACTUAL
+      type: string
+    armsWaybillRevisionSourceType:
+      default: WAYBILL_REVISION_SOURCE_TYPE_UNSPECIFIED
+      enum:
+      - WAYBILL_REVISION_SOURCE_TYPE_UNSPECIFIED
+      - WAYBILL
+      - CONSIST
+      - BILL_OF_LADING
+      - ADVANCE_CAR_DISPOSITION
+      - LOAD
+      - EMPTY
+      - REBILL
+      - DERAMP
+      type: string
+    armsSwitchRequestType:
+      default: SWITCH_REQUEST_TYPE_UNSPECIFIED
+      enum:
+      - SWITCH_REQUEST_TYPE_UNSPECIFIED
+      - SPOT
+      - INTRA_PLANT
+      - TURN
+      - RELEASE
+      - LEAVE
+      type: string
+    cedaraiarmsRouteEntry:
+      properties:
+        additionalSwitchCarrierCodes:
+          items:
+            type: string
+          type: array
+        carrierCode:
+          type: string
+        intermodalServiceCode:
+          type: string
+        isBreakpoint:
+          type: boolean
+        junctionCode:
+          type: string
+        rebillReasonCode:
+          type: string
+        routingSequenceCode:
+          $ref: '#/components/schemas/cedaraiRoutingSequenceCode'
+        rule11PartyId:
+          type: string
+        splc:
+          type: string
+      type: object
+    cedaraiarmsEquipment:
+      properties:
+        arrivalState:
+          $ref: '#/components/schemas/armsArrivalState'
+        equipmentId:
+          format: int64
+          type: integer
+        equipmentInitial:
+          type: string
+        equipmentNumber:
+          format: uint64
+          type: string
+        equipmentUuid:
+          type: string
+        groupings:
+          items:
+            $ref: '#/components/schemas/armsGrouping'
+          type: array
+        loadStatus:
+          type: string
+        location:
+          $ref: '#/components/schemas/armsInventoryLocation'
+        parentGroupings:
+          items:
+            $ref: '#/components/schemas/armsEquipmentParentGrouping'
+          type: array
+        umler:
+          $ref: '#/components/schemas/armsUmler'
+        verificationKey:
+          type: string
+        verificationKeys:
+          items:
+            $ref: '#/components/schemas/armsVerificationKey'
+          type: array
+        waybill:
+          $ref: '#/components/schemas/armsWaybill'
+      type: object
+    armsWorkOrderBlueprint:
+      properties:
+        attributesDefault:
+          properties: {}
+          type: object
+        cancelled:
+          type: boolean
+        destinationCustomerLocationId:
+          format: int64
+          type: string
+        destinationServingLocationId:
+          format: int64
+          type: string
+        enableLocalTrainMode:
+          type: boolean
+        job:
+          $ref: '#/components/schemas/armsRRJob'
+        jobId:
+          type: string
+        name:
+          type: string
+        originCustomerLocationId:
+          format: int64
+          type: string
+        originServingLocationId:
+          format: int64
+          type: string
+        schedule:
+          type: string
+        useTrainFunction:
+          type: boolean
+        workDefinitionIds:
+          items:
+            type: string
+          type: array
+        workDefinitions:
+          items:
+            $ref: '#/components/schemas/armsWorkDefinition'
+          type: array
+        workOrderBlueprintId:
+          type: string
+      type: object
+    armsListWorkOrderTasksRequest:
+      properties:
+        customerLocationId:
+          format: int64
+          type: string
+        equipmentIds:
+          items:
+            format: int64
+            type: string
+          type: array
+        justCreatedNow:
+          type: boolean
+        servingLocationId:
+          format: int64
+          type: string
+        status:
+          $ref: '#/components/schemas/armsWorkOrderTaskStatus'
+        taskIds:
+          items:
+            type: string
+          type: array
+        taskType:
+          $ref: '#/components/schemas/armsWorkOrderTaskType'
+        workDefinitionIds:
+          items:
+            type: string
+          type: array
+        workOrderId:
+          type: string
+      type: object
+    armsWeightUnitCode:
+      default: WEIGHT_UNIT_CODE_UNSPECIFIED
+      enum:
+      - WEIGHT_UNIT_CODE_UNSPECIFIED
+      - WUC_METRIC_TON
+      - WUC_KILOGRAMS
+      - WUC_POUNDS
+      - WUC_SHORT_TON
+      - WUC_LONG_TON
+      type: string
+    armsReferenceInfo:
+      properties:
+        description:
+          type: string
+        referenceId:
+          type: string
+        referenceIdQualifier:
+          type: string
+      type: object
+    armsWorkOrder:
+      properties:
+        attributes:
+          properties: {}
+          type: object
+        autoCompleteTasks:
+          type: boolean
+        blueprint:
+          $ref: '#/components/schemas/armsWorkOrderBlueprint'
+        createdAt:
+          type: string
+        crews:
+          items:
+            $ref: '#/components/schemas/armsCrew'
+          type: array
+        customerLocationId:
+          format: int64
+          type: string
+        departureHeading:
+          format: double
+          type: number
+        departureLocoConsistIndex:
+          format: int32
+          type: integer
+        designatedDate:
+          format: date-time
+          type: string
+        destinationCustomerLocationId:
+          format: int64
+          type: string
+        destinationServingLocationId:
+          format: int64
+          type: string
+        inTransit:
+          type: boolean
+        initialTrainConsistId:
+          type: string
+        job:
+          $ref: '#/components/schemas/armsRRJob'
+        jobId:
+          type: string
+        lastEventId:
+          format: int64
+          type: string
+        latestTrainEventId:
+          format: int64
+          type: string
+        lostTrainConsistId:
+          type: string
+        originCustomerLocationId:
+          format: int64
+          type: string
+        originServingLocationId:
+          format: int64
+          type: string
+        readyToDepart:
+          type: boolean
+        scheduledStops:
+          items:
+            $ref: '#/components/schemas/armsWorkOrderScheduledStop'
+          type: array
+        servingLocationId:
+          format: int64
+          type: string
+        status:
+          $ref: '#/components/schemas/armsWorkOrderStatus'
+        tasks:
+          items:
+            $ref: '#/components/schemas/armsWorkOrderTask'
+          type: array
+        touchedBy:
+          properties: {}
+          type: object
+        trainConsistId:
+          type: string
+        trainId:
+          type: string
+        workOrderBlueprintId:
+          type: string
+        workOrderId:
+          type: string
+      type: object
+    armsListWorkOrdersRequest:
+      description: Request message for listing work orders with optional filtering and pagination. Used to search and retrieve work orders based on various criteria such as status, equipment, locations, and dates.
+      example:
+        attributes:
+          priority: high
+          shift: day
+        customer_location_ids:
+        - '33333'
+        designated_date_range:
+          end: '2024-01-31T23:59:59Z'
+          start: '2024-01-01T00:00:00Z'
+        destination_location_ids:
+        - '22222'
+        equipment_name: BNSF 123456
+        include_tasks: true
+        name: Daily Switch Job
+        origin_location_ids:
+        - '11111'
+        page_next_token: eyJwYWdlIjogMiwgImxhc3RfaWQiOiAiMTIzNDUifQ==
+        page_size: 50
+        serving_location_ids:
+        - '44444'
+        statuses:
+        - ACTIVE
+        - PENDING
+        work_order_ids:
+        - '12345'
+        - '67890'
+      properties:
+        attributes:
+          additionalProperties:
+            type: string
+          type: object
+        customerLocationIds:
+          items:
+            type: string
+          type: array
+        designatedDateRange:
+          $ref: '#/components/schemas/cedaraiarmsTimeRange'
+        destinationLocationIds:
+          items:
+            type: string
+          type: array
+        directionFilter:
+          $ref: '#/components/schemas/armsWorkOrderDirectionFilter'
+        equipmentName:
+          type: string
+        inTransit:
+          type: boolean
+        includeScheduledStops:
+          description: Whether to include scheduled stop arrival/departure times, activity codes, and cancellation info in the response.
+          type: boolean
+        includeTasks:
+          description: Whether to include task details in the response.
+          type: boolean
+        name:
+          type: string
+        originLocationIds:
+          items:
+            type: string
+          type: array
+        pageNextToken:
+          type: string
+        pagePreviousToken:
+          type: string
+        pageSize:
+          format: int64
+          type: integer
+        servingLocationIds:
+          items:
+            type: string
+          type: array
+        statuses:
+          items:
+            $ref: '#/components/schemas/armsWorkOrderStatus'
+          type: array
+        taskLocationIds:
+          items:
+            type: string
+          type: array
+        workOrderIds:
+          description: Optional list of work order ids to fetch. When provided these are the only work orders returned.
+          items:
+            type: string
+          type: array
+      title: List Work Orders Request
+      type: object
+    RecordTrainEventRequestEventLocation:
+      description: Information about where the event occurred.
+      properties:
+        fsac:
+          description: The FSAC (or "primary location code" in Europe) of the location where the event occurred. This is only used if the grouping_id is not provided.
+          type: string
+        groupingId:
+          description: The ARMS network structure grouping id for the location where the event occurred.
+          format: int64
+          type: string
+      title: Event Location
+      type: object
+    HistoryMoveTypeMessageHistoryMoveType:
+      default: UNSPECIFIED
+      enum:
+      - UNSPECIFIED
+      - ABNO
+      - AEIE
+      - AEIN
+      - AEIS
+      - AEIW
+      - AETA
+      - AETI
+      - AINV
+      - ARIL
+      - ARRI
+      - BADO
+      - BFRM
+      - BHVY
+      - BLGT
+      - BOHR
+      - BXNG
+      - CGIP
+      - CGRD
+      - CH80
+      - CH81
+      - CH82
+      - CH83
+      - CH84
+      - CH85
+      - CH86
+      - CH89
+      - CHARGED
+      - CHERRYPICK
+      - CLEAN
+      - CORRECTION
+      - CPRL
+      - DELIVERED
+      - DFLC
+      - DIGOUTS
+      - DIVERT
+      - DRMP
+      - ECYC
+      - EMPTIED
+      - EQOR
+      - FFBO
+      - FLIP
+      - FTBO
+      - HADR
+      - HAND
+      - HANR
+      - HEATSTP
+      - HEATSTRT
+      - HEMB
+      - HHAR
+      - HIGT
+      - HMIS
+      - HOGT
+      - HUMP
+      - ICHD
+      - ICHR
+      - IGTI
+      - IGTR
+      - INSPECTION
+      - INTERPLANT
+      - INTRAPLANT
+      - LCOM
+      - LDCH
+      - LOADED
+      - LTFR
+      - LTTO
+      - MAWY
+      - MOTR
+      - MOVE
+      - NOBL
+      - NOTP
+      - OFFERED
+      - OGTI
+      - OGTR
+      - ORDER
+      - OSTH
+      - PACT
+      - PASL
+      - PCON
+      - PFLT
+      - PFPS
+      - PICKUP
+      - PKGD
+      - PKGR
+      - PLJI
+      - PLLF
+      - PLLT
+      - PUJI
+      - RAMP
+      - REBL
+      - RECEIVED
+      - RECONSIGN
+      - REJS
+      - RELEASED
+      - REMB
+      - RFLT
+      - RICD
+      - RLOD
+      - RMTY
+      - RRFS
+      - RTAA
+      - RTOI
+      - RTPO
+      - SCYC
+      - SETBACK
+      - SETOUT
+      - SPARGSTP
+      - SPARGSTRT
+      - SPECIALSWITCH
+      - STEA
+      - STEX
+      - STOP
+      - STPD
+      - STPE
+      - STPL
+      - STRD
+      - STRE
+      - STRT
+      - STSE
+      - STSU
+      - STUN
+      - SWAP
+      - TRIM
+      - TSET
+      - TURN
+      - ULCH
+      - UNKN
+      - UNSC
+      - WASH
+      - WAYB
+      - WEIGH
+      - WEIGHE
+      - WEIGHL
+      type: string
+    armsPartyIdentificationCodeQualifier:
+      default: PARTY_IDENTIFICATION_CODE_QUALIFIER_UNSPECIFIED
+      enum:
+      - PARTY_IDENTIFICATION_CODE_QUALIFIER_UNSPECIFIED
+      - DUNS
+      - DUNS_PLUS_4
+      - TELEPHONE_NUMBER
+      - ABI_ROUTING_CODE
+      - SPLC
+      - CBSA_AUTOMOTIVE_ID
+      - BROKER_FILER_ID
+      - CRA_BUSINESS_NUMBER
+      - CIF_NUMBER
+      - FEDERAL_TAXPAYER_ID
+      - JURISDICTION_CODE
+      - ORIGIN_ASSIGNED_CODE
+      - MUTUALLY_DEFINED
+      type: string
+    armsWaybill:
+      properties:
+        armsTrackingId:
+          type: string
+        billOfLadingNumber:
+          type: string
+        capacityLoadCode:
+          $ref: '#/components/schemas/armsCapacityLoadCode'
+        crossReferenceEquipment:
+          items:
+            $ref: '#/components/schemas/armsCrossReferenceEquipment'
+          type: array
+        defaultReceiver:
+          type: string
+        destinationJunction:
+          $ref: '#/components/schemas/armsWaybillStation'
+        destinationStation:
+          $ref: '#/components/schemas/armsWaybillStation'
+        equipmentDetails:
+          items:
+            $ref: '#/components/schemas/armsEquipmentDetails'
+          type: array
+        extendedReferenceInfo:
+          items:
+            $ref: '#/components/schemas/armsExtendedReferenceInformation'
+          type: array
+        lineItems:
+          items:
+            $ref: '#/components/schemas/armsLineItem'
+          type: array
+        originCarrierCode:
+          type: string
+        originJunction:
+          $ref: '#/components/schemas/armsWaybillStation'
+        originStation:
+          $ref: '#/components/schemas/armsWaybillStation'
+        originSystem:
+          $ref: '#/components/schemas/armsWaybillOriginSystem'
+        parties:
+          items:
+            $ref: '#/components/schemas/cedaraiarmsParty'
+          type: array
+        revisionNumber:
+          format: int64
+          type: integer
+        revisionSourceType:
+          $ref: '#/components/schemas/armsWaybillRevisionSourceType'
+        revisionTime:
+          format: date-time
+          type: string
+        route:
+          items:
+            $ref: '#/components/schemas/cedaraiarmsRouteEntry'
+          type: array
+        shipmentId:
+          type: string
+        shipmentPaymentMethod:
+          $ref: '#/components/schemas/armsShipmentPaymentMethod'
+        shipmentQualifier:
+          $ref: '#/components/schemas/armsShipmentQualifier'
+        specialHandlingCodes:
+          items:
+            type: string
+          type: array
+        transportationMethod:
+          $ref: '#/components/schemas/armsTransportationMethod'
+        waybillDate:
+          format: date-time
+          type: string
+        waybillId:
+          format: int64
+          type: integer
+        waybillNumber:
+          format: int64
+          type: integer
+        waybillStatus:
+          $ref: '#/components/schemas/armsWaybillStatus'
+        weightUnitCode:
+          $ref: '#/components/schemas/armsWeightUnitCode'
       type: object
   securitySchemes:
     ApiKeyAuth:
