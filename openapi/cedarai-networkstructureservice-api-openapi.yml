@@ -49,24 +49,6 @@ paths:
           description: An unexpected error response.
 components:
   schemas:
-    armsRegion:
-      properties:
-        attributes:
-          properties: {}
-          type: object
-        groupingId:
-          type: string
-        groupingType:
-          type: string
-        legacyGroupingId:
-          format: int64
-          type: string
-        name:
-          type: string
-        sortOrder:
-          format: int32
-          type: integer
-      type: object
     armsGetHierarchyResponse:
       example:
         hierarchy:
@@ -110,18 +92,6 @@ components:
           $ref: '#/components/schemas/armsCarrierHierarchy'
       title: Get Hierarchy Response
       type: object
-    armsGetHierarchyRequest:
-      description: Request message for retrieving the carrier network hierarchy.
-      example:
-        scope: main
-        sort_by_association: true
-      properties:
-        scope:
-          type: string
-        sortByAssociation:
-          type: boolean
-      title: Get Hierarchy Request
-      type: object
     rpcStatus:
       properties:
         code:
@@ -134,12 +104,42 @@ components:
         message:
           type: string
       type: object
+    armsGetHierarchyRequest:
+      description: Request message for retrieving the carrier network hierarchy.
+      example:
+        scope: main
+        sort_by_association: true
+      properties:
+        scope:
+          type: string
+        sortByAssociation:
+          type: boolean
+      title: Get Hierarchy Request
+      type: object
     protobufAny:
       additionalProperties:
         type: object
       properties:
         '@type':
           type: string
+      type: object
+    armsRegion:
+      properties:
+        attributes:
+          properties: {}
+          type: object
+        groupingId:
+          type: string
+        groupingType:
+          type: string
+        legacyGroupingId:
+          format: int64
+          type: string
+        name:
+          type: string
+        sortOrder:
+          format: int32
+          type: integer
       type: object
     armsCarrierHierarchy:
       properties:

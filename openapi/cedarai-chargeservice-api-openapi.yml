@@ -271,6 +271,117 @@ paths:
           description: An unexpected error response.
 components:
   schemas:
+    armsSortDirection:
+      default: ASCENDING
+      enum:
+      - ASCENDING
+      - DESCENDING
+      type: string
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    armsSortColumn:
+      properties:
+        column:
+          type: string
+        direction:
+          $ref: '#/components/schemas/armsSortDirection'
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    armsAggregateOp:
+      default: AO_UNSPECIFIED
+      enum:
+      - AO_UNSPECIFIED
+      - AO_COUNT
+      - AO_SUM
+      - AO_AVG
+      - AO_MIN
+      - AO_MAX
+      - AO_STRING_CONCAT
+      - AO_STRING_CONCAT_DISTINCT
+      type: string
+    armsGetTableSummaryResponse:
+      properties:
+        aggregates:
+          items:
+            $ref: '#/components/schemas/armsAggregateData'
+          type: array
+      type: object
+    armsRequestTableData:
+      properties:
+        additionalFilters:
+          items:
+            $ref: '#/components/schemas/armsColumnSearchTerm'
+          type: array
+        pageNextToken:
+          type: string
+        pagePreviousToken:
+          type: string
+        pageSize:
+          format: int64
+          type: integer
+        requestedColumns:
+          items:
+            $ref: '#/components/schemas/armsColumnSearchTerm'
+          type: array
+        sortColumns:
+          items:
+            $ref: '#/components/schemas/armsSortColumn'
+          type: array
+      type: object
+    armsTableDef:
+      properties:
+        columns:
+          items:
+            $ref: '#/components/schemas/armsColumnDef'
+          type: array
+        defaultColumns:
+          items:
+            type: string
+          type: array
+      type: object
+    googletypeDecimal:
+      properties:
+        value:
+          type: string
+      type: object
+    armsGetTableSummaryRequest:
+      properties:
+        aggregates:
+          items:
+            $ref: '#/components/schemas/armsColumnsToAggregate'
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/armsColumnSearchTerm'
+          type: array
+      type: object
+    armsColumnDataType:
+      default: STRING
+      enum:
+      - STRING
+      - INT
+      - REAL
+      - TIMESTAMP
+      - DECIMAL
+      - BOOLEAN
+      - TIME
+      type: string
     armsColumnData:
       properties:
         boolVal:
@@ -294,50 +405,26 @@ components:
           format: date-time
           type: string
       type: object
-    protobufAny:
-      additionalProperties:
-        type: object
+    armsColumnDef:
       properties:
-        '@type':
-          type: string
-      type: object
-    armsColumnsToAggregate:
-      properties:
-        columnKey:
-          type: string
-        op:
-          $ref: '#/components/schemas/armsAggregateOp'
-      type: object
-    armsColumnDataType:
-      default: STRING
-      enum:
-      - STRING
-      - INT
-      - REAL
-      - TIMESTAMP
-      - DECIMAL
-      - BOOLEAN
-      - TIME
-      type: string
-    armsColumnSearchTerm:
-      properties:
-        columnKey:
-          type: string
-        op:
-          $ref: '#/components/schemas/armsRequestOp'
-        searchTerm:
-          type: string
-      type: object
-    armsGetTableSummaryRequest:
-      properties:
-        aggregates:
+        aliases:
           items:
-            $ref: '#/components/schemas/armsColumnsToAggregate'
+            type: string
           type: array
-        filters:
+        description:
+          type: string
+        enumValues:
           items:
-            $ref: '#/components/schemas/armsColumnSearchTerm'
+            type: string
           type: array
+        key:
+          type: string
+        name:
+          type: string
+        searchable:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/armsColumnDataType'
       type: object
     armsTableData:
       properties:
@@ -364,113 +451,6 @@ components:
         tableDataRequest:
           $ref: '#/components/schemas/armsRequestTableData'
       type: object
-    armsAggregateData:
-      properties:
-        columnKey:
-          type: string
-        intVal:
-          format: int64
-          type: string
-        op:
-          $ref: '#/components/schemas/armsAggregateOp'
-        realVal:
-          format: double
-          type: number
-        stringVal:
-          type: string
-      type: object
-    armsRequestTableData:
-      properties:
-        additionalFilters:
-          items:
-            $ref: '#/components/schemas/armsColumnSearchTerm'
-          type: array
-        pageNextToken:
-          type: string
-        pagePreviousToken:
-          type: string
-        pageSize:
-          format: int64
-          type: integer
-        requestedColumns:
-          items:
-            $ref: '#/components/schemas/armsColumnSearchTerm'
-          type: array
-        sortColumns:
-          items:
-            $ref: '#/components/schemas/armsSortColumn'
-          type: array
-      type: object
-    armsSortDirection:
-      default: ASCENDING
-      enum:
-      - ASCENDING
-      - DESCENDING
-      type: string
-    armsRowData:
-      properties:
-        data:
-          additionalProperties:
-            $ref: '#/components/schemas/armsColumnData'
-          type: object
-        intKey:
-          format: int64
-          type: string
-        stringKey:
-          type: string
-      type: object
-    googletypeDecimal:
-      properties:
-        value:
-          type: string
-      type: object
-    armsSortColumn:
-      properties:
-        column:
-          type: string
-        direction:
-          $ref: '#/components/schemas/armsSortDirection'
-      type: object
-    armsColumnDef:
-      properties:
-        aliases:
-          items:
-            type: string
-          type: array
-        description:
-          type: string
-        enumValues:
-          items:
-            type: string
-          type: array
-        key:
-          type: string
-        name:
-          type: string
-        searchable:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/armsColumnDataType'
-      type: object
-    armsGetTableSummaryResponse:
-      properties:
-        aggregates:
-          items:
-            $ref: '#/components/schemas/armsAggregateData'
-          type: array
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
     armsRequestOp:
       default: RO_DEFAULT
       enum:
@@ -491,29 +471,49 @@ components:
       - RO_NOT_STARTSWITH
       - RO_NOT_ENDSWITH
       type: string
-    armsTableDef:
+    armsAggregateData:
       properties:
-        columns:
-          items:
-            $ref: '#/components/schemas/armsColumnDef'
-          type: array
-        defaultColumns:
-          items:
-            type: string
-          type: array
+        columnKey:
+          type: string
+        intVal:
+          format: int64
+          type: string
+        op:
+          $ref: '#/components/schemas/armsAggregateOp'
+        realVal:
+          format: double
+          type: number
+        stringVal:
+          type: string
       type: object
-    armsAggregateOp:
-      default: AO_UNSPECIFIED
-      enum:
-      - AO_UNSPECIFIED
-      - AO_COUNT
-      - AO_SUM
-      - AO_AVG
-      - AO_MIN
-      - AO_MAX
-      - AO_STRING_CONCAT
-      - AO_STRING_CONCAT_DISTINCT
-      type: string
+    armsColumnSearchTerm:
+      properties:
+        columnKey:
+          type: string
+        op:
+          $ref: '#/components/schemas/armsRequestOp'
+        searchTerm:
+          type: string
+      type: object
+    armsRowData:
+      properties:
+        data:
+          additionalProperties:
+            $ref: '#/components/schemas/armsColumnData'
+          type: object
+        intKey:
+          format: int64
+          type: string
+        stringKey:
+          type: string
+      type: object
+    armsColumnsToAggregate:
+      properties:
+        columnKey:
+          type: string
+        op:
+          $ref: '#/components/schemas/armsAggregateOp'
+      type: object
   securitySchemes:
     ApiKeyAuth:
       in: header

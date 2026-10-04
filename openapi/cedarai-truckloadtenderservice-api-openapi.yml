@@ -181,6 +181,18 @@ paths:
           description: An unexpected error response.
 components:
   schemas:
+    armsExtendedReferenceInformation:
+      properties:
+        description:
+          type: string
+        reference_id:
+          type: string
+        reference_id_qualifier:
+          type: string
+        reference_timestamp:
+          format: date-time
+          type: string
+      type: object
     armsEquipmentLineItem:
       properties:
         cbp_barcode_number:
@@ -213,16 +225,118 @@ components:
         weight_unit_code:
           type: string
       type: object
-    armsTerminal:
+    v1DateTimeReference:
       properties:
-        location_identifier:
+        date:
           type: string
-        location_qualifier:
+        date_qualifier:
+          $ref: '#/components/schemas/TruckLoadTenderDateQualifier'
+        time:
           type: string
-        port_name:
+        time_code:
           type: string
-        terminal_function_code:
+        time_qualifier:
           type: string
+      type: object
+    TruckLoadTenderStopReasonCode:
+      description: Codes specifying the reason for a stop.
+      enum:
+      - COMPLETE
+      - COMPLETE_UNLOAD
+      - LOAD
+      - PART_LOAD
+      - PART_UNLOAD
+      - UNLOAD
+      type: string
+    TruckLoadTenderSpecialHandlingCode:
+      description: Codes specifying special transportation handling instructions.
+      enum:
+      - ADVANCE_APPOINTMENT
+      - DELIVERY_APPOINTMENT
+      - EXPORT
+      type: string
+    armsWeightType:
+      enum:
+      - WT_ACTUAL
+      type: string
+    armsReferenceInfo:
+      properties:
+        description:
+          type: string
+        reference_id:
+          type: string
+        reference_id_qualifier:
+          type: string
+      type: object
+    v1TruckLoadTenderWeightQualifier:
+      description: Weight qualifier codes used for total shipment weight.
+      enum:
+      - SHIPPER_WEIGHT
+      - BILLED_WEIGHT
+      - ACTUAL_NET_WEIGHT_FOR_COMBINATION
+      - ESTIMATED_NET_WEIGHT
+      - GROSS_WEIGHT
+      - LIGHT_WEIGHT
+      - CLEAN_OUT
+      - LEGAL_WEIGHT
+      - MINIMUM_WEIGHT
+      - ACTUAL_NET_WEIGHT
+      - EXCESS_WEIGHT
+      - STATE_WEIGHT
+      - MAXIMUM_WEIGHT
+      type: string
+    v1StopOffDetail:
+      properties:
+        bol_handling_requirements:
+          items:
+            $ref: '#/components/schemas/v1BolHandlingRequirement'
+          type: array
+        date_time_references:
+          items:
+            $ref: '#/components/schemas/v1DateTimeReference'
+          type: array
+        lading_descriptions:
+          items:
+            $ref: '#/components/schemas/v1LadingDescription'
+          type: array
+        party:
+          $ref: '#/components/schemas/armsParty'
+        shipment_weight_packaging_quantity_data:
+          items:
+            $ref: '#/components/schemas/v1ShipmentWeightPackagingQuantityData'
+          type: array
+        stop_reason_code:
+          $ref: '#/components/schemas/TruckLoadTenderStopReasonCode'
+        stop_sequence_number:
+          format: int32
+          type: integer
+        weight:
+          format: double
+          type: number
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties:
+        type: object
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1UpdateTruckLoadTenderResponse:
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
       type: object
     armsPartyEntityIdentifierCode:
       enum:
@@ -259,18 +373,6 @@ components:
       - MONITORING_PARTY
       - CUSTOMER
       type: string
-    v1GetTruckLoadTenderResponse:
-      properties:
-        truck_load_tender:
-          $ref: '#/components/schemas/v1TruckLoadTender'
-      type: object
-    protobufAny:
-      additionalProperties:
-        type: object
-      properties:
-        '@type':
-          type: string
-      type: object
     TruckLoadTenderDateQualifier:
       description: Codes specifying the type of date.
       enum:
@@ -421,136 +523,24 @@ components:
       - ORIGINAL_TRANSACTION
       - TRANSFER
       type: string
-    armsExtendedReferenceInformation:
-      properties:
-        description:
-          type: string
-        reference_id:
-          type: string
-        reference_id_qualifier:
-          type: string
-        reference_timestamp:
-          format: date-time
-          type: string
+    v1DeleteTruckLoadTenderResponse:
       type: object
-    armsEquipmentShipmentInformation:
-      properties:
-        description:
-          type: string
-        extended_reference_info:
-          items:
-            $ref: '#/components/schemas/armsExtendedReferenceInformation'
-          type: array
-        line_items:
-          items:
-            $ref: '#/components/schemas/armsEquipmentLineItem'
-          type: array
-        reference_id:
-          type: string
-        reference_id_qualifier:
-          type: string
-      type: object
-    v1BolHandlingRequirement:
-      properties:
-        special_handling_code:
-          $ref: '#/components/schemas/TruckLoadTenderSpecialHandlingCode'
-        special_handling_description:
-          type: string
-      type: object
-    v1StopOffDetail:
-      properties:
-        bol_handling_requirements:
-          items:
-            $ref: '#/components/schemas/v1BolHandlingRequirement'
-          type: array
-        date_time_references:
-          items:
-            $ref: '#/components/schemas/v1DateTimeReference'
-          type: array
-        lading_descriptions:
-          items:
-            $ref: '#/components/schemas/v1LadingDescription'
-          type: array
-        party:
-          $ref: '#/components/schemas/armsParty'
-        shipment_weight_packaging_quantity_data:
-          items:
-            $ref: '#/components/schemas/v1ShipmentWeightPackagingQuantityData'
-          type: array
-        stop_reason_code:
-          $ref: '#/components/schemas/TruckLoadTenderStopReasonCode'
-        stop_sequence_number:
-          format: int32
-          type: integer
-        weight:
-          format: double
-          type: number
-      type: object
-    TruckLoadTenderShipmentMethodOfPayment:
-      description: Codes identifying payment terms for transportation charges.
+    armsPartyIdentificationCodeQualifier:
       enum:
-      - COLLECT
-      - PREPAID
+      - DUNS
+      - DUNS_PLUS_4
+      - TELEPHONE_NUMBER
+      - ABI_ROUTING_CODE
+      - SPLC
+      - CBSA_AUTOMOTIVE_ID
+      - BROKER_FILER_ID
+      - CRA_BUSINESS_NUMBER
+      - CIF_NUMBER
+      - FEDERAL_TAXPAYER_ID
+      - JURISDICTION_CODE
+      - ORIGIN_ASSIGNED_CODE
+      - MUTUALLY_DEFINED
       type: string
-    v1NoteOrSpecialInstruction:
-      properties:
-        description:
-          type: string
-        note_reference_code:
-          $ref: '#/components/schemas/TruckLoadTenderNoteReferenceCode'
-      type: object
-    v1ListTruckLoadTenderResponse:
-      properties:
-        next_page_token:
-          type: string
-        truck_load_tenders:
-          items:
-            $ref: '#/components/schemas/v1TruckLoadTender'
-          type: array
-      type: object
-    v1DeleteTruckLoadTenderRequest:
-      properties:
-        name:
-          type: string
-      type: object
-    v1LadingDescription:
-      properties:
-        commodity_code:
-          type: string
-        commodity_code_qualifier:
-          type: string
-        lading_description:
-          type: string
-        lading_line_item_number:
-          type: string
-        packaging_code:
-          type: string
-      type: object
-    armsWeightType:
-      enum:
-      - WT_ACTUAL
-      type: string
-    v1DateTimeReference:
-      properties:
-        date:
-          type: string
-        date_qualifier:
-          $ref: '#/components/schemas/TruckLoadTenderDateQualifier'
-        time:
-          type: string
-        time_code:
-          type: string
-        time_qualifier:
-          type: string
-      type: object
-    cedaraiIntLengthMeasurement:
-      properties:
-        unit:
-          type: string
-        value:
-          format: int32
-          type: integer
-      type: object
     v1CreateTruckLoadTenderRequest:
       example:
         truck_load_tender:
@@ -602,6 +592,80 @@ components:
         truck_load_tender:
           $ref: '#/components/schemas/v1TruckLoadTender'
       type: object
+    v1CreateTruckLoadTenderResponse:
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
+      type: object
+    v1ListTruckLoadTenderResponse:
+      properties:
+        next_page_token:
+          type: string
+        truck_load_tenders:
+          items:
+            $ref: '#/components/schemas/v1TruckLoadTender'
+          type: array
+      type: object
+    v1UpdateTruckLoadTenderRequest:
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
+      type: object
+    armsRebillReasonCode:
+      enum:
+      - RRC_COLLECT
+      - RRC_PREPAID
+      type: string
+    TruckLoadTenderShipmentMethodOfPayment:
+      description: Codes identifying payment terms for transportation charges.
+      enum:
+      - COLLECT
+      - PREPAID
+      type: string
+    cedaraiIntLengthMeasurement:
+      properties:
+        unit:
+          type: string
+        value:
+          format: int32
+          type: integer
+      type: object
+    v1BusinessInstruction:
+      properties:
+        description:
+          type: string
+        reference_identification:
+          type: string
+        reference_identification_qualifier:
+          description: Kept as the raw X12 qualifier string to support the broad/open-ended L11 qualifier list.
+          type: string
+      type: object
+    armsBillingInformation:
+      properties:
+        carrier_codes:
+          items:
+            type: string
+          type: array
+        destination:
+          $ref: '#/components/schemas/armsWaybillStation'
+        origin:
+          $ref: '#/components/schemas/armsWaybillStation'
+        rebill_reason_code:
+          $ref: '#/components/schemas/armsRebillReasonCode'
+      type: object
+    armsInterchangeMoveAuthority:
+      properties:
+        carrier_code:
+          type: string
+        movement_authority_code:
+          type: string
+        reject_reason_code:
+          type: string
+        state_tariff_application_code:
+          type: string
+        terminal_tariff_application_code:
+          type: string
+      type: object
     armsWaybillStation:
       properties:
         city_name:
@@ -617,63 +681,95 @@ components:
         state_or_province:
           type: string
       type: object
-    v1TruckLoadTenderWeightQualifier:
-      description: Weight qualifier codes used for total shipment weight.
-      enum:
-      - SHIPPER_WEIGHT
-      - BILLED_WEIGHT
-      - ACTUAL_NET_WEIGHT_FOR_COMBINATION
-      - ESTIMATED_NET_WEIGHT
-      - GROSS_WEIGHT
-      - LIGHT_WEIGHT
-      - CLEAN_OUT
-      - LEGAL_WEIGHT
-      - MINIMUM_WEIGHT
-      - ACTUAL_NET_WEIGHT
-      - EXCESS_WEIGHT
-      - STATE_WEIGHT
-      - MAXIMUM_WEIGHT
-      type: string
-    armsInterchangeMoveAuthority:
+    armsTerminal:
       properties:
-        carrier_code:
+        location_identifier:
           type: string
-        movement_authority_code:
+        location_qualifier:
           type: string
-        reject_reason_code:
+        port_name:
           type: string
-        state_tariff_application_code:
-          type: string
-        terminal_tariff_application_code:
+        terminal_function_code:
           type: string
       type: object
-    armsEquipmentOrdered:
+    v1DeleteTruckLoadTenderRequest:
       properties:
-        aar_car_type:
+        name:
           type: string
-        cubic_capacity:
-          format: int32
-          type: integer
-        height_inches:
-          format: int32
-          type: integer
-        length_inches:
-          format: int32
-          type: integer
-        weight_capacity:
+      type: object
+    v1TruckLoadTenderWeightUnitCode:
+      description: Codes specifying weight units.
+      enum:
+      - METRIC_TON
+      - GRAMS
+      - KILOGRAMS
+      - POUNDS
+      - MEASUREMENT_TON
+      - OUNCES
+      - SHORT_TON
+      - LONG_TON
+      type: string
+    armsAdministrativeContact:
+      properties:
+        communication_numbers:
+          items:
+            $ref: '#/components/schemas/armsCommunicationNumber'
+          type: array
+        contact_function_code:
+          type: string
+        contact_inquiry_reference:
+          type: string
+        name:
+          type: string
+      type: object
+    v1GetTruckLoadTenderResponse:
+      properties:
+        truck_load_tender:
+          $ref: '#/components/schemas/v1TruckLoadTender'
+      type: object
+    v1InterlineInformation:
+      properties:
+        routing_sequence_code:
+          type: string
+        scac:
+          type: string
+        state_or_province_code:
+          type: string
+        transportation_method_type_code:
+          type: string
+      type: object
+    v1BolHandlingRequirement:
+      properties:
+        special_handling_code:
+          $ref: '#/components/schemas/TruckLoadTenderSpecialHandlingCode'
+        special_handling_description:
+          type: string
+      type: object
+    armsEquipmentShipmentInformation:
+      properties:
+        description:
+          type: string
+        extended_reference_info:
+          items:
+            $ref: '#/components/schemas/armsExtendedReferenceInformation'
+          type: array
+        line_items:
+          items:
+            $ref: '#/components/schemas/armsEquipmentLineItem'
+          type: array
+        reference_id:
+          type: string
+        reference_id_qualifier:
+          type: string
+      type: object
+    cedaraiIntWeightMeasurement:
+      properties:
+        unit:
+          type: string
+        value:
           format: int32
           type: integer
       type: object
-    TruckLoadTenderStopReasonCode:
-      description: Codes specifying the reason for a stop.
-      enum:
-      - COMPLETE
-      - COMPLETE_UNLOAD
-      - LOAD
-      - PART_LOAD
-      - PART_UNLOAD
-      - UNLOAD
-      type: string
     v1ShipmentWeightPackagingQuantityData:
       properties:
         lading_quantity:
@@ -695,161 +791,35 @@ components:
         weight_unit_code:
           $ref: '#/components/schemas/v1TruckLoadTenderWeightUnitCode'
       type: object
-    v1InterlineInformation:
+    v1LadingDescription:
       properties:
-        routing_sequence_code:
+        commodity_code:
           type: string
-        scac:
+        commodity_code_qualifier:
           type: string
-        state_or_province_code:
+        lading_description:
           type: string
-        transportation_method_type_code:
+        lading_line_item_number:
+          type: string
+        packaging_code:
           type: string
       type: object
-    v1TruckLoadTenderWeightUnitCode:
-      description: Codes specifying weight units.
-      enum:
-      - METRIC_TON
-      - GRAMS
-      - KILOGRAMS
-      - POUNDS
-      - MEASUREMENT_TON
-      - OUNCES
-      - SHORT_TON
-      - LONG_TON
-      type: string
-    armsEquipmentDetails:
+    armsEquipmentOrdered:
       properties:
         aar_car_type:
           type: string
-        carrier_code:
-          type: string
-        chassis_initial:
-          type: string
-        chassis_number:
-          format: uint64
-          type: string
-        check_digit:
-          format: int64
+        cubic_capacity:
+          format: int32
           type: integer
-        description_code:
-          type: string
-        dunnage:
-          format: int64
+        height_inches:
+          format: int32
           type: integer
-        dunnage_measure:
-          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
-        equipment_initial:
-          type: string
-        equipment_name:
-          type: string
-        equipment_number:
-          format: uint64
-          type: string
-        equipment_ordered:
-          $ref: '#/components/schemas/armsEquipmentOrdered'
-        gross_weight_lbs:
-          format: int64
+        length_inches:
+          format: int32
           type: integer
-        gross_weight_measure:
-          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
-        height_in:
-          format: int64
+        weight_capacity:
+          format: int32
           type: integer
-        height_measure:
-          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
-        interchange_move_authorities:
-          items:
-            $ref: '#/components/schemas/armsInterchangeMoveAuthority'
-          type: array
-        iso_container_code:
-          type: string
-        length_in:
-          format: int64
-          type: integer
-        length_measure:
-          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
-        net_weight_lbs:
-          format: int64
-          type: integer
-        net_weight_measure:
-          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
-        ownership_code:
-          type: string
-        owning_carrier_code:
-          type: string
-        position:
-          type: string
-        seal_numbers:
-          items:
-            type: string
-          type: array
-        shipment_info:
-          items:
-            $ref: '#/components/schemas/armsEquipmentShipmentInformation'
-          type: array
-        tare_qualifier_code:
-          type: string
-        tare_weight_lbs:
-          format: int64
-          type: integer
-        tare_weight_measure:
-          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
-        terminals:
-          items:
-            $ref: '#/components/schemas/armsTerminal'
-          type: array
-        weight_allowance:
-          format: int64
-          type: integer
-        weight_allowance_measure:
-          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
-        weight_type:
-          $ref: '#/components/schemas/armsWeightType'
-        width_in:
-          format: int64
-          type: integer
-        width_measure:
-          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
-      type: object
-    armsAdministrativeContact:
-      properties:
-        communication_numbers:
-          items:
-            $ref: '#/components/schemas/armsCommunicationNumber'
-          type: array
-        contact_function_code:
-          type: string
-        contact_inquiry_reference:
-          type: string
-        name:
-          type: string
-      type: object
-    TruckLoadTenderNoteReferenceCode:
-      description: Codes identifying the functional area or purpose for which a note applies.
-      enum:
-      - MUTUALLY_DEFINED
-      type: string
-    v1BusinessInstruction:
-      properties:
-        description:
-          type: string
-        reference_identification:
-          type: string
-        reference_identification_qualifier:
-          description: Kept as the raw X12 qualifier string to support the broad/open-ended L11 qualifier list.
-          type: string
-      type: object
-    v1DeleteTruckLoadTenderResponse:
-      type: object
-    armsReferenceInfo:
-      properties:
-        description:
-          type: string
-        reference_id:
-          type: string
-        reference_id_qualifier:
-          type: string
       type: object
     armsParty:
       properties:
@@ -954,53 +924,6 @@ components:
         weight_unit_code:
           $ref: '#/components/schemas/v1TruckLoadTenderWeightUnitCode'
       type: object
-    armsBillingInformation:
-      properties:
-        carrier_codes:
-          items:
-            type: string
-          type: array
-        destination:
-          $ref: '#/components/schemas/armsWaybillStation'
-        origin:
-          $ref: '#/components/schemas/armsWaybillStation'
-        rebill_reason_code:
-          $ref: '#/components/schemas/armsRebillReasonCode'
-      type: object
-    armsRebillReasonCode:
-      enum:
-      - RRC_COLLECT
-      - RRC_PREPAID
-      type: string
-    TruckLoadTenderSpecialHandlingCode:
-      description: Codes specifying special transportation handling instructions.
-      enum:
-      - ADVANCE_APPOINTMENT
-      - DELIVERY_APPOINTMENT
-      - EXPORT
-      type: string
-    v1UpdateTruckLoadTenderResponse:
-      properties:
-        truck_load_tender:
-          $ref: '#/components/schemas/v1TruckLoadTender'
-      type: object
-    v1CreateTruckLoadTenderResponse:
-      properties:
-        truck_load_tender:
-          $ref: '#/components/schemas/v1TruckLoadTender'
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
     armsCommunicationNumber:
       properties:
         number:
@@ -1008,35 +931,112 @@ components:
         qualifier:
           type: string
       type: object
-    cedaraiIntWeightMeasurement:
+    v1NoteOrSpecialInstruction:
       properties:
-        unit:
+        description:
           type: string
-        value:
-          format: int32
-          type: integer
+        note_reference_code:
+          $ref: '#/components/schemas/TruckLoadTenderNoteReferenceCode'
       type: object
-    armsPartyIdentificationCodeQualifier:
+    armsEquipmentDetails:
+      properties:
+        aar_car_type:
+          type: string
+        carrier_code:
+          type: string
+        chassis_initial:
+          type: string
+        chassis_number:
+          format: uint64
+          type: string
+        check_digit:
+          format: int64
+          type: integer
+        description_code:
+          type: string
+        dunnage:
+          format: int64
+          type: integer
+        dunnage_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        equipment_initial:
+          type: string
+        equipment_name:
+          type: string
+        equipment_number:
+          format: uint64
+          type: string
+        equipment_ordered:
+          $ref: '#/components/schemas/armsEquipmentOrdered'
+        gross_weight_lbs:
+          format: int64
+          type: integer
+        gross_weight_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        height_in:
+          format: int64
+          type: integer
+        height_measure:
+          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
+        interchange_move_authorities:
+          items:
+            $ref: '#/components/schemas/armsInterchangeMoveAuthority'
+          type: array
+        iso_container_code:
+          type: string
+        length_in:
+          format: int64
+          type: integer
+        length_measure:
+          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
+        net_weight_lbs:
+          format: int64
+          type: integer
+        net_weight_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        ownership_code:
+          type: string
+        owning_carrier_code:
+          type: string
+        position:
+          type: string
+        seal_numbers:
+          items:
+            type: string
+          type: array
+        shipment_info:
+          items:
+            $ref: '#/components/schemas/armsEquipmentShipmentInformation'
+          type: array
+        tare_qualifier_code:
+          type: string
+        tare_weight_lbs:
+          format: int64
+          type: integer
+        tare_weight_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        terminals:
+          items:
+            $ref: '#/components/schemas/armsTerminal'
+          type: array
+        weight_allowance:
+          format: int64
+          type: integer
+        weight_allowance_measure:
+          $ref: '#/components/schemas/cedaraiIntWeightMeasurement'
+        weight_type:
+          $ref: '#/components/schemas/armsWeightType'
+        width_in:
+          format: int64
+          type: integer
+        width_measure:
+          $ref: '#/components/schemas/cedaraiIntLengthMeasurement'
+      type: object
+    TruckLoadTenderNoteReferenceCode:
+      description: Codes identifying the functional area or purpose for which a note applies.
       enum:
-      - DUNS
-      - DUNS_PLUS_4
-      - TELEPHONE_NUMBER
-      - ABI_ROUTING_CODE
-      - SPLC
-      - CBSA_AUTOMOTIVE_ID
-      - BROKER_FILER_ID
-      - CRA_BUSINESS_NUMBER
-      - CIF_NUMBER
-      - FEDERAL_TAXPAYER_ID
-      - JURISDICTION_CODE
-      - ORIGIN_ASSIGNED_CODE
       - MUTUALLY_DEFINED
       type: string
-    v1UpdateTruckLoadTenderRequest:
-      properties:
-        truck_load_tender:
-          $ref: '#/components/schemas/v1TruckLoadTender'
-      type: object
   securitySchemes:
     ApiKeyAuth:
       in: header
