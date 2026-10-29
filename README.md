@@ -64,6 +64,130 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cedarai is a company surfaced as a portfolio company of felicis and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Cedar AI builds ARMS (Automated Rail Management System), a cloud-native, AI-powered transportation management platform for railroads, industrial shippers, transload and intermodal terminals, and fleet/car owners. The ARMS External API exposes REST and gRPC services for railcar inventory and history, waybills and bills of lading, work orders and train movements, switching and class lists, charges, shipper invoices and quotes, truck load tenders, network structure, and threaded notes (Linda) with AI summaries — plus Ed25519-signed webhooks for real-time operational events, across US (cedarai.com) and EU (cedarai.se) regions. Backed by Felicis.
 
-Backed by: felicis — https://cedarai.com
+**Areas:** Company · Rail · Transportation · Logistics · Freight · Supply Chain · Railcar Management · Transportation Management System · Fleet Management · Artificial Intelligence
+
+## Cedarai on APIs.io
+
+Everything profiled for Cedarai is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cedarai/](https://apis.io/providers/cedarai/)** — or go straight to one of the APIs or properties below.
+
+### APIs (9)
+
+- [Cedarai ChargeService API](https://apis.io/apis/cedarai/cedarai-chargeservice-api/) — The ChargeService API from Cedarai — 3 operation(s) for chargeservice.
+- [Cedarai Equipment History API](https://apis.io/apis/cedarai/cedarai-equipment-history-api/) — The Equipment History API from Cedarai — 1 operation(s) for equipment history.
+- [Cedarai Ims API](https://apis.io/apis/cedarai/cedarai-ims-api/) — The Ims API from Cedarai — 16 operation(s) for ims.
+- [Cedarai InvoicesService API](https://apis.io/apis/cedarai/cedarai-invoicesservice-api/) — The InvoicesService API from Cedarai — 3 operation(s) for invoicesservice.
+- [Cedarai LindaService API](https://apis.io/apis/cedarai/cedarai-lindaservice-api/) — The LindaService API from Cedarai — 9 operation(s) for lindaservice.
+- [Cedarai NetworkStructureService API](https://apis.io/apis/cedarai/cedarai-networkstructureservice-api/) — The NetworkStructureService API from Cedarai — 1 operation(s) for networkstructureservice.
+- [Cedarai QuotesService API](https://apis.io/apis/cedarai/cedarai-quotesservice-api/) — The QuotesService API from Cedarai — 3 operation(s) for quotesservice.
+- [Cedarai TruckLoadTenderService API](https://apis.io/apis/cedarai/cedarai-truckloadtenderservice-api/) — The TruckLoadTenderService API from Cedarai — 5 operation(s) for truckloadtenderservice.
+- [Cedarai WorkOrderService API](https://apis.io/apis/cedarai/cedarai-workorderservice-api/) — The WorkOrderService API from Cedarai — 10 operation(s) for workorderservice.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Cedarai Webhooks](https://apis.io/asyncapis/cedarai/cedarai-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [cedarai-arms](https://apis.io/servers/cedarai/cedarai-arms/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [protobuf/arms/charge.proto ChargeService API](https://apis.io/collections/cedarai/open-cedarai-chargeservice-api/)
+- [protobuf/arms/charge.proto ChargeService Equipment History API](https://apis.io/collections/cedarai/open-cedarai-equipment-history-api/)
+- [protobuf/arms/charge.proto ChargeService Ims API](https://apis.io/collections/cedarai/open-cedarai-ims-api/)
+- [protobuf/arms/charge.proto ChargeService InvoicesService API](https://apis.io/collections/cedarai/open-cedarai-invoicesservice-api/)
+- [protobuf/arms/charge.proto ChargeService LindaService API](https://apis.io/collections/cedarai/open-cedarai-lindaservice-api/)
+- [protobuf/arms/charge.proto ChargeService NetworkStructureService API](https://apis.io/collections/cedarai/open-cedarai-networkstructureservice-api/)
+- [protobuf/arms/charge.proto ChargeService QuotesService API](https://apis.io/collections/cedarai/open-cedarai-quotesservice-api/)
+- [protobuf/arms/charge.proto ChargeService TruckLoadTenderService API](https://apis.io/collections/cedarai/open-cedarai-truckloadtenderservice-api/)
+- [protobuf/arms/charge.proto ChargeService WorkOrderService API](https://apis.io/collections/cedarai/open-cedarai-workorderservice-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Cedarai External Openapi Overlay](https://apis.io/overlays/cedarai/cedarai-external-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cedarai Authentication](https://apis.io/security/cedarai/cedarai-authentication/)
+- [Cedarai Domain Security](https://apis.io/security/cedarai/cedarai-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cedarai.com)
+- [Documentation](https://docs.cedarai.com)
+- [Getting started](https://docs.cedarai.com/user-docs/admin/getting-started)
+- [API reference](https://docs.cedarai.com/user-docs/api-reference/introduction)
+- [Blog](https://www.cedarai.com/insights/)
+- [Privacy policy](https://www.cedarai.com/privacy-policy/)
+- [Status](https://status.cedarai.com)
+
+## API Evangelist rating
+
+**Kin Score 39.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 58.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 54.2 |
+| Access clarity | 17.1 |
+
+**Agent readiness 23.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 19.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cedarai/](https://apis.io/providers/cedarai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cedarai: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cedarai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
